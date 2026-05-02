@@ -99,3 +99,7 @@ Linked from landing page.
 - Sign-in / cloud sync (paused indefinitely)
 - Wikilink resolution across notes (currently renders `[[title]]` as text)
 - Reviving the orbital hub — only worth it if it can be made absolutely smooth
+
+These are my own changes that im adding,
+the tabs on the left and right (Spec and Walkthrough) overlap with the text. additionally, when on the MS tab, the tabs don't link with the question answer showing. don't like the note presentation, would prefer it to look like  my obsidian notes with custom colours. put the site online too at pastpaperbd.com
+
