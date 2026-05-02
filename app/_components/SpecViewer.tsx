@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { RelatedNote, SpecPoint } from "@/lib/types";
 import type { InteractivePdfHandle } from "./InteractivePdf";
 
@@ -61,11 +61,16 @@ export function SpecViewer({
 
   const pdfHandle = useRef<InteractivePdfHandle>(null);
 
-  // Map page → spec point id (for the IntersectionObserver in InteractivePdf)
+  const onScrollActiveChange = useCallback((id: string | null) => {
+    if (id) setActiveId(id);
+  }, []);
+
   const pageMap = useMemo(() => {
-    const map: Record<number, string> = {};
+    const map: Record<number, string[]> = {};
     for (const e of entries) {
-      if (e.point.pageNumber) map[e.point.pageNumber] = e.point.id;
+      if (e.point.pageNumber) {
+        (map[e.point.pageNumber] ??= []).push(e.point.id);
+      }
     }
     return map;
   }, [entries]);
@@ -142,7 +147,7 @@ export function SpecViewer({
               <InteractivePdf
                 src={specPdfPath}
                 questionPages={pageMap}
-                onActiveQuestionChange={(id) => id && setActiveId(id)}
+                onActiveQuestionChange={onScrollActiveChange}
                 handleRef={pdfHandle}
               />
             ) : (

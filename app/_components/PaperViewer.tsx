@@ -95,9 +95,11 @@ export function PaperViewer({
   const msAvailable = !examMode || allDone;
 
   const questionPages = useMemo(() => {
-    const map: Record<number, string> = {};
+    const map: Record<number, string[]> = {};
     for (const e of entries) {
-      if (e.question.pageNumber) map[e.question.pageNumber] = e.question.id;
+      if (e.question.pageNumber) {
+        (map[e.question.pageNumber] ??= []).push(e.question.id);
+      }
     }
     return map;
   }, [entries]);

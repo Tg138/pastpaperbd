@@ -13,8 +13,8 @@ export interface InteractivePdfHandle {
 
 interface Props {
   src: string;
-  // Map of pageNumber → itemId. The item whose page is most visible wins.
-  questionPages: Record<number, string>;
+  // Map of pageNumber → ordered list of question IDs starting on that page.
+  questionPages: Record<number, string[]>;
   onActiveQuestionChange?: (questionId: string | null) => void;
   handleRef?: React.Ref<InteractivePdfHandle>;
 }
@@ -112,38 +112,42 @@ export function InteractivePdf({
     return () => observer.disconnect();
   }, [numPages]);
 
-  // Scroll-spy: switch active question when its page header crosses a threshold line.
-  // This avoids the intersection-ratio approach which skips questions when multiple
-  // questions share a page or a question spans many pages.
+  // Scroll-spy: track active question as user scrolls.
+  // Multiple questions can share a page; the page is divided proportionally
+  // among them so each question gets its fair slice of scroll distance.
   useEffect(() => {
     if (numPages === 0) return;
     if (!onActiveQuestionChange) return;
     const container = containerRef.current;
     if (!container) return;
 
-    // Sort question pages ascending so we can walk them in order.
     const sorted = Object.entries(questionPages)
-      .map(([page, qid]) => ({ page: Number(page), qid }))
+      .map(([page, qids]) => ({ page: Number(page), qids }))
       .sort((a, b) => a.page - b.page);
 
     if (sorted.length === 0) return;
 
     const resolve = () => {
       // Threshold: 40% down from the top of the visible container.
-      // A question becomes active once its page top has crossed this line.
       const threshold = container.clientHeight * 0.4;
       const containerTop = container.getBoundingClientRect().top;
 
       let active: string | null = null;
-      for (const { page, qid } of sorted) {
+      for (const { page, qids } of sorted) {
         const el = pageRefs.current.get(page);
         if (!el) continue;
         const relativeTop = el.getBoundingClientRect().top - containerTop;
-        if (relativeTop <= threshold) active = qid;
+        if (relativeTop > threshold) continue;
+
+        // Page top has crossed the threshold. Divide the page height equally
+        // among all questions starting on this page and pick the slice we're in.
+        const scrolledInto = threshold - relativeTop; // px of page above threshold
+        const fraction = Math.min(scrolledInto / el.offsetHeight, 1);
+        const idx = Math.min(Math.floor(fraction * qids.length), qids.length - 1);
+        active = qids[idx];
       }
 
-      // Before any page crosses the threshold, default to the first question.
-      onActiveQuestionChange(active ?? sorted[0].qid);
+      onActiveQuestionChange(active ?? sorted[0].qids[0]);
     };
 
     container.addEventListener("scroll", resolve, { passive: true });
