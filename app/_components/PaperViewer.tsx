@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Breakdown, Paper, Question, RelatedNote, SpecPoint } from "@/lib/types";
 import type { InteractivePdfHandle } from "./InteractivePdf";
 
@@ -104,6 +104,10 @@ export function PaperViewer({
 
   const activeEntry =
     entries.find((e) => e.question.id === activeQid) ?? entries[0];
+
+  const onScrollActiveQuestionChange = useCallback((qid: string | null) => {
+    if (qid) setActiveQid(qid);
+  }, []);
 
   const onSelectQuestion = (qid: string) => {
     setActiveQid(qid);
@@ -217,7 +221,7 @@ export function PaperViewer({
                   <InteractivePdf
                     src={paper.qpPath}
                     questionPages={questionPages}
-                    onActiveQuestionChange={(qid) => qid && setActiveQid(qid)}
+                    onActiveQuestionChange={onScrollActiveQuestionChange}
                     handleRef={qpHandleRef}
                   />
                 ) : (
@@ -257,7 +261,7 @@ export function PaperViewer({
                   <InteractivePdf
                     src={paper.qpPath}
                     questionPages={questionPages}
-                    onActiveQuestionChange={(qid) => qid && setActiveQid(qid)}
+                    onActiveQuestionChange={onScrollActiveQuestionChange}
                     handleRef={qpHandleRef}
                   />
                 ) : msAvailable ? (
