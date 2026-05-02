@@ -112,50 +112,43 @@ export function InteractivePdf({
     return () => observer.disconnect();
   }, [numPages]);
 
-  // Track which page is most visible → resolve to a questionId
+  // Scroll-spy: switch active question when its page header crosses a threshold line.
+  // This avoids the intersection-ratio approach which skips questions when multiple
+  // questions share a page or a question spans many pages.
   useEffect(() => {
     if (numPages === 0) return;
     if (!onActiveQuestionChange) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-    const visibility = new Map<number, number>();
+    // Sort question pages ascending so we can walk them in order.
+    const sorted = Object.entries(questionPages)
+      .map(([page, qid]) => ({ page: Number(page), qid }))
+      .sort((a, b) => a.page - b.page);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          const pageStr = (e.target as HTMLElement).dataset.pageNumber;
-          if (!pageStr) continue;
-          const pageNum = Number(pageStr);
-          visibility.set(pageNum, e.intersectionRatio);
-        }
+    if (sorted.length === 0) return;
 
-        let bestPage = 0;
-        let bestRatio = 0;
-        for (const [page, ratio] of visibility) {
-          if (ratio > bestRatio) {
-            bestRatio = ratio;
-            bestPage = page;
-          }
-        }
+    const resolve = () => {
+      // Threshold: 40% down from the top of the visible container.
+      // A question becomes active once its page top has crossed this line.
+      const threshold = container.clientHeight * 0.4;
+      const containerTop = container.getBoundingClientRect().top;
 
-        if (bestPage === 0) {
-          onActiveQuestionChange(null);
-          return;
-        }
+      let active: string | null = null;
+      for (const { page, qid } of sorted) {
+        const el = pageRefs.current.get(page);
+        if (!el) continue;
+        const relativeTop = el.getBoundingClientRect().top - containerTop;
+        if (relativeTop <= threshold) active = qid;
+      }
 
-        let resolved: string | null = null;
-        for (let p = bestPage; p >= 1; p--) {
-          if (questionPages[p]) {
-            resolved = questionPages[p];
-            break;
-          }
-        }
-        onActiveQuestionChange(resolved);
-      },
-      { threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
+      // Before any page crosses the threshold, default to the first question.
+      onActiveQuestionChange(active ?? sorted[0].qid);
+    };
 
-    for (const el of pageRefs.current.values()) observer.observe(el);
-    return () => observer.disconnect();
+    container.addEventListener("scroll", resolve, { passive: true });
+    resolve();
+    return () => container.removeEventListener("scroll", resolve);
   }, [numPages, questionPages, onActiveQuestionChange]);
 
   const scrollToPage = useCallback((page: number) => {
