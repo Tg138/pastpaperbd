@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pdftotext -l 1 \"aqa a level bio past papers/June 2022 MS.pdf\" -)",
+      "Bash(pdftotext -l 1 \"aqa a level bio past papers/June 2022 MS \\(1\\).pdf\" -)",
+      "Bash(pdftotext -l 1 \"aqa a level bio past papers/June 2022 MS \\(2\\).pdf\" -)",
+      "Bash(pdftotext -l 2 \"aqa a level bio past papers/June 2022 MS.pdf\" -)",
+      "Bash(pdftotext -l 2 \"aqa a level bio past papers/June 2022 MS \\(1\\).pdf\" -)",
+      "Bash(pdftotext \"aqa a level bio past papers/June 2022 MS.pdf\" -)",
+      "Bash(mkdir -p /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/2022/paper-1 /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/2022/paper-2 /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/2022/paper-3 /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/2023/paper-1 /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/2023/paper-2 /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/2023/paper-3 /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/2024/paper-1 /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/2024/paper-2 /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/2024/paper-3 /c/Users/TG134/Desktop/ppbreakdown/public/spec)",
+      "Bash(mv '/c/Users/TG134/Desktop/ppbreakdown/aqa a level bio past papers/June __TRACKED_VAR__ QP.pdf' /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/__TRACKED_VAR__/paper-1/qp.pdf)",
+      "Bash(mv '/c/Users/TG134/Desktop/ppbreakdown/aqa a level bio past papers/June __TRACKED_VAR__ QP \\(1\\).pdf' /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/__TRACKED_VAR__/paper-2/qp.pdf)",
+      "Bash(mv '/c/Users/TG134/Desktop/ppbreakdown/aqa a level bio past papers/June __TRACKED_VAR__ QP \\(2\\).pdf' /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/__TRACKED_VAR__/paper-3/qp.pdf)",
+      "Bash(mv '/c/Users/TG134/Desktop/ppbreakdown/aqa a level bio past papers/June __TRACKED_VAR__ MS.pdf' /c/Users/TG134/Desktop/ppbreakdown/public/papers/biology/__TRACKED_VAR__/paper-1/ms.pdf)",
+      "Bash(npm run *)",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000__TRACKED_VAR__)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:3000/\")",
+      "Bash(node scripts/sync-notes.mjs)",
+      "Bash(npx tsc *)",
+      "Bash(npm install *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/biology)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/biology/2024/1)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/pdf.worker.min.mjs)",
+      "Bash(curl -s http://localhost:3000/biology/2024/1)",
+      "Bash(curl -s -o /dev/null -w \"/ %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"/biology %{http_code}\\\\n\" http://localhost:3000/biology)",
+      "Bash(curl -s -o /dev/null -w \"/biology/spec %{http_code}\\\\n\" http://localhost:3000/biology/spec)",
+      "Bash(curl -s -o /dev/null -w \"/biology/2024/1 %{http_code}\\\\n\" http://localhost:3000/biology/2024/1)",
+      "Bash(curl -s -o /dev/null -w \"/biology/notes %{http_code}\\\\n\" http://localhost:3000/biology/notes)",
+      "Bash(netstat -ano)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(taskkill /PID 22352 /F)",
+      "PowerShell(Stop-Process -Id 22352 -Force -Confirm:$false)",
+      "Bash(pdftotext -layout public/papers/biology/2024/paper-1/qp.pdf -)",
+      "Bash(pdftotext -layout public/papers/biology/2024/paper-1/ms.pdf -)",
+      "Bash(pdftotext -layout public/spec/biology.pdf -)",
+      "Bash(npm info *)"
+    ]
+  }
+}

@@ -1,26 +1,52 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #d2c39e;
+  --foreground: #2f2618;
+  --surface: #dccfa9;
+  --surface-2: #c9b88f;
+  --border: #b3a47a;
+  --muted: #6b5a3e;
+  --accent: #5e4a2a;
+  --accent-hover: #4a3a20;
+  --accent-soft: #e7dcb8;
+}
+
+.dark {
+  --background: #1a1410;
+  --foreground: #ece1c2;
+  --surface: #251e16;
+  --surface-2: #2f261c;
+  --border: #4a3e2c;
+  --muted: #a89773;
+  --accent: #d4b070;
+  --accent-hover: #e7c890;
+  --accent-soft: #3a2e1d;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
+@keyframes ppb-orbit {
+  from { offset-distance: 0%; }
+  to   { offset-distance: 100%; }
 }
