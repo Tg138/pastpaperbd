@@ -55,9 +55,7 @@ export function SpecViewer({
     });
   };
 
-  const [activeId, setActiveId] = useState<string | null>(
-    entries[0]?.point.id ?? null
-  );
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const pdfHandle = useRef<InteractivePdfHandle>(null);
 
@@ -76,7 +74,7 @@ export function SpecViewer({
   }, [entries]);
 
   const activeEntry =
-    entries.find((e) => e.point.id === activeId) ?? entries[0];
+    entries.find((e) => e.point.id === activeId) ?? undefined;
 
   const onSelectPoint = (id: string) => {
     setActiveId(id);
