@@ -1,14 +1,11 @@
+import katex from "katex";
+
 type ListKind = "ordered" | "unordered";
 
 interface PendingList {
   kind: ListKind;
   items: string[];
 }
-
-type MathToken =
-  | { type: "text"; value: string }
-  | { type: "sub"; value: string }
-  | { type: "operator"; value: string };
 
 function cleanText(text: string): string {
   return text
@@ -17,65 +14,19 @@ function cleanText(text: string): string {
     .replace(/\s{2,}/g, " ");
 }
 
-function latexToTokens(source: string): MathToken[] {
-  const normalised = source
-    .replace(/^\$\$|\$\$$/g, "")
-    .replace(/\\text\{([^}]+)\}/g, "$1")
-    .replace(/\\rightarrow/g, "→")
-    .replace(/\\to/g, "→")
-    .replace(/\\rightleftharpoons/g, "⇌")
-    .replace(/\\leftrightarrow/g, "↔")
-    .trim();
-  const tokens: MathToken[] = [];
-  const parts = normalised.split(/(\s*[+→⇌↔=]\s*|_\{[A-Za-z0-9]+\}|_[A-Za-z0-9])/g).filter(Boolean);
-
-  for (const part of parts) {
-    const subscript = part.match(/^_\{([A-Za-z0-9]+)\}$/) ?? part.match(/^_([A-Za-z0-9])$/);
-    if (subscript) {
-      tokens.push({ type: "sub", value: subscript[1] });
-      continue;
-    }
-
-    if (/^[\s+→⇌↔=]+$/.test(part)) {
-      tokens.push({ type: "operator", value: part.trim() });
-      continue;
-    }
-
-    tokens.push({ type: "text", value: part.trim() });
-  }
-
-  return tokens.filter((token) => token.value);
-}
-
-function renderMathBlock(source: string, key: React.Key): React.ReactNode {
+function renderMathBlock(latex: string, key: React.Key): React.ReactNode {
+  const html = katex.renderToString(latex.trim(), { displayMode: true, throwOnError: false });
   return (
     <div
       key={key}
-      className="my-6 overflow-x-auto rounded-md border border-border bg-background/55 px-4 py-4"
-    >
-      <div className="flex min-w-max items-baseline justify-center gap-1.5 font-mono text-lg text-foreground">
-        {latexToTokens(source).map((token, index) => {
-          if (token.type === "sub") {
-            return (
-              <sub key={index} className="-ml-1 text-xs text-accent">
-                {token.value}
-              </sub>
-            );
-          }
-
-          if (token.type === "operator") {
-            return (
-              <span key={index} className="px-1 text-xl font-semibold text-accent">
-                {token.value}
-              </span>
-            );
-          }
-
-          return <span key={index}>{token.value}</span>;
-        })}
-      </div>
-    </div>
+      className="my-6 overflow-x-auto rounded-md border border-border bg-background/55 px-6 py-5 text-center"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   );
+}
+
+function renderInlineMath(latex: string): string {
+  return katex.renderToString(latex, { displayMode: false, throwOnError: false });
 }
 
 function renderPlainText(text: string, keyPrefix: string): React.ReactNode[] {
@@ -143,7 +94,7 @@ function plainInline(text: string): string {
 
 function renderInline(text: string): React.ReactNode[] {
   const cleaned = cleanText(text);
-  const parts = cleaned.split(/(!\[\[[^\]]+\]\]|\[\[[^\]]+\]\]|\*\*[^*]+\*\*|_[^_]+_|\*[^*]+\*)/g);
+  const parts = cleaned.split(/(!\[\[[^\]]+\]\]|\[\[[^\]]+\]\]|\*\*[^*]+\*\*|_[^_]+_|\*[^*]+\*|\$[^$\n]+\$)/g);
 
   return parts.filter(Boolean).map((part, index) => {
     const image = part.match(/^!\[\[([^\]]+)\]\]$/);
@@ -185,6 +136,12 @@ function renderInline(text: string): React.ReactNode[] {
       );
     }
 
+    const inlineMath = part.match(/^\$([^$\n]+)\$$/);
+    if (inlineMath) {
+      const html = renderInlineMath(inlineMath[1]);
+      return <span key={index} dangerouslySetInnerHTML={{ __html: html }} />;
+    }
+
     return renderPlainText(cleanText(part), `text-${index}`);
   });
 }
@@ -201,6 +158,7 @@ export function MarkdownNote({ content }: { content: string }) {
   const blocks: React.ReactNode[] = [];
   let pendingList: PendingList | undefined;
   let tableRows: string[] = [];
+  let mathLines: string[] | null = null;
 
   const flushList = () => {
     if (!pendingList) return;
@@ -261,6 +219,24 @@ export function MarkdownNote({ content }: { content: string }) {
   lines.forEach((line, index) => {
     const trimmed = line.trim();
 
+    // Multi-line display math block
+    if (trimmed === "$$") {
+      if (mathLines === null) {
+        flushList();
+        flushTable();
+        mathLines = [];
+      } else {
+        blocks.push(renderMathBlock(mathLines.join("\n"), `math-${index}`));
+        mathLines = null;
+      }
+      return;
+    }
+
+    if (mathLines !== null) {
+      mathLines.push(line);
+      return;
+    }
+
     if (!trimmed) {
       flushList();
       flushTable();
@@ -294,8 +270,9 @@ export function MarkdownNote({ content }: { content: string }) {
       return;
     }
 
+    // Single-line display math: $$...$$ on one line
     if (/^\$\$.*\$\$$/.test(trimmed)) {
-      blocks.push(renderMathBlock(trimmed, index));
+      blocks.push(renderMathBlock(trimmed.slice(2, -2), index));
       return;
     }
 

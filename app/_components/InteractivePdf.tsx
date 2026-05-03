@@ -147,7 +147,7 @@ export function InteractivePdf({
         active = qids[idx];
       }
 
-      onActiveQuestionChange(active ?? sorted[0].qids[0]);
+      if (active) onActiveQuestionChange(active);
     };
 
     container.addEventListener("scroll", resolve, { passive: true });
