@@ -179,9 +179,16 @@ export function PaperViewer({
     }
   };
 
-  const onQpScrollFraction = useCallback((fraction: number) => {
-    msHandleRef.current?.setScrollFraction(fraction);
-  }, []);
+  // In split view, mirror QP page changes onto the MS by page number.
+  // This handles the MS cover pages correctly — both land on the same question page.
+  useEffect(() => {
+    if (layout !== "split") return;
+    if (!activeQid) return;
+    const entry = entries.find((e) => e.question.id === activeQid);
+    if (entry?.question.pageNumber) {
+      msHandleRef.current?.scrollToPage(entry.question.pageNumber);
+    }
+  }, [activeQid, layout, entries]);
 
   const handleLayoutChange = (v: string) => {
     const next = v as ViewLayout;
@@ -330,7 +337,7 @@ export function PaperViewer({
                     src={paper.qpPath}
                     questionPages={questionPages}
                     onActiveQuestionChange={onScrollActiveQuestionChange}
-                    onScrollFractionChange={onQpScrollFraction}
+
                     handleRef={qpHandleRef}
                     scale={zoom}
                   />

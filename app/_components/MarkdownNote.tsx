@@ -19,7 +19,7 @@ function renderMathBlock(latex: string, key: React.Key): React.ReactNode {
   return (
     <div
       key={key}
-      className="my-6 overflow-x-auto rounded-md border border-border bg-background/55 px-6 py-5 text-center"
+      className="my-6 overflow-x-auto rounded-lg border border-border bg-surface px-8 py-6 text-center text-[1.08rem]"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
@@ -40,7 +40,7 @@ function renderPlainText(text: string, keyPrefix: string): React.ReactNode[] {
       return (
         <span
           key={`${keyPrefix}-${index}`}
-          className="font-mono text-[0.95em] font-medium text-accent"
+          className="font-mono text-[0.92em] font-medium text-accent"
         >
           {part}
         </span>
@@ -63,21 +63,19 @@ function isEquationLine(text: string): boolean {
 
 function renderEquation(text: string): React.ReactNode {
   const parts = plainInline(text).split(/(\s*[=≡→+]\s*)/g).filter(Boolean);
-
   return (
-    <span className="my-2 flex flex-wrap items-center gap-1.5 rounded-md border border-border bg-background/45 px-3 py-2 font-mono text-sm text-foreground">
+    <div className="my-3 inline-flex flex-wrap items-center gap-1 rounded-md border border-border bg-surface px-4 py-2.5 font-mono text-sm">
       {parts.map((part, index) => {
         if (/^[\s=≡→+]+$/.test(part)) {
           return (
-            <span key={index} className="px-0.5 text-base font-semibold text-accent">
+            <span key={index} className="px-1 font-bold text-accent">
               {part.trim()}
             </span>
           );
         }
-
-        return <span key={index}>{part.trim()}</span>;
+        return <span key={index} className="text-foreground">{part.trim()}</span>;
       })}
-    </span>
+    </div>
   );
 }
 
@@ -112,7 +110,7 @@ function renderInline(text: string): React.ReactNode[] {
     const wiki = part.match(/^\[\[([^\]|]+)\|([^\]]+)\]\]$/) ?? part.match(/^\[\[([^\]]+)\]\]$/);
     if (wiki) {
       return (
-        <span key={index} className="font-medium text-accent">
+        <span key={index} className="font-medium text-accent underline decoration-accent/40 underline-offset-2">
           {cleanText(wiki[2] ?? wiki[1])}
         </span>
       );
@@ -121,7 +119,7 @@ function renderInline(text: string): React.ReactNode[] {
     const bold = part.match(/^\*\*([^*]+)\*\*$/);
     if (bold) {
       return (
-        <strong key={index} className="font-semibold text-accent">
+        <strong key={index} className="font-semibold text-foreground">
           {cleanText(bold[1])}
         </strong>
       );
@@ -130,7 +128,7 @@ function renderInline(text: string): React.ReactNode[] {
     const italic = part.match(/^_([^_]+)_$/) ?? part.match(/^\*([^*]+)\*$/);
     if (italic) {
       return (
-        <em key={index} className="text-muted">
+        <em key={index} className="italic text-muted">
           {cleanText(italic[1])}
         </em>
       );
@@ -153,25 +151,45 @@ function headingAnchor(text: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+// Detect special section types by heading text
+function sectionVariant(text: string): "exam" | "summary" | "default" {
+  const lower = plainInline(text).toLowerCase();
+  if (lower.includes("exam tip") || lower.includes("exam hint")) return "exam";
+  if (lower.includes("summary")) return "summary";
+  return "default";
+}
+
 export function MarkdownNote({ content }: { content: string }) {
   const lines = content.replace(/\r\n/g, "\n").split("\n");
   const blocks: React.ReactNode[] = [];
   let pendingList: PendingList | undefined;
   let tableRows: string[] = [];
   let mathLines: string[] | null = null;
+  let currentSection: "exam" | "summary" | "default" = "default";
 
   const flushList = () => {
     if (!pendingList) return;
     const Tag = pendingList.kind === "ordered" ? "ol" : "ul";
+    const listClass =
+      currentSection === "exam"
+        ? "space-y-2.5 pl-5 my-3"
+        : currentSection === "summary"
+        ? "space-y-1.5 pl-5 my-3"
+        : "space-y-2 pl-5 my-4";
+    const markerClass =
+      currentSection === "exam"
+        ? "marker:text-amber-500 dark:marker:text-amber-400"
+        : currentSection === "summary"
+        ? "marker:text-emerald-600 dark:marker:text-emerald-400"
+        : "marker:text-accent";
+
     blocks.push(
       <Tag
         key={`list-${blocks.length}`}
-        className={`my-5 space-y-2 rounded-md border border-border/70 bg-surface/55 px-6 py-4 ${
-          pendingList.kind === "ordered" ? "list-decimal" : "list-disc"
-        }`}
+        className={`${listClass} ${pendingList.kind === "ordered" ? "list-decimal" : "list-disc"} ${markerClass}`}
       >
         {pendingList.items.map((item, index) => (
-          <li key={index} className="pl-1 leading-7 marker:text-accent">
+          <li key={index} className="pl-1 leading-7 text-foreground/90">
             {isEquationLine(item) ? renderEquation(item) : renderInline(item)}
           </li>
         ))}
@@ -185,7 +203,7 @@ export function MarkdownNote({ content }: { content: string }) {
     blocks.push(
       <div
         key={`table-${blocks.length}`}
-        className="my-5 overflow-x-auto rounded-md border border-border bg-surface/70"
+        className="my-5 overflow-x-auto rounded-lg border border-border bg-surface/70"
       >
         <table className="w-full border-collapse text-sm">
           <tbody>
@@ -202,7 +220,7 @@ export function MarkdownNote({ content }: { content: string }) {
                 return (
                   <tr key={rowIndex} className={rowIndex === 0 ? "bg-accent-soft" : "border-t border-border"}>
                     {cells.map((cell, cellIndex) => (
-                      <Cell key={cellIndex} className="px-3 py-2 text-left align-top">
+                      <Cell key={cellIndex} className="px-4 py-2.5 text-left align-top">
                         {renderInline(cell)}
                       </Cell>
                     ))}
@@ -282,32 +300,62 @@ export function MarkdownNote({ content }: { content: string }) {
       const text = renderInline(heading[2]);
       const id = headingAnchor(heading[2]);
 
-      if (level === 1) {
+      if (level === 2) {
+        const variant = sectionVariant(heading[2]);
+        currentSection = variant;
+
+        if (variant === "exam") {
+          blocks.push(
+            <h2
+              key={index}
+              id={id}
+              className="mb-3 mt-12 scroll-mt-24 flex items-center gap-3 rounded-lg border border-amber-500/30 px-4 py-3 text-lg font-semibold text-amber-700 dark:border-amber-400/25 dark:text-amber-300"
+              style={{ backgroundColor: "rgb(245 158 11 / 0.07)" }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              {text}
+            </h2>
+          );
+        } else if (variant === "summary") {
+          blocks.push(
+            <h2
+              key={index}
+              id={id}
+              className="mb-3 mt-12 scroll-mt-24 flex items-center gap-3 rounded-lg border border-emerald-500/30 px-4 py-3 text-lg font-semibold text-emerald-700 dark:border-emerald-400/25 dark:text-emerald-300"
+              style={{ backgroundColor: "rgb(16 185 129 / 0.07)" }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              {text}
+            </h2>
+          );
+        } else {
+          blocks.push(
+            <h2
+              key={index}
+              id={id}
+              className="mb-4 mt-12 scroll-mt-24 border-b-2 border-accent pb-2 text-2xl font-semibold tracking-tight text-foreground"
+            >
+              {text}
+            </h2>
+          );
+        }
+      } else if (level === 1) {
+        currentSection = "default";
         blocks.push(
           <h1
             key={index}
             id={id}
-            className="mb-6 scroll-mt-24 text-4xl font-semibold tracking-tight text-foreground"
+            className="mb-2 scroll-mt-24 text-4xl font-bold tracking-tight text-foreground"
           >
             {text}
           </h1>
-        );
-      } else if (level === 2) {
-        blocks.push(
-          <h2
-            key={index}
-            id={id}
-            className="mb-4 mt-12 scroll-mt-24 rounded-md border-l-4 border-accent bg-accent-soft px-4 py-3 text-2xl font-semibold tracking-tight text-accent"
-          >
-            {text}
-          </h2>
         );
       } else if (level === 3) {
         blocks.push(
           <h3
             key={index}
             id={id}
-            className="mb-3 mt-8 scroll-mt-24 border-b border-border pb-2 text-lg font-semibold tracking-tight text-accent-hover"
+            className="mb-2 mt-7 scroll-mt-24 text-base font-semibold uppercase tracking-wider text-accent"
           >
             {text}
           </h3>
@@ -317,7 +365,7 @@ export function MarkdownNote({ content }: { content: string }) {
           <h4
             key={index}
             id={id}
-            className="mb-2 mt-6 scroll-mt-24 text-sm font-semibold uppercase tracking-wider text-muted"
+            className="mb-1.5 mt-5 scroll-mt-24 text-sm font-semibold text-muted uppercase tracking-widest"
           >
             {text}
           </h4>
@@ -326,11 +374,29 @@ export function MarkdownNote({ content }: { content: string }) {
       return;
     }
 
-    if (isEquationLine(trimmed)) {
-      blocks.push(<div key={index}>{renderEquation(trimmed)}</div>);
-    } else {
+    // Spec ref line (italic-only lines like *AQA spec ref: ...*) — styled as a small label
+    if (/^\*[^*].*[^*]\*$/.test(trimmed) && !trimmed.includes("**")) {
+      const inner = trimmed.slice(1, -1);
       blocks.push(
-        <p key={index} className="my-4 max-w-2xl text-[1.02rem] leading-8 text-foreground/90">
+        <p key={index} className="mb-6 mt-1 text-xs font-medium uppercase tracking-wider text-muted">
+          {inner}
+        </p>
+      );
+      return;
+    }
+
+    if (isEquationLine(trimmed)) {
+      blocks.push(<div key={index} className="my-2">{renderEquation(trimmed)}</div>);
+    } else {
+      const paraClass =
+        currentSection === "exam"
+          ? "my-2.5 border-l-2 border-amber-500/50 pl-3 leading-7 text-[0.97rem] text-foreground/85"
+          : currentSection === "summary"
+          ? "my-2.5 border-l-2 border-emerald-500/50 pl-3 leading-7 text-[0.97rem] text-foreground/85"
+          : "my-4 max-w-2xl leading-8 text-[1.02rem] text-foreground/90";
+
+      blocks.push(
+        <p key={index} className={paraClass}>
           {renderInline(trimmed)}
         </p>
       );

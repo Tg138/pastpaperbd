@@ -26,9 +26,9 @@ export default function BiologyNotesPage() {
 
       <main className="flex-1 px-8 py-12">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-3xl font-semibold tracking-tight">Your Biology notes</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">Detailed Notes</h1>
           <p className="mt-2 text-muted">
-            Pulled from your Obsidian Biology folder.
+            AQA A-level Biology — topic by topic.
           </p>
 
           {notes.length === 0 ? (
