@@ -151,7 +151,6 @@ export function InteractivePdf({
     };
 
     container.addEventListener("scroll", resolve, { passive: true });
-    resolve();
     return () => container.removeEventListener("scroll", resolve);
   }, [numPages, questionPages, onActiveQuestionChange]);
 
