@@ -3,6 +3,31 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+// ─────────────────────────────────────────────────────────────────
+// Icons
+
+function IconSpec({ active }: { active: boolean }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={active ? "text-accent" : "text-muted"}>
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+      <polyline points="10 9 9 9 8 9" />
+    </svg>
+  );
+}
+
+function IconWalkthrough({ active }: { active: boolean }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={active ? "text-accent" : "text-muted"}>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="8" x2="12" y2="12" />
+      <line x1="12" y1="16" x2="12.01" y2="16" />
+    </svg>
+  );
+}
 import type { Breakdown, Paper, Question, RelatedNote, SpecPoint } from "@/lib/types";
 import type { InteractivePdfHandle } from "./InteractivePdf";
 
@@ -39,6 +64,39 @@ export function PaperViewer({
   const [examMode, setExamMode] = useState(false);
   const [layout, setLayout] = useState<ViewLayout>("qp");
   const [renderMode, setRenderMode] = useState<RenderMode>("interactive");
+  const [zoom, setZoom] = useState(1);
+  const pdfAreaRef = useRef<HTMLDivElement>(null);
+  const mainRowRef = useRef<HTMLDivElement>(null);
+  const [mainRowWidth, setMainRowWidth] = useState(0);
+
+  const clampZoom = (v: number) => Math.min(Math.max(Math.round(v * 20) / 20, 0.5), 3);
+  const zoomIn = () => setZoom((z) => clampZoom(z + 0.25));
+  const zoomOut = () => setZoom((z) => clampZoom(z - 0.25));
+  const zoomReset = () => setZoom(1);
+
+  // Measure main row width for panel sizing
+  useEffect(() => {
+    const el = mainRowRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) setMainRowWidth(entry.contentRect.width);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Ctrl+scroll to zoom — attached to document so we beat the browser's native
+  // pinch-zoom handler, but only acts when the pointer is over the PDF area.
+  useEffect(() => {
+    const handler = (e: WheelEvent) => {
+      if (!e.ctrlKey) return;
+      if (!pdfAreaRef.current?.contains(e.target as Node)) return;
+      e.preventDefault();
+      setZoom((z) => clampZoom(z - e.deltaY * 0.001));
+    };
+    document.addEventListener("wheel", handler, { passive: false });
+    return () => document.removeEventListener("wheel", handler);
+  }, []);
 
   // Both panels can be open simultaneously
   const [openPanels, setOpenPanels] = useState<Set<SidebarKey>>(new Set());
@@ -139,10 +197,30 @@ export function PaperViewer({
   const specOpen = openPanels.has("spec");
   const walkthroughOpen = openPanels.has("walkthrough");
 
+  // Width of each panel in dual-overlay mode: (containerWidth - docWidth) / 2 - 40
+  // docWidth mirrors InteractivePdf's own sizing: clamp(containerWidth - 80, 320, 760) * zoom
+  const dualPanelWidth = useMemo(() => {
+    if (mainRowWidth === 0) return 360;
+    const docWidth = Math.min(Math.max(mainRowWidth - 80, 320), 760) * zoom;
+    return Math.max((mainRowWidth - docWidth) / 2 - 8, 200);
+  }, [mainRowWidth, zoom]);
+
   return (
     <div className="flex flex-1 min-h-0 flex-col">
       {/* Toolbar */}
       <div className="flex items-center gap-3 px-4 py-2 border-b border-border bg-surface shrink-0 flex-wrap">
+        {/* Spec toggle */}
+        <button
+          onClick={() => togglePanel("spec")}
+          aria-label="Toggle spec panel"
+          title="Spec points"
+          className={`p-1.5 rounded transition-colors duration-150 ${
+            specOpen ? "bg-accent-soft text-accent" : "hover:bg-surface-2 text-muted hover:text-foreground"
+          }`}
+        >
+          <IconSpec active={specOpen} />
+        </button>
+
         <SegmentedControl
           options={[
             { value: "qp", label: "Question paper" },
@@ -174,6 +252,13 @@ export function PaperViewer({
           onChange={(v) => setRenderMode(v as RenderMode)}
         />
 
+        {/* Zoom controls */}
+        <div className="flex items-center gap-1 rounded-md border border-border overflow-hidden text-sm">
+          <button onClick={zoomOut} title="Zoom out" className="px-2 py-1.5 hover:bg-surface-2 transition-colors text-muted hover:text-foreground">−</button>
+          <button onClick={zoomReset} title="Reset zoom" className="px-2 py-1.5 hover:bg-surface-2 transition-colors text-xs text-muted hover:text-foreground tabular-nums w-12 text-center">{Math.round(zoom * 100)}%</button>
+          <button onClick={zoomIn} title="Zoom in" className="px-2 py-1.5 hover:bg-surface-2 transition-colors text-muted hover:text-foreground">+</button>
+        </div>
+
         <div className="ml-auto flex items-center gap-4">
           <label className="flex items-center gap-2 text-sm text-muted cursor-pointer select-none">
             <input
@@ -191,31 +276,48 @@ export function PaperViewer({
           >
             Download
           </a>
+
+          {/* Walkthrough toggle */}
+          <button
+            onClick={() => togglePanel("walkthrough")}
+            aria-label="Toggle walkthrough panel"
+            title="Walkthrough"
+            className={`p-1.5 rounded transition-colors duration-150 ${
+              walkthroughOpen ? "bg-accent-soft text-accent" : "hover:bg-surface-2 text-muted hover:text-foreground"
+            }`}
+          >
+            <IconWalkthrough active={walkthroughOpen} />
+          </button>
         </div>
       </div>
 
-      {/* Main content row: [Spec col] [PDF area] [Walkthrough col] */}
-      <div className="flex flex-1 min-h-0 relative">
-        {/* Spec docked column */}
-        <DockedPanel side="left" open={specOpen} onClose={() => closePanel("spec")}>
-          <SpecSidebar
-            entry={activeEntry}
-            entries={entries}
-            activeQid={activeQid}
-            onSelectQuestion={onSelectQuestion}
-          />
-        </DockedPanel>
+      {/* Main content row.
+          One panel open  → inline split: panel w-1/3, PDF gets the rest.
+          Both panels open → panels overlay (DockedPanel), PDF stays full width. */}
+      <div ref={mainRowRef} className={`flex flex-1 min-h-0 ${openPanels.size < 2 ? "" : "relative"}`}>
 
-        {/* Spec edge tab */}
-        <EdgeTab
-          side="left"
-          label="Spec"
-          active={specOpen}
-          onClick={() => togglePanel("spec")}
-        />
+        {/* Spec — inline when solo, overlay when both open */}
+        {openPanels.size < 2 ? (
+          <div className={`overflow-hidden flex flex-col bg-surface border-r border-border transition-all duration-150 ease-in-out ${specOpen ? "w-1/3 opacity-100" : "w-0 opacity-0"}`}>
+            {specOpen && (
+              <SpecSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} onClose={() => closePanel("spec")} />
+            )}
+          </div>
+        ) : (
+          <DockedPanel side="left" open={specOpen} onClose={() => closePanel("spec")} width={dualPanelWidth}>
+            <SpecSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} onClose={() => closePanel("spec")} />
+          </DockedPanel>
+        )}
 
         {/* PDF area — single (qp/ms) or split */}
-        <div className="flex-1 min-w-0 flex">
+        <div
+          ref={pdfAreaRef}
+          className="flex-1 min-w-0 flex"
+          style={openPanels.size >= 2 ? {
+            paddingLeft: dualPanelWidth,
+            paddingRight: dualPanelWidth,
+          } : undefined}
+        >
           {layout === "split" ? (
             <>
               <PdfPane label="Question paper" className="flex-1 min-w-0 border-r border-border">
@@ -225,6 +327,7 @@ export function PaperViewer({
                     questionPages={questionPages}
                     onActiveQuestionChange={onScrollActiveQuestionChange}
                     handleRef={qpHandleRef}
+                    scale={zoom}
                   />
                 ) : (
                   <iframe src={paper.qpPath} className="w-full h-full bg-surface-2" title="Question paper" />
@@ -233,31 +336,19 @@ export function PaperViewer({
               <PdfPane label="Mark scheme" className="flex-1 min-w-0">
                 {renderMode === "interactive" ? (
                   msAvailable ? (
-                    <InteractivePdf
-                      src={paper.msPath}
-                      questionPages={questionPages}
-                      handleRef={msHandleRef}
-                    />
+                    <InteractivePdf src={paper.msPath} questionPages={questionPages} handleRef={msHandleRef} scale={zoom} />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center bg-surface-2 text-sm text-muted">
                       Complete all questions to unlock the mark scheme.
                     </div>
                   )
                 ) : (
-                  <iframe
-                    src={msAvailable ? paper.msPath : ""}
-                    className="w-full h-full bg-surface-2"
-                    title="Mark scheme"
-                  />
+                  <iframe src={msAvailable ? paper.msPath : ""} className="w-full h-full bg-surface-2" title="Mark scheme" />
                 )}
               </PdfPane>
             </>
           ) : (
-            <PdfPane
-              key={layout}
-              label={layout === "qp" ? "Question paper" : "Mark scheme"}
-              className="flex-1 min-w-0"
-            >
+            <PdfPane key={layout} label={layout === "qp" ? "Question paper" : "Mark scheme"} className="flex-1 min-w-0">
               {renderMode === "interactive" ? (
                 layout === "qp" ? (
                   <InteractivePdf
@@ -265,13 +356,10 @@ export function PaperViewer({
                     questionPages={questionPages}
                     onActiveQuestionChange={onScrollActiveQuestionChange}
                     handleRef={qpHandleRef}
+                    scale={zoom}
                   />
                 ) : msAvailable ? (
-                  <InteractivePdf
-                    src={paper.msPath}
-                    questionPages={questionPages}
-                    handleRef={msHandleRef}
-                  />
+                  <InteractivePdf src={paper.msPath} questionPages={questionPages} handleRef={msHandleRef} scale={zoom} />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center bg-surface-2 text-sm text-muted">
                     Complete all questions to unlock the mark scheme.
@@ -288,26 +376,18 @@ export function PaperViewer({
           )}
         </div>
 
-        {/* Walkthrough docked column */}
-        <DockedPanel side="right" open={walkthroughOpen} onClose={() => closePanel("walkthrough")}>
-          <WalkthroughSidebar
-            entry={activeEntry}
-            entries={entries}
-            activeQid={activeQid}
-            onSelectQuestion={onSelectQuestion}
-            completed={completed}
-            onToggleComplete={toggleComplete}
-            examMode={examMode}
-          />
-        </DockedPanel>
-
-        {/* Walkthrough edge tab */}
-        <EdgeTab
-          side="right"
-          label="Walkthrough"
-          active={walkthroughOpen}
-          onClick={() => togglePanel("walkthrough")}
-        />
+        {/* Walkthrough — inline when solo, overlay when both open */}
+        {openPanels.size < 2 ? (
+          <div className={`overflow-hidden flex flex-col bg-surface border-l border-border transition-all duration-150 ease-in-out ${walkthroughOpen ? "w-1/3 opacity-100" : "w-0 opacity-0"}`}>
+            {walkthroughOpen && (
+              <WalkthroughSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} completed={completed} onToggleComplete={toggleComplete} examMode={examMode} onClose={() => closePanel("walkthrough")} />
+            )}
+          </div>
+        ) : (
+          <DockedPanel side="right" open={walkthroughOpen} onClose={() => closePanel("walkthrough")} width={dualPanelWidth}>
+            <WalkthroughSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} completed={completed} onToggleComplete={toggleComplete} examMode={examMode} onClose={() => closePanel("walkthrough")} />
+          </DockedPanel>
+        )}
       </div>
     </div>
   );
@@ -331,6 +411,46 @@ function PdfPane({
         {label}
       </div>
       {children}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Docked panel — overlays the PDF area
+
+function DockedPanel({
+  side,
+  open,
+  onClose,
+  width,
+  children,
+}: {
+  side: "left" | "right";
+  open: boolean;
+  onClose: () => void;
+  width?: number;
+  children: React.ReactNode;
+}) {
+  useEffect(() => {
+    if (!open) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  const borderClass = side === "left" ? "border-r" : "border-l";
+  const posClass = side === "left" ? "left-0" : "right-0";
+
+  return (
+    <div
+      className={`absolute top-0 bottom-0 ${posClass} z-20 bg-surface ${borderClass} border-border flex flex-col`}
+      style={{ width: width ?? 360 }}
+    >
+      <div className="flex-1 min-h-0 overflow-y-auto">{children}</div>
     </div>
   );
 }
@@ -367,121 +487,84 @@ function SegmentedControl({
 }
 
 // ─────────────────────────────────────────────────────────────────
-// Edge tab — sits on the outer edge of the content area
-
-function EdgeTab({
-  side,
-  label,
-  active,
-  onClick,
-}: {
-  side: "left" | "right";
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`absolute top-1/2 -translate-y-1/2 z-30 px-1.5 py-4 text-xs font-medium border border-border transition-colors duration-200 ${
-        side === "left"
-          ? "left-0 rounded-r-md border-l-0"
-          : "right-0 rounded-l-md border-r-0"
-      } ${
-        active
-          ? "bg-accent text-white border-accent"
-          : "bg-surface hover:bg-accent-soft hover:text-accent"
-      }`}
-      style={{
-        writingMode: "vertical-rl",
-        textOrientation: "mixed",
-      }}
-    >
-      {label}
-    </button>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────
-// Docked panel — pushes content aside instead of overlaying
-
-function DockedPanel({
-  side,
-  open,
-  onClose,
-  children,
-}: {
-  side: "left" | "right";
-  open: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-}) {
-  useEffect(() => {
-    if (!open) return;
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [open, onClose]);
-
-  if (!open) return null;
-
-  const borderClass = side === "left" ? "border-r" : "border-l";
-
-  return (
-    <div className={`shrink-0 w-[360px] max-w-[40%] bg-surface ${borderClass} border-border flex flex-col`}>
-      <div className="flex items-center justify-end px-3 py-2 border-b border-border shrink-0">
-        <button
-          onClick={onClose}
-          aria-label="Close panel"
-          className="text-muted hover:text-foreground transition-colors text-lg leading-none px-2"
-        >
-          ×
-        </button>
-      </div>
-      <div className="flex-1 min-h-0 overflow-y-auto">{children}</div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────
 // Question tab bar
 
 function QuestionTabBar({
   entries,
   activeQid,
   onSelect,
+  onClose,
 }: {
   entries: QuestionEntry[];
   activeQid: string | null;
   onSelect: (qid: string) => void;
+  onClose: () => void;
 }) {
   const activeRef = useRef<HTMLButtonElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     activeRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
   }, [activeQid]);
 
+  const scroll = (dir: "left" | "right") => {
+    scrollRef.current?.scrollBy({ left: dir === "left" ? -120 : 120, behavior: "smooth" });
+  };
+
   return (
-    <div className="flex border-b border-border bg-surface overflow-x-auto shrink-0">
-      {entries.map((e) => {
-        const isActive = activeQid === e.question.id;
-        return (
-          <button
-            key={e.question.id}
-            ref={isActive ? activeRef : undefined}
-            onClick={() => onSelect(e.question.id)}
-            className={`relative px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors ${
-              isActive ? "text-accent" : "text-muted hover:text-foreground"
-            }`}
-          >
-            Q{e.question.number}
-            {isActive && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />
-            )}
-          </button>
-        );
-      })}
+    <div className="flex items-stretch border-b border-border bg-surface shrink-0">
+      {/* Left arrow */}
+      <button
+        onClick={() => scroll("left")}
+        className="shrink-0 px-1.5 text-muted hover:text-foreground transition-colors"
+        aria-label="Scroll tabs left"
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      {/* Tab list — scrollbar hidden */}
+      <div
+        ref={scrollRef}
+        className="flex flex-1 min-w-0 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+        style={{ scrollbarWidth: "none" }}
+      >
+        {entries.map((e) => {
+          const isActive = activeQid === e.question.id;
+          return (
+            <button
+              key={e.question.id}
+              ref={isActive ? activeRef : undefined}
+              onClick={() => onSelect(e.question.id)}
+              className={`relative px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors ${
+                isActive ? "text-accent" : "text-muted hover:text-foreground"
+              }`}
+            >
+              Q{e.question.number}
+              {isActive && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Right arrow */}
+      <button
+        onClick={() => scroll("right")}
+        className="shrink-0 px-1.5 text-muted hover:text-foreground transition-colors"
+        aria-label="Scroll tabs right"
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      {/* Close */}
+      <button
+        onClick={onClose}
+        aria-label="Close panel"
+        className="shrink-0 px-2.5 text-muted hover:text-foreground transition-colors text-lg leading-none border-l border-border"
+      >
+        ×
+      </button>
     </div>
   );
 }
@@ -494,15 +577,17 @@ function SpecSidebar({
   entries,
   activeQid,
   onSelectQuestion,
+  onClose,
 }: {
   entry: QuestionEntry | undefined;
   entries: QuestionEntry[];
   activeQid: string | null;
   onSelectQuestion: (qid: string) => void;
+  onClose: () => void;
 }) {
   return (
     <div className="flex flex-col h-full">
-      <QuestionTabBar entries={entries} activeQid={activeQid} onSelect={onSelectQuestion} />
+      <QuestionTabBar entries={entries} activeQid={activeQid} onSelect={onSelectQuestion} onClose={onClose} />
 
       {entry ? (
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -552,6 +637,7 @@ function WalkthroughSidebar({
   completed,
   onToggleComplete,
   examMode,
+  onClose,
 }: {
   entry: QuestionEntry | undefined;
   entries: QuestionEntry[];
@@ -560,13 +646,14 @@ function WalkthroughSidebar({
   completed: Set<string>;
   onToggleComplete: (qid: string) => void;
   examMode: boolean;
+  onClose: () => void;
 }) {
   const done = entry ? completed.has(entry.question.id) : false;
   const breakdownLocked = examMode && entry !== undefined && !done;
 
   return (
     <div className="flex flex-col h-full">
-      <QuestionTabBar entries={entries} activeQid={activeQid} onSelect={onSelectQuestion} />
+      <QuestionTabBar entries={entries} activeQid={activeQid} onSelect={onSelectQuestion} onClose={onClose} />
 
       <div className="px-4 py-2 border-b border-border text-xs text-muted shrink-0">
         {completed.size} / {entries.length} marked done

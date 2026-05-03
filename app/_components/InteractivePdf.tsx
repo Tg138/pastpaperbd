@@ -17,6 +17,7 @@ interface Props {
   questionPages: Record<number, string[]>;
   onActiveQuestionChange?: (questionId: string | null) => void;
   handleRef?: React.Ref<InteractivePdfHandle>;
+  scale?: number;
 }
 
 // A4 portrait aspect ratio (height = width × √2). Used for placeholder height.
@@ -27,6 +28,7 @@ export function InteractivePdf({
   questionPages,
   onActiveQuestionChange,
   handleRef,
+  scale = 1,
 }: Props) {
   const [numPages, setNumPages] = useState(0);
   const [width, setWidth] = useState<number>(760);
@@ -173,10 +175,34 @@ export function InteractivePdf({
 
   useImperativeHandle(handleRef, () => ({ scrollToPage }), [scrollToPage]);
 
-  const placeholderHeight = Math.round(width * PAGE_ASPECT);
+  const scaledWidth = Math.round(width * scale);
+  const placeholderHeight = Math.round(scaledWidth * PAGE_ASPECT);
+
+  const scrollBy = (dir: "up" | "down") => {
+    containerRef.current?.scrollBy({ top: dir === "up" ? -300 : 300, behavior: "smooth" });
+  };
 
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-y-auto bg-surface-2">
+    <div className="absolute inset-0">
+      {/* Fixed scroll arrows — siblings to the scrolling div so they don't move */}
+      <div className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-2">
+        <button
+          onClick={() => scrollBy("up")}
+          className="text-muted hover:text-foreground transition-colors"
+          aria-label="Scroll up"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+        <button
+          onClick={() => scrollBy("down")}
+          className="text-muted hover:text-foreground transition-colors"
+          aria-label="Scroll down"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+
+      <div ref={containerRef} className="absolute inset-0 overflow-y-auto bg-surface-2 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: "none" }}>
       <div className="flex flex-col items-center gap-3 py-4">
         <Document
           file={file}
@@ -197,13 +223,13 @@ export function InteractivePdf({
                 }}
                 data-page-number={pageNum}
                 className="shadow-sm rounded overflow-hidden bg-white"
-                style={{ width, minHeight: isRendered ? undefined : placeholderHeight }}
+                style={{ width: scaledWidth, minHeight: isRendered ? undefined : placeholderHeight }}
               >
                 {isRendered && (
                   <Page
                     key={`${pageNum}-${renderKey}`}
                     pageNumber={pageNum}
-                    width={width}
+                    width={scaledWidth}
                     renderAnnotationLayer={false}
                     renderTextLayer={false}
                     onRenderSuccess={() => {
@@ -219,6 +245,7 @@ export function InteractivePdf({
             );
           })}
         </Document>
+      </div>
       </div>
     </div>
   );

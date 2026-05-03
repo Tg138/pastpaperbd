@@ -26,6 +26,37 @@ export interface SpecEntry {
 type RenderMode = "classic" | "interactive";
 type SidebarKey = "topics" | "notes";
 
+// ─────────────────────────────────────────────────────────────────
+// Icons
+
+function IconList({ active }: { active: boolean }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={active ? "text-accent" : "text-muted"}>
+      <line x1="8" y1="6" x2="21" y2="6" />
+      <line x1="8" y1="12" x2="21" y2="12" />
+      <line x1="8" y1="18" x2="21" y2="18" />
+      <line x1="3" y1="6" x2="3.01" y2="6" />
+      <line x1="3" y1="12" x2="3.01" y2="12" />
+      <line x1="3" y1="18" x2="3.01" y2="18" />
+    </svg>
+  );
+}
+
+function IconNotes({ active }: { active: boolean }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={active ? "text-accent" : "text-muted"}>
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+      <polyline points="10 9 9 9 8 9" />
+    </svg>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Main
+
 export function SpecViewer({
   specPdfPath,
   entries,
@@ -34,9 +65,7 @@ export function SpecViewer({
   entries: SpecEntry[];
 }) {
   const [renderMode, setRenderMode] = useState<RenderMode>("interactive");
-  const [openPanels, setOpenPanels] = useState<Set<SidebarKey>>(
-    new Set(["topics"])
-  );
+  const [openPanels, setOpenPanels] = useState<Set<SidebarKey>>(new Set());
 
   const togglePanel = (key: SidebarKey) => {
     setOpenPanels((prev) => {
@@ -46,6 +75,7 @@ export function SpecViewer({
       return next;
     });
   };
+
   const closePanel = (key: SidebarKey) => {
     setOpenPanels((prev) => {
       if (!prev.has(key)) return prev;
@@ -56,7 +86,6 @@ export function SpecViewer({
   };
 
   const [activeId, setActiveId] = useState<string | null>(null);
-
   const pdfHandle = useRef<InteractivePdfHandle>(null);
 
   const onScrollActiveChange = useCallback((id: string | null) => {
@@ -73,8 +102,7 @@ export function SpecViewer({
     return map;
   }, [entries]);
 
-  const activeEntry =
-    entries.find((e) => e.point.id === activeId) ?? undefined;
+  const activeEntry = entries.find((e) => e.point.id === activeId) ?? undefined;
 
   const onSelectPoint = (id: string) => {
     setActiveId(id);
@@ -84,10 +112,6 @@ export function SpecViewer({
     }
   };
 
-  const topicsOpen = openPanels.has("topics");
-  const notesOpen = openPanels.has("notes");
-
-  // Group spec points by topic for the sidebar
   const grouped = useMemo(() => {
     const map = new Map<string, SpecEntry[]>();
     for (const e of entries) {
@@ -98,10 +122,25 @@ export function SpecViewer({
     return Array.from(map.entries());
   }, [entries]);
 
+  const topicsOpen = openPanels.has("topics");
+  const notesOpen = openPanels.has("notes");
+
   return (
     <div className="flex flex-1 min-h-0 flex-col">
       {/* Toolbar */}
       <div className="flex items-center gap-3 px-4 py-2 border-b border-border bg-surface shrink-0 flex-wrap">
+        {/* Topics toggle */}
+        <button
+          onClick={() => togglePanel("topics")}
+          aria-label="Toggle topics panel"
+          title="Topics"
+          className={`p-1.5 rounded transition-colors duration-150 ${
+            topicsOpen ? "bg-accent-soft text-accent" : "hover:bg-surface-2 text-muted hover:text-foreground"
+          }`}
+        >
+          <IconList active={topicsOpen} />
+        </button>
+
         <SegmentedControl
           options={[
             { value: "interactive", label: "Interactive" },
@@ -111,7 +150,7 @@ export function SpecViewer({
           onChange={(v) => setRenderMode(v as RenderMode)}
         />
 
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-3">
           <a
             href={specPdfPath}
             download
@@ -119,19 +158,29 @@ export function SpecViewer({
           >
             Download
           </a>
+
+          {/* Notes toggle */}
+          <button
+            onClick={() => togglePanel("notes")}
+            aria-label="Toggle notes panel"
+            title="Notes"
+            className={`p-1.5 rounded transition-colors duration-150 ${
+              notesOpen ? "bg-accent-soft text-accent" : "hover:bg-surface-2 text-muted hover:text-foreground"
+            }`}
+          >
+            <IconNotes active={notesOpen} />
+          </button>
         </div>
       </div>
 
-      {/* Main content row: [Topics col] [PDF] [Notes col] */}
+      {/* Main content row */}
       <div className="flex flex-1 min-h-0 relative">
+        {/* Topics docked panel */}
         <DockedPanel side="left" open={topicsOpen} onClose={() => closePanel("topics")}>
-          <TopicsSidebar
-            grouped={grouped}
-            activeId={activeId}
-            onSelect={onSelectPoint}
-          />
+          <TopicsSidebar grouped={grouped} activeId={activeId} onSelect={onSelectPoint} />
         </DockedPanel>
 
+        {/* Topics edge tab */}
         <EdgeTab
           side="left"
           label="Topics"
@@ -139,6 +188,7 @@ export function SpecViewer({
           onClick={() => togglePanel("topics")}
         />
 
+        {/* PDF */}
         <div className="flex-1 min-w-0 flex">
           <PdfPane label="AQA 7402 specification" className="flex-1 min-w-0">
             {renderMode === "interactive" ? (
@@ -158,10 +208,12 @@ export function SpecViewer({
           </PdfPane>
         </div>
 
+        {/* Notes docked panel */}
         <DockedPanel side="right" open={notesOpen} onClose={() => closePanel("notes")}>
           <NotesSidebar entry={activeEntry} />
         </DockedPanel>
 
+        {/* Notes edge tab */}
         <EdgeTab
           side="right"
           label="Notes"
@@ -227,7 +279,7 @@ function SegmentedControl({
 }
 
 // ─────────────────────────────────────────────────────────────────
-// EdgeTab
+// Edge tab
 
 function EdgeTab({
   side,
@@ -260,7 +312,7 @@ function EdgeTab({
 }
 
 // ─────────────────────────────────────────────────────────────────
-// DockedPanel
+// Docked panel
 
 function DockedPanel({
   side,
@@ -303,7 +355,7 @@ function DockedPanel({
 }
 
 // ─────────────────────────────────────────────────────────────────
-// Topics sidebar — grouped tree of spec points
+// Topics sidebar
 
 function TopicsSidebar({
   grouped,
@@ -355,7 +407,7 @@ function TopicsSidebar({
 }
 
 // ─────────────────────────────────────────────────────────────────
-// Notes sidebar — active spec point detail + related notes
+// Notes sidebar
 
 function NotesSidebar({ entry }: { entry: SpecEntry | undefined }) {
   if (!entry) {
