@@ -4,6 +4,15 @@ import { MarkdownNote } from "@/app/_components/MarkdownNote";
 import { getBiologyNote, getBiologyNotes } from "@/lib/notes";
 import { ThemeToggle } from "../../../_components/ThemeToggle";
 
+function buildNoteIndex(): Record<string, string> {
+  const notes = getBiologyNotes();
+  const index: Record<string, string> = {};
+  for (const note of notes) {
+    index[note.title.toLowerCase()] = note.slug;
+  }
+  return index;
+}
+
 export function generateStaticParams() {
   return getBiologyNotes().map((note) => ({ slug: note.slug }));
 }
@@ -14,6 +23,7 @@ export default async function BiologyNotePage(
   const { slug } = await props.params;
   const note = getBiologyNote(slug);
   if (!note) notFound();
+  const noteIndex = buildNoteIndex();
 
   return (
     <div className="flex flex-1 flex-col">
@@ -38,7 +48,7 @@ export default async function BiologyNotePage(
           <div className="mb-6 text-xs font-medium uppercase tracking-wider text-muted">
             {note.topic}
           </div>
-          <MarkdownNote content={note.content} />
+          <MarkdownNote content={note.content} noteIndex={noteIndex} />
         </div>
       </main>
     </div>

@@ -90,7 +90,7 @@ function plainInline(text: string): string {
     .trim();
 }
 
-function renderInline(text: string): React.ReactNode[] {
+function renderInline(text: string, noteIndex: Record<string, string> = {}): React.ReactNode[] {
   const cleaned = cleanText(text);
   const parts = cleaned.split(/(!\[\[[^\]]+\]\]|\[\[[^\]]+\]\]|\*\*[^*]+\*\*|_[^_]+_|\*[^*]+\*|\$[^$\n]+\$)/g);
 
@@ -109,9 +109,19 @@ function renderInline(text: string): React.ReactNode[] {
 
     const wiki = part.match(/^\[\[([^\]|]+)\|([^\]]+)\]\]$/) ?? part.match(/^\[\[([^\]]+)\]\]$/);
     if (wiki) {
+      const displayText = cleanText(wiki[2] ?? wiki[1]);
+      const lookupKey = cleanText(wiki[1]).toLowerCase();
+      const slug = noteIndex[lookupKey];
+      if (slug) {
+        return (
+          <a key={index} href={`/biology/notes/${slug}`} className="font-medium text-accent underline decoration-accent/40 underline-offset-2 hover:decoration-accent transition-colors">
+            {displayText}
+          </a>
+        );
+      }
       return (
-        <span key={index} className="font-medium text-accent underline decoration-accent/40 underline-offset-2">
-          {cleanText(wiki[2] ?? wiki[1])}
+        <span key={index} className="font-medium text-accent/60">
+          {displayText}
         </span>
       );
     }
@@ -159,7 +169,8 @@ function sectionVariant(text: string): "exam" | "summary" | "default" {
   return "default";
 }
 
-export function MarkdownNote({ content }: { content: string }) {
+export function MarkdownNote({ content, noteIndex = {} }: { content: string; noteIndex?: Record<string, string> }) {
+  const ri = (text: string) => renderInline(text, noteIndex);
   const lines = content.replace(/\r\n/g, "\n").split("\n");
   const blocks: React.ReactNode[] = [];
   let pendingList: PendingList | undefined;
@@ -190,7 +201,7 @@ export function MarkdownNote({ content }: { content: string }) {
       >
         {pendingList.items.map((item, index) => (
           <li key={index} className="pl-1 leading-7 text-foreground/90">
-            {isEquationLine(item) ? renderEquation(item) : renderInline(item)}
+            {isEquationLine(item) ? renderEquation(item) : ri(item)}
           </li>
         ))}
       </Tag>
@@ -221,7 +232,7 @@ export function MarkdownNote({ content }: { content: string }) {
                   <tr key={rowIndex} className={rowIndex === 0 ? "bg-accent-soft" : "border-t border-border"}>
                     {cells.map((cell, cellIndex) => (
                       <Cell key={cellIndex} className="px-4 py-2.5 text-left align-top">
-                        {renderInline(cell)}
+                        {ri(cell)}
                       </Cell>
                     ))}
                   </tr>
@@ -297,7 +308,7 @@ export function MarkdownNote({ content }: { content: string }) {
     const heading = trimmed.match(/^(#{1,4})\s+(.+)$/);
     if (heading) {
       const level = heading[1].length;
-      const text = renderInline(heading[2]);
+      const text = ri(heading[2]);
       const id = headingAnchor(heading[2]);
 
       if (level === 2) {
@@ -397,7 +408,7 @@ export function MarkdownNote({ content }: { content: string }) {
 
       blocks.push(
         <p key={index} className={paraClass}>
-          {renderInline(trimmed)}
+          {ri(trimmed)}
         </p>
       );
     }
