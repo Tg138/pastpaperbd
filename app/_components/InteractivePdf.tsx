@@ -9,6 +9,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.mjs";
 
 export interface InteractivePdfHandle {
   scrollToPage: (page: number) => void;
+  setScrollFraction: (fraction: number) => void;
 }
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
   // Map of pageNumber → ordered list of question IDs starting on that page.
   questionPages: Record<number, string[]>;
   onActiveQuestionChange?: (questionId: string | null) => void;
+  onScrollFractionChange?: (fraction: number) => void;
   handleRef?: React.Ref<InteractivePdfHandle>;
   scale?: number;
 }
@@ -27,6 +29,7 @@ export function InteractivePdf({
   src,
   questionPages,
   onActiveQuestionChange,
+  onScrollFractionChange,
   handleRef,
   scale = 1,
 }: Props) {
@@ -156,6 +159,20 @@ export function InteractivePdf({
     return () => container.removeEventListener("scroll", resolve);
   }, [numPages, questionPages, onActiveQuestionChange]);
 
+  // Emit scroll fraction so a paired PDF can mirror scroll position.
+  useEffect(() => {
+    if (!onScrollFractionChange) return;
+    const el = containerRef.current;
+    if (!el) return;
+    const handler = () => {
+      const max = el.scrollHeight - el.clientHeight;
+      if (max <= 0) return;
+      onScrollFractionChange(el.scrollTop / max);
+    };
+    el.addEventListener("scroll", handler, { passive: true });
+    return () => el.removeEventListener("scroll", handler);
+  }, [onScrollFractionChange]);
+
   const scrollToPage = useCallback((page: number) => {
     setRenderedPages((prev) => {
       const next = new Set(prev);
@@ -173,7 +190,14 @@ export function InteractivePdf({
     setScrollTarget(null);
   }, [scrollTarget, renderedPages]);
 
-  useImperativeHandle(handleRef, () => ({ scrollToPage }), [scrollToPage]);
+  const setScrollFraction = useCallback((fraction: number) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const max = el.scrollHeight - el.clientHeight;
+    el.scrollTop = fraction * max;
+  }, []);
+
+  useImperativeHandle(handleRef, () => ({ scrollToPage, setScrollFraction }), [scrollToPage, setScrollFraction]);
 
   const scaledWidth = Math.round(width * scale);
   const placeholderHeight = Math.round(scaledWidth * PAGE_ASPECT);

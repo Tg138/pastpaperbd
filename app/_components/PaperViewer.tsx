@@ -21,11 +21,7 @@ function IconSpec({ active }: { active: boolean }) {
 
 function IconWalkthrough({ active }: { active: boolean }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={active ? "text-accent" : "text-muted"}>
-      <circle cx="12" cy="12" r="10" />
-      <line x1="12" y1="8" x2="12" y2="12" />
-      <line x1="12" y1="16" x2="12.01" y2="16" />
-    </svg>
+    <span className={`text-xs font-semibold tracking-wide ${active ? "text-accent" : "text-muted"}`}>MS</span>
   );
 }
 import type { Breakdown, Paper, Question, RelatedNote, SpecPoint } from "@/lib/types";
@@ -183,6 +179,10 @@ export function PaperViewer({
     }
   };
 
+  const onQpScrollFraction = useCallback((fraction: number) => {
+    msHandleRef.current?.setScrollFraction(fraction);
+  }, []);
+
   const handleLayoutChange = (v: string) => {
     const next = v as ViewLayout;
     if (next === "ms" && !msAvailable) return;
@@ -226,7 +226,7 @@ export function PaperViewer({
             { value: "qp", label: "Question paper" },
             {
               value: "ms",
-              label: "Mark scheme",
+              label: "MS",
               disabled: !msAvailable,
               title: !msAvailable ? "Complete all questions to unlock" : undefined,
             },
@@ -292,12 +292,12 @@ export function PaperViewer({
       </div>
 
       {/* Main content row.
-          One panel open  → inline split: panel w-1/3, PDF gets the rest.
-          Both panels open → panels overlay (DockedPanel), PDF stays full width. */}
-      <div ref={mainRowRef} className={`flex flex-1 min-h-0 ${openPanels.size < 2 ? "" : "relative"}`}>
+          One panel open (non-split layout) → inline 1/3 split.
+          Both panels open, or split layout → panels overlay (DockedPanel). */}
+      <div ref={mainRowRef} className={`flex flex-1 min-h-0 ${(openPanels.size < 2 && layout !== "split") ? "" : "relative"}`}>
 
-        {/* Spec — inline when solo, overlay when both open */}
-        {openPanels.size < 2 ? (
+        {/* Spec — inline when solo (non-split), overlay otherwise */}
+        {(openPanels.size < 2 && layout !== "split") ? (
           <div className={`overflow-hidden flex flex-col bg-surface border-r border-border transition-all duration-150 ease-in-out ${specOpen ? "w-1/3 opacity-100" : "w-0 opacity-0"}`}>
             {specOpen && (
               <SpecSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} onClose={() => closePanel("spec")} />
@@ -313,8 +313,12 @@ export function PaperViewer({
         <div
           ref={pdfAreaRef}
           className="flex-1 min-w-0 flex"
-          style={openPanels.size >= 2 ? {
+          style={(openPanels.size >= 2 || layout === "split") && specOpen && walkthroughOpen ? {
             paddingLeft: dualPanelWidth,
+            paddingRight: dualPanelWidth,
+          } : (openPanels.size >= 2 || layout === "split") && specOpen ? {
+            paddingLeft: dualPanelWidth,
+          } : (openPanels.size >= 2 || layout === "split") && walkthroughOpen ? {
             paddingRight: dualPanelWidth,
           } : undefined}
         >
@@ -326,6 +330,7 @@ export function PaperViewer({
                     src={paper.qpPath}
                     questionPages={questionPages}
                     onActiveQuestionChange={onScrollActiveQuestionChange}
+                    onScrollFractionChange={onQpScrollFraction}
                     handleRef={qpHandleRef}
                     scale={zoom}
                   />
@@ -376,8 +381,8 @@ export function PaperViewer({
           )}
         </div>
 
-        {/* Walkthrough — inline when solo, overlay when both open */}
-        {openPanels.size < 2 ? (
+        {/* Walkthrough — inline when solo (non-split), overlay otherwise */}
+        {(openPanels.size < 2 && layout !== "split") ? (
           <div className={`overflow-hidden flex flex-col bg-surface border-l border-border transition-all duration-150 ease-in-out ${walkthroughOpen ? "w-1/3 opacity-100" : "w-0 opacity-0"}`}>
             {walkthroughOpen && (
               <WalkthroughSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} completed={completed} onToggleComplete={toggleComplete} examMode={examMode} onClose={() => closePanel("walkthrough")} />
