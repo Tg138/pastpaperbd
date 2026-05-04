@@ -305,6 +305,280 @@ const PLACEHOLDER_SPEC: SpecPoint[] = [
       "Sympatric = same habitat (no geographical isolation). Allopatric = different habitats (geographical isolation). Disruptive selection favours extremes, not the middle. For camouflage questions: always link to a survival/reproductive advantage — not just 'harder to see'.",
     pageNumber: 75,
   },
+
+  // ── 3.1 Biological molecules (additional sub-points) ──
+  {
+    id: "3.1.5.1",
+    title: "DNA structure — double helix and base pairing",
+    topic: "Biological molecules",
+    description:
+      "DNA is a double-stranded molecule wound into a double helix. Each strand has a sugar-phosphate backbone with nitrogenous bases pointing inward. Complementary base pairing: adenine pairs with thymine (2 hydrogen bonds), cytosine pairs with guanine (3 hydrogen bonds). The two strands are antiparallel — one runs 3′→5′ and the other 5′→3′.",
+    breakdown:
+      "A-T: 2 H-bonds. C-G: 3 H-bonds. Antiparallel is often tested — the complementary strand must run in the opposite direction. Hydrogen bonds between bases are individually weak but collectively stable.",
+    pageNumber: 18,
+  },
+  {
+    id: "3.1.5.2",
+    title: "RNA structure — mRNA, tRNA and rRNA",
+    topic: "Biological molecules",
+    description:
+      "mRNA is a single-stranded molecule carrying codons (triplet sequences) read 5′→3′ during translation. tRNA has a cloverleaf secondary structure with an anticodon loop (complementary to mRNA codon) and an amino acid attachment site at the 3′ end (CCA). rRNA is a structural and catalytic component of the ribosome. All RNA uses uracil instead of thymine.",
+    breakdown:
+      "Three RNA types: mRNA (the message), tRNA (the adaptor — one end binds codon, other end carries amino acid), rRNA (the factory — forms part of the ribosome). Uracil pairs with adenine in RNA.",
+    pageNumber: 19,
+  },
+  {
+    id: "3.1.7",
+    title: "Water — properties and biological importance",
+    topic: "Biological molecules",
+    description:
+      "Water molecules are polar — oxygen carries a partial negative charge, hydrogen atoms partial positive charges — allowing hydrogen bond formation. Key properties: high specific heat capacity (temperature buffer), high latent heat of vaporisation (cooling by evaporation), cohesion and surface tension (supports transport in xylem), solvent properties (ionic and polar substances dissolve), transparency (light penetrates for aquatic photosynthesis), maximum density at 4 °C (ice floats, insulating liquid beneath). Water is a reactant in hydrolysis and photosynthesis.",
+    breakdown:
+      "Every property links back to hydrogen bonding or polarity. Exam tip: name the property, explain the molecular basis, then give the biological consequence — three steps for every mark.",
+    pageNumber: 21,
+  },
+  {
+    id: "3.1.8",
+    title: "Inorganic ions — roles in biological systems",
+    topic: "Biological molecules",
+    description:
+      "Key inorganic ions and their functions: Fe²⁺/Fe³⁺ (component of haem in haemoglobin, carries O₂; component of cytochromes in respiration), Ca²⁺ (muscle contraction — binds troponin; bone/teeth mineralisation; enzyme co-factor), Mg²⁺ (component of chlorophyll; enzyme co-factor), PO₄³⁻ (backbone of DNA/RNA; in ATP; in phospholipids), Na⁺ (action potentials; co-transport), H⁺ (chemiosmosis; pH), NO₃⁻ (source of nitrogen for amino acid/nucleotide synthesis).",
+    breakdown:
+      "Link each ion to a specific molecule or process. Fe²⁺ → haemoglobin/cytochromes. Ca²⁺ → troponin/bone. Mg²⁺ → chlorophyll. PO₄³⁻ → DNA backbone/ATP. Na⁺ → action potential/co-transport.",
+    pageNumber: 22,
+  },
+
+  // ── 3.2 Cells (additional sub-points) ──
+  {
+    id: "3.2.4",
+    title: "Cell recognition and the immune system",
+    topic: "Cells",
+    description:
+      "Cell surface antigens identify cells as 'self' or 'non-self'. Non-self antigens trigger an immune response. Phagocytes engulf pathogens (phagocytosis → phagolysosome → antigen presentation). T lymphocytes: T-helper (activate B and T-killer cells), T-killer (destroy infected cells), T-memory (long-term immunity). B lymphocytes: activated by T-helper + antigen → clonal selection → plasma cells (secrete antibodies) + B-memory cells. Antibodies are complementary to specific antigens. Primary response is slow; secondary response (memory cells) is faster and larger. Vaccines expose the immune system to antigens to produce memory cells without disease.",
+    breakdown:
+      "Flow: antigen → phagocyte presents → T-helper → activates B cells and T-killers → plasma cells secrete antibodies. Memory cells = long-term immunity. HIV targets T-helper cells → collapses the entire response.",
+    pageNumber: 26,
+  },
+
+  // ── 3.3 Exchange and transport (additional sub-points) ──
+  {
+    id: "3.3.4.1",
+    title: "The heart — structure and cardiac cycle",
+    topic: "Exchange and transport",
+    description:
+      "The heart has four chambers: right and left atria receive blood, right and left ventricles pump it. Atrioventricular valves (mitral, tricuspid) prevent backflow into atria. Semilunar valves (aortic, pulmonary) prevent backflow into ventricles. Cardiac cycle: atrial systole → ventricular systole → diastole. During ventricular systole, pressure increases → AV valves close → semilunar valves open → blood ejected. Cardiac output = heart rate × stroke volume.",
+    breakdown:
+      "Valves open when pressure is higher on the upstream side, close when downstream pressure exceeds upstream. Left ventricle has thicker walls (pumps to systemic circulation at higher pressure). Diastole = relaxation (filling).",
+    pageNumber: 30,
+  },
+  {
+    id: "3.3.4.2",
+    title: "Blood vessels and tissue fluid",
+    topic: "Exchange and transport",
+    description:
+      "Arteries: thick wall with elastic tissue (stretches to smooth pressure), smooth muscle (vasoconstriction/dilation), smooth endothelium (reduces friction). Veins: thinner walls, large lumen, valves (prevent backflow), low pressure. Capillaries: single endothelial cell layer, pores — gas, glucose and water exchange by diffusion/osmosis/pressure filtration. Tissue fluid forms at the arterial end (hydrostatic pressure drives fluid out); most reabsorbed at the venous end (osmotic pressure draws back); excess enters lymphatics.",
+    breakdown:
+      "Elastic tissue 'recoils' — never 'contracts' (that's smooth muscle). Capillary walls are one cell thick = short diffusion path. Tissue fluid formation: pressure difference at arterial end outweighs osmotic pull; reverse at venous end.",
+    pageNumber: 31,
+  },
+
+  // ── 3.4 Genetic information (additional sub-points) ──
+  {
+    id: "3.4.2",
+    title: "DNA and protein synthesis — transcription and translation",
+    topic: "Genetic information & variation",
+    description:
+      "Transcription (nucleus): RNA polymerase unwinds DNA, builds complementary mRNA strand using free RNA nucleotides (A→U, T→A, C→G, G→C) reading the template strand 3′→5′; mRNA leaves nucleus via nuclear pore. Translation (ribosome): ribosome reads mRNA codons 5′→3′; tRNA anticodons bind complementary codons; peptide bonds form between amino acids (condensation); stop codon releases polypeptide. The genetic code is triplet, non-overlapping, degenerate (multiple codons per amino acid) and universal.",
+    breakdown:
+      "Transcription = DNA → mRNA (in nucleus). Translation = mRNA → polypeptide (at ribosome). Key: tRNA anticodon is complementary AND antiparallel to mRNA codon. Degenerate code means one amino acid can have several codons — a substitution may still code for the same amino acid.",
+    pageNumber: 38,
+  },
+  {
+    id: "3.4.7",
+    title: "Biodiversity, populations and ecological succession",
+    topic: "Genetic information & variation",
+    description:
+      "Biodiversity has three components: genetic diversity (variety of alleles within a species), species diversity (number and abundance of species — captured by indices such as Simpson's), and ecosystem diversity. Species richness = number of different species in an area. Population: group of the same species in the same area at the same time that can interbreed. Ecological succession: pioneer species → increasing complexity → climax community (near-stable). Genetic drift: random changes in allele frequency, most significant in small populations; can fix or eliminate alleles by chance alone. Founder effect and genetic bottleneck reduce genetic diversity. Conservation strategies include habitat management, seed banks, and captive breeding.",
+    breakdown:
+      "Species richness = count of species (no abundance). Species diversity = count + abundance (need an index). Genetic drift acts on small populations by chance — distinguish from natural selection (which is non-random). Climax community fluctuates but remains relatively stable.",
+    pageNumber: 48,
+  },
+
+  // ── 3.5 Energy transfers (additional sub-points) ──
+  {
+    id: "3.5.1",
+    title: "Photosynthesis — light-dependent and light-independent reactions",
+    topic: "Energy transfers",
+    description:
+      "Light-dependent stage (thylakoid membranes): light energy excites electrons in chlorophyll → photolysis of water (H₂O → 2H⁺ + 2e⁻ + ½O₂) → electrons replace those in photosystem → ATP synthesised via photophosphorylation → reduced NADP formed. Light-independent stage (stroma — Calvin cycle): CO₂ + RuBP (5C) → 2 GP (3C) [catalysed by RuBisCO]; GP → triose phosphate (TP) using ATP and reduced NADP; TP → RuBP (regeneration) or → glucose, amino acids, lipids.",
+    breakdown:
+      "Light-dependent: needs light, makes ATP + reduced NADP + O₂. Light-independent: needs ATP + reduced NADP from above, fixes CO₂ via Calvin cycle. Every 3 CO₂ fixed gives 1 net TP. Limiting factors: CO₂, light intensity, temperature.",
+    pageNumber: 49,
+  },
+  {
+    id: "3.5.4",
+    title: "Nutrient cycles — nitrogen and carbon",
+    topic: "Energy transfers",
+    description:
+      "Nitrogen cycle: atmospheric N₂ fixed by Azotobacter (free-living) or Rhizobium (mutualistic, in root nodules) → ammonium ions. Nitrification: Nitrosomonas converts NH₄⁺ → NO₂⁻; Nitrobacter converts NO₂⁻ → NO₃⁻. Nitrates absorbed by plants → amino acids/nucleotides. Ammonification: decomposers break down organic nitrogen → NH₄⁺. Denitrification: anaerobic bacteria convert NO₃⁻ → N₂. Carbon cycle: CO₂ fixed by photosynthesis; returned by respiration, decomposition, combustion. Farming practices affect cycles (e.g., waterlogged soils increase denitrification).",
+    breakdown:
+      "Nitrogen cycle bacteria to know: Azotobacter/Rhizobium (fixation), Nitrosomonas + Nitrobacter (nitrification — two steps), decomposers (ammonification), Pseudomonas (denitrification). Carbon cycle: only two major fluxes in/out — photosynthesis in, respiration + combustion + decomposition out.",
+    pageNumber: 55,
+  },
+
+  // ── 3.6 Organisms respond (additional sub-points) ──
+  {
+    id: "3.6.1.1",
+    title: "Receptors — Pacinian corpuscle and sensory transduction",
+    topic: "Organisms respond",
+    description:
+      "Sensory receptors convert stimuli into nerve impulses (transduction). The Pacinian corpuscle detects pressure: deformation of lamellae → membrane stretched → stretch-mediated Na⁺ channels open → Na⁺ enters → generator potential generated; if generator potential reaches threshold → action potential in sensory neurone. Receptor potential size is proportional to stimulus intensity. Rods (sensitive to low light, monochromatic) and cones (colour vision, bright light) in the retina are photoreceptors.",
+    breakdown:
+      "Generator potential: graded (proportional to stimulus strength), local (stays at receptor), can summate. Action potential: all-or-nothing, travels along axon. Threshold must be exceeded to trigger an action potential.",
+    pageNumber: 58,
+  },
+  {
+    id: "3.6.1.2",
+    title: "Nerve impulses — resting potential and action potential",
+    topic: "Organisms respond",
+    description:
+      "Resting potential (–70 mV): maintained by Na⁺/K⁺ pump (3 Na⁺ out, 2 K⁺ in per cycle) and selective permeability (K⁺ channels leak). Action potential: (1) depolarisation — Na⁺ channels open, Na⁺ rushes in, membrane potential rises to +40 mV; (2) repolarisation — Na⁺ channels close, K⁺ channels open, K⁺ leaves; (3) hyperpolarisation — excess K⁺ loss, K⁺ channels close; (4) resting potential restored. All-or-nothing principle. Refractory period prevents backward propagation. Myelinated axons conduct faster via saltatory conduction (impulse jumps between Nodes of Ranvier). Speed also increases with larger axon diameter and higher temperature.",
+    breakdown:
+      "Three phases: depolarise (Na⁺ in) → repolarise (K⁺ out) → hyperpolarise (slight overshoot) → back to –70 mV. Refractory period = reason impulses don't travel backwards. Myelin + Nodes of Ranvier = saltatory = faster.",
+    pageNumber: 59,
+  },
+  {
+    id: "3.6.1.3",
+    title: "Synaptic transmission — cholinergic synapse",
+    topic: "Organisms respond",
+    description:
+      "Cholinergic synapse mechanism: action potential reaches presynaptic knob → Ca²⁺ channels open → Ca²⁺ enters → synaptic vesicles fuse with presynaptic membrane → acetylcholine (ACh) released by exocytosis → ACh diffuses across cleft → binds complementary receptors on postsynaptic membrane → Na⁺ channels open → depolarisation (EPSP). Acetylcholinesterase hydrolyses ACh in the cleft → choline reabsorbed and recycled. Inhibitory synapses open Cl⁻ or K⁺ channels → IPSP (hyperpolarisation). Summation: spatial (multiple synapses) or temporal (rapid repeated impulses).",
+    breakdown:
+      "Ca²⁺ is the trigger for vesicle fusion — not Na⁺. ACh is broken down in the cleft (not reabsorbed intact) to prevent continuous stimulation. EPSP = excitatory (Na⁺ in). IPSP = inhibitory (Cl⁻ in or K⁺ out).",
+    pageNumber: 60,
+  },
+  {
+    id: "3.6.2.1",
+    title: "Neuromuscular junction",
+    topic: "Organisms respond",
+    description:
+      "The neuromuscular junction (NMJ) is a specialised cholinergic synapse between a motor neurone and a muscle fibre. Motor neurone action potential → Ca²⁺ influx → ACh released → binds receptors on sarcolemma (muscle cell membrane) → Na⁺ enters → action potential propagates along sarcolemma and down T-tubules → Ca²⁺ released from sarcoplasmic reticulum into sarcoplasm → Ca²⁺ binds troponin → tropomyosin shifts away from actin binding sites → myosin heads can bind actin → contraction begins.",
+    breakdown:
+      "NMJ = synapse between nerve and muscle. Sequence: action potential → ACh → Na⁺ into sarcolemma → action potential → T-tubule → Ca²⁺ from sarcoplasmic reticulum → troponin/tropomyosin shift → contraction. ACh hydrolysed by acetylcholinesterase to end contraction signal.",
+    pageNumber: 61,
+  },
+  {
+    id: "3.6.2.2",
+    title: "Sliding filament theory of muscle contraction",
+    topic: "Organisms respond",
+    description:
+      "Sarcomere structure: A-band (myosin filaments, constant length), I-band (actin only, shortens on contraction), H-zone (myosin only, shortens on contraction), Z-lines (boundaries). Sliding filament: Ca²⁺ binds troponin → tropomyosin moves → actin binding sites exposed → myosin heads bind actin (cross-bridge) → power stroke (myosin head pivots, actin moves towards centre) → ATP binds myosin → myosin detaches → ATP hydrolysed → myosin head cocks → cycle repeats. Relaxation: Ca²⁺ pumped back into sarcoplasmic reticulum (requires ATP) → tropomyosin covers binding sites.",
+    breakdown:
+      "A-band = myosin length = always constant. I-band and H-zone shorten during contraction. ATP is needed for BOTH the power stroke recycling (detachment) and Ca²⁺ reuptake (relaxation). Rigor mortis: no ATP → cross-bridges cannot detach.",
+    pageNumber: 62,
+  },
+  {
+    id: "3.6.3",
+    title: "Hormonal coordination — endocrine system",
+    topic: "Organisms respond",
+    description:
+      "Hormones are chemical messengers secreted by endocrine glands directly into the blood. They travel to target organs where they bind specific receptors. Adrenaline: secreted by adrenal medulla in response to stress → increases heart rate, dilates airways and pupils, raises blood glucose, diverts blood to muscles. ADH (antidiuretic hormone): released from hypothalamus/posterior pituitary when plasma osmolarity rises → targets collecting duct of kidney → increases aquaporin insertion → more water reabsorbed → concentrated urine. Insulin and glucagon regulate blood glucose (see 3.6.4.3). Oestrogen: acts as a transcription factor, enters cells and directly regulates gene expression.",
+    breakdown:
+      "Hormones vs neurotransmitters: hormones travel in blood (slower, widespread), neurotransmitters cross synaptic cleft (fast, local). Adrenaline = 'fight or flight'. ADH = 'hold on to water'. Oestrogen = steroid → crosses membrane → nuclear receptor → affects transcription.",
+    pageNumber: 65,
+  },
+  {
+    id: "3.6.4.1",
+    title: "Homeostasis — principles of negative feedback",
+    topic: "Organisms respond",
+    description:
+      "Homeostasis maintains a constant internal environment (temperature, blood glucose, water potential, pH). Components: receptor (detects deviation from set point) → control centre (processes signal) → effector (restores set point). Negative feedback: a change from the set point triggers a response that reverses the change and restores the set point. Positive feedback amplifies changes (e.g., action potential depolarisation, blood clotting, oxytocin during labour) — rare in homeostasis. Importance: enzymes work optimally at constant temperature and pH; osmotic balance prevents cell shrinkage or lysis.",
+    breakdown:
+      "Negative feedback = corrective (restores set point). Positive feedback = amplifying (moves further from set point). Always state: receptor → comparator/control centre → effector → corrective response.",
+    pageNumber: 67,
+  },
+  {
+    id: "3.6.4.2",
+    title: "Thermoregulation — maintaining body temperature",
+    topic: "Organisms respond",
+    description:
+      "The hypothalamus acts as both thermoreceptor (blood temperature) and thermostat. Peripheral thermoreceptors in the skin send signals to the hypothalamus. Responses to overheating: vasodilation (more blood to skin surface → more radiation), sweating (evaporative cooling), reduced metabolic rate, pilorelaxation. Responses to cooling: vasoconstriction (less blood to skin), shivering (muscle contraction generates heat), increased metabolic rate, piloerection (traps air), behavioural responses. Endotherms generate heat internally; ectotherms rely on the environment.",
+    breakdown:
+      "Vasodilation: arterioles dilate → more blood in capillaries near skin surface → more heat lost by radiation. Vasoconstriction = opposite. Shivering = muscle contraction = ATP hydrolysis = heat production. Piloerection traps air (insulation) — not sweating.",
+    pageNumber: 69,
+  },
+  {
+    id: "3.6.4.3",
+    title: "Control of blood glucose — insulin and glucagon",
+    topic: "Organisms respond",
+    description:
+      "Islets of Langerhans in the pancreas: α cells secrete glucagon, β cells secrete insulin. High blood glucose → β cells detect rise → insulin secreted → target cells (liver, muscle) increase glucose uptake → glycogen synthesis (glycogenesis) → blood glucose falls. Low blood glucose → α cells detect fall → glucagon secreted → liver cells → glycogen breakdown (glycogenolysis) → gluconeogenesis → glucose released into blood. Type I diabetes: autoimmune destruction of β cells → no insulin → managed with injections. Type II diabetes: cells become insensitive to insulin → managed with diet/exercise/medication.",
+    breakdown:
+      "β cells → insulin → lower glucose. α cells → glucagon → raise glucose. Glycogenesis = making glycogen. Glycogenolysis = breaking glycogen. Gluconeogenesis = making glucose from non-carbohydrate sources. Type I = no insulin (inject it). Type II = resistant to insulin (lifestyle first).",
+    pageNumber: 71,
+  },
+
+  // ── 3.8 Control of gene expression ──
+  {
+    id: "3.8.1",
+    title: "Gene expression — mutations, epigenetics and cancer",
+    topic: "Control of gene expression",
+    description:
+      "Gene expression is the production of a functional gene product (protein or RNA). Not all genes are expressed in every cell (differentiation). Mutations: substitution (single base change — may be silent/missense/nonsense), deletion/insertion (frameshift — shifts reading frame, alters all downstream codons). Epigenetics: heritable changes in gene expression without DNA sequence change. Histone acetylation (loosens chromatin → transcription increased). DNA methylation (cytosines methylated → gene silenced). Environmental factors (diet, smoking) can cause epigenetic changes.",
+    breakdown:
+      "Epigenetics ≠ changing the DNA sequence. Methylation = silence. Acetylation = express. Frameshift mutations (insertion/deletion) alter every codon downstream — more disruptive than substitution. Silent mutation = same amino acid (degenerate code). Nonsense mutation = early stop codon = truncated protein.",
+    pageNumber: 81,
+  },
+  {
+    id: "3.8.2.1",
+    title: "Epigenetics — histone modification and DNA methylation",
+    topic: "Control of gene expression",
+    description:
+      "Histones are proteins around which DNA is wound to form nucleosomes. Histone modification alters chromatin structure and gene accessibility. Acetylation of histone tails (by histone acetyltransferases) neutralises positive charges → DNA-histone interaction weakens → chromatin opens (euchromatin) → gene transcription increases. Deacetylation → chromatin condenses (heterochromatin) → gene silenced. DNA methylation: methyl groups added to cytosine residues in CpG islands near promoters → prevents transcription factor binding → gene silenced. Both modifications are reversible and can be inherited through cell division.",
+    breakdown:
+      "Acetylation = open chromatin = more transcription. Methylation = closed/silent gene. Both are epigenetic (reversible, no sequence change, heritable). CpG islands near promoters are the key methylation targets. Imprinting is a permanent epigenetic silencing of one parental allele.",
+    pageNumber: 83,
+  },
+  {
+    id: "3.8.2.2",
+    title: "Cancer — oncogenes and tumour suppressor genes",
+    topic: "Control of gene expression",
+    description:
+      "Cancer arises from uncontrolled cell division due to mutations in genes that control the cell cycle. Proto-oncogenes (normally promote cell division) → mutated to oncogenes → constitutively active → uncontrolled growth. Tumour suppressor genes (normally inhibit cell division, e.g., p53) → loss-of-function mutations → cell cycle proceeds unchecked. Epigenetic silencing of tumour suppressors can also contribute. Risk factors: carcinogens (mutagens — UV, chemicals, tobacco smoke), oncogenic viruses, ionising radiation. Metastasis: cancer cells break away from primary tumour → spread via blood/lymph → secondary tumours.",
+    breakdown:
+      "Oncogenes = gain-of-function (accelerator stuck on). Tumour suppressors = loss-of-function (brakes removed). Multiple mutations usually required ('two-hit hypothesis' for tumour suppressors). Carcinogens act by causing DNA damage/mutation.",
+    pageNumber: 85,
+  },
+  {
+    id: "3.8.2.3",
+    title: "Control of transcription and translation",
+    topic: "Control of gene expression",
+    description:
+      "Transcription factors are proteins that bind to specific regulatory sequences (enhancers or silencers) near gene promoters and either activate or repress transcription by RNA polymerase. Oestrogen: lipid-soluble steroid → diffuses across membrane → binds cytoplasmic receptor → receptor-hormone complex enters nucleus → acts as transcription factor → promotes transcription of target genes. siRNA (small interfering RNA) and miRNA silence gene expression post-transcriptionally: siRNA/miRNA incorporated into RISC (RNA-induced silencing complex) → binds complementary mRNA → mRNA cleaved or translation blocked.",
+    breakdown:
+      "Transcription factors bind DNA near promoter → recruit/block RNA polymerase. siRNA = silences specific mRNA (RNAi). Oestrogen = steroid (lipid-soluble) → crosses membrane → nuclear receptor → acts as transcription factor. Key distinction: transcription control (before mRNA) vs translation control (after mRNA made).",
+    pageNumber: 87,
+  },
+  {
+    id: "3.8.3",
+    title: "Ethics and social implications of gene technologies",
+    topic: "Control of gene expression",
+    description:
+      "Gene technologies raise ethical, moral and social issues. Genetic screening: can identify carriers or individuals at risk before symptoms appear; raises questions of privacy, discrimination by insurers/employers, psychological impact, and informed consent. Gene therapy: somatic (corrects cells in patient — not heritable) vs germline (heritable — affects future generations). GM organisms: concerns about biodiversity, allergenicity, gene escape, corporate control. Pharmacogenetics: tailoring drugs to genotype. Evaluating clinical trials: importance of statistical significance, sample size, controls, duration, applicability to humans.",
+    breakdown:
+      "Ethics questions require balanced arguments — list benefits AND risks. Key terms: informed consent, privacy, autonomy, 'designer babies', equitable access. For clinical trials: a P-value below 0.05 indicates significant result; small/short trials limit generalisability.",
+    pageNumber: 89,
+  },
+  {
+    id: "3.8.4.1",
+    title: "Biotechnology and recombinant DNA technology",
+    topic: "Control of gene expression",
+    description:
+      "Gene cloning using plasmid vectors: restriction enzyme cuts both gene of interest and plasmid at same recognition sequence → complementary sticky ends → DNA ligase seals phosphodiester bonds → recombinant plasmid transformed into host (e.g., E. coli) → selection markers identify transformed cells. PCR amplifies target DNA: (1) denature (95 °C, H-bonds break), (2) anneal (55 °C, primers bind flanking sequences), (3) extension (72 °C, Taq polymerase extends). DNA profiling (genetic fingerprinting): DNA cut by restriction enzymes → VNTR fragments separated by electrophoresis → pattern compared for identification or parentage. Gene therapy delivers functional genes to affected cells.",
+    breakdown:
+      "PCR: 3 temperatures, 3 steps. Primers must be complementary to the flanking sequences. Plasmid cloning: restriction enzyme (cuts) → sticky ends → ligase (joins). VNTR/STR profiling: smaller bands travel further on gel. Transformation efficiency is low — selection markers (antibiotic resistance) are needed.",
+    pageNumber: 91,
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────────
@@ -1351,6 +1625,7 @@ If no person remove 1 mark.`,
     msAnswer: `Due to a typographical error, this question has been discounted and all candidates will receive 1 mark, even the non-attempts.`,
     whyExplanation: `Question discounted — typographical error in question paper. All candidates awarded 1 mark.`,
     specLinks: ["3.3.1"],
+    commonMistakes: `Question was discounted — all candidates received 1 mark regardless of answer. No marks were lost for incorrect responses.`,
   },
   {
     questionId: questionId(P3_2024, "03.4"),
