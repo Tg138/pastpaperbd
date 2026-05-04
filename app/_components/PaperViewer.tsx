@@ -409,12 +409,12 @@ export function PaperViewer({
         {(openPanels.size < 2 && layout !== "split") ? (
           <div className={`overflow-hidden flex flex-col bg-surface border-l border-border transition-all duration-150 ease-in-out ${walkthroughOpen ? "w-1/3 opacity-100" : "w-0 opacity-0"}`}>
             {walkthroughOpen && (
-              <WalkthroughSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} completed={completed} onToggleComplete={toggleComplete} examMode={examMode} onClose={() => closePanel("walkthrough")} />
+              <WalkthroughSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} completed={completed} onToggleComplete={toggleComplete} examMode={examMode} onClose={() => closePanel("walkthrough")} backHref={backHref} />
             )}
           </div>
         ) : (
           <DockedPanel side="right" open={walkthroughOpen} onClose={() => closePanel("walkthrough")} width={dualPanelWidth}>
-            <WalkthroughSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} completed={completed} onToggleComplete={toggleComplete} examMode={examMode} onClose={() => closePanel("walkthrough")} />
+            <WalkthroughSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} completed={completed} onToggleComplete={toggleComplete} examMode={examMode} onClose={() => closePanel("walkthrough")} backHref={backHref} />
           </DockedPanel>
         )}
       </div>
@@ -667,6 +667,7 @@ function WalkthroughSidebar({
   onToggleComplete,
   examMode,
   onClose,
+  backHref,
 }: {
   entry: QuestionEntry | undefined;
   entries: QuestionEntry[];
@@ -676,6 +677,7 @@ function WalkthroughSidebar({
   onToggleComplete: (qid: string) => void;
   examMode: boolean;
   onClose: () => void;
+  backHref: string;
 }) {
   const done = entry ? completed.has(entry.question.id) : false;
   const breakdownLocked = examMode && entry !== undefined && !done;
@@ -750,7 +752,7 @@ function WalkthroughSidebar({
             <div className="text-sm text-muted">Walkthrough not available yet for this question.</div>
           )}
 
-          <RelatedNotes notes={entry.relatedNotes} />
+          <RelatedNotes notes={entry.relatedNotes} backHref={backHref} />
         </div>
       ) : (
         <div className="p-4 text-sm text-muted">No question selected.</div>
