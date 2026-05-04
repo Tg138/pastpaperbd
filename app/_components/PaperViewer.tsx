@@ -119,23 +119,17 @@ export function PaperViewer({
     });
   };
 
-  const [activeQid, setActiveQid] = useState<string | null>(
-    entries[0]?.question.id ?? null
-  );
+  const [activeQid, setActiveQid] = useState<string | null>(() => {
+    if (initialPage) {
+      const match = entries.find((e) => e.question.pageNumber === initialPage);
+      if (match) return match.question.id;
+    }
+    return entries[0]?.question.id ?? null;
+  });
   const [completed, setCompleted] = useState<Set<string>>(new Set());
 
   const qpHandleRef = useRef<InteractivePdfHandle>(null);
   const msHandleRef = useRef<InteractivePdfHandle>(null);
-
-  // Scroll to page specified via ?page= when navigating back from a note
-  useEffect(() => {
-    if (!initialPage) return;
-    const timer = setTimeout(() => {
-      qpHandleRef.current?.scrollToPage(initialPage);
-    }, 400);
-    return () => clearTimeout(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const storageKey = `progress:${paper.subject}-${paper.year}-p${paper.paperNumber}`;
 
@@ -356,9 +350,9 @@ export function PaperViewer({
                     src={paper.qpPath}
                     questionPages={questionPages}
                     onActiveQuestionChange={onScrollActiveQuestionChange}
-
                     handleRef={qpHandleRef}
                     scale={zoom}
+                    initialPage={initialPage}
                   />
                 ) : (
                   <iframe src={paper.qpPath} className="w-full h-full bg-surface-2" title="Question paper" />
@@ -388,6 +382,7 @@ export function PaperViewer({
                     onActiveQuestionChange={onScrollActiveQuestionChange}
                     handleRef={qpHandleRef}
                     scale={zoom}
+                    initialPage={initialPage}
                   />
                 ) : msAvailable ? (
                   <InteractivePdf src={paper.msPath} questionPages={questionPages} handleRef={msHandleRef} scale={zoom} />

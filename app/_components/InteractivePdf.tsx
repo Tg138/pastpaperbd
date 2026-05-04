@@ -20,6 +20,7 @@ interface Props {
   onScrollFractionChange?: (fraction: number) => void;
   handleRef?: React.Ref<InteractivePdfHandle>;
   scale?: number;
+  initialPage?: number;
 }
 
 // A4 portrait aspect ratio (height = width × √2). Used for placeholder height.
@@ -32,11 +33,21 @@ export function InteractivePdf({
   onScrollFractionChange,
   handleRef,
   scale = 1,
+  initialPage,
 }: Props) {
   const [numPages, setNumPages] = useState(0);
   const [width, setWidth] = useState<number>(760);
-  const [renderedPages, setRenderedPages] = useState<Set<number>>(new Set([1, 2, 3]));
-  const [scrollTarget, setScrollTarget] = useState<number | null>(null);
+  const [renderedPages, setRenderedPages] = useState<Set<number>>(() => {
+    if (initialPage) {
+      const seed = new Set<number>();
+      for (let p = Math.max(1, initialPage - 1); p <= initialPage + 1; p++) seed.add(p);
+      return seed;
+    }
+    return new Set([1, 2, 3]);
+  });
+  const [scrollTarget, setScrollTarget] = useState<number | null>(initialPage ?? null);
+  // Use instant scroll for the initial target; smooth for subsequent programmatic scrolls.
+  const isInitialScroll = useRef(!!initialPage);
   const containerRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<Map<number, HTMLDivElement>>(new Map());
 
@@ -186,7 +197,11 @@ export function InteractivePdf({
   useEffect(() => {
     if (scrollTarget === null) return;
     const el = pageRefs.current.get(scrollTarget);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (el) {
+      const behavior = isInitialScroll.current ? "instant" : "smooth";
+      isInitialScroll.current = false;
+      el.scrollIntoView({ behavior: behavior as ScrollBehavior, block: "start" });
+    }
     setScrollTarget(null);
   }, [scrollTarget, renderedPages]);
 

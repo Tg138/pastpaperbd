@@ -65,6 +65,16 @@ export default async function BiologyNotePage(
           <MarkdownNote content={note.content} noteIndex={noteIndex} />
         </div>
       </main>
+
+      {backHref && (
+        <Link
+          href={backHref}
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-1.5 rounded-full border border-border bg-surface px-4 py-2 text-sm shadow-lg hover:border-accent hover:bg-accent-soft transition-colors"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to paper
+        </Link>
+      )}
     </div>
   );
 }
