@@ -604,7 +604,7 @@ function SpecSidebar({
       {entry ? (
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           <div>
-            <div className="text-[10px] uppercase tracking-wider text-muted mb-2">
+            <div className="text-xs uppercase tracking-wider text-muted mb-2">
               Spec points for Q{entry.question.number}
             </div>
             <div className="space-y-3">
@@ -612,20 +612,18 @@ function SpecSidebar({
                 <div className="text-sm text-muted">No spec points tagged yet.</div>
               )}
               {entry.specPoints.map((sp) => (
-                <div key={sp.id} className="rounded-md border border-border bg-background p-3">
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-mono text-xs text-accent">{sp.id}</span>
-                    <span className="text-sm font-medium">{sp.title}</span>
+                <Collapsible key={sp.id} label={`${sp.id} — ${sp.title}`} defaultClosed>
+                  <div className="space-y-2 pt-1">
+                    <div className="text-sm leading-relaxed text-foreground/80">
+                      {sp.description}
+                    </div>
+                    {sp.breakdown && (
+                      <Collapsible label="In plain English">
+                        <div className="text-sm leading-relaxed">{sp.breakdown}</div>
+                      </Collapsible>
+                    )}
                   </div>
-                  <div className="mt-2 text-xs leading-relaxed text-foreground/80">
-                    {sp.description}
-                  </div>
-                  {sp.breakdown && (
-                    <Collapsible label="In plain English">
-                      <div className="text-xs leading-relaxed">{sp.breakdown}</div>
-                    </Collapsible>
-                  )}
-                </div>
+                </Collapsible>
               ))}
             </div>
           </div>

@@ -367,41 +367,77 @@ function TopicsSidebar({
   onSelect: (id: string) => void;
 }) {
   const activeRef = useRef<HTMLButtonElement>(null);
+  const [openTopics, setOpenTopics] = useState<Set<string>>(() => new Set());
+
   useEffect(() => {
     activeRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [activeId]);
 
+  // Auto-open topic containing the active spec point
+  useEffect(() => {
+    if (!activeId) return;
+    const topic = grouped.find(([, list]) => list.some((e) => e.point.id === activeId))?.[0];
+    if (topic) setOpenTopics((prev) => new Set([...prev, topic]));
+  }, [activeId, grouped]);
+
+  function toggleTopic(topic: string) {
+    setOpenTopics((prev) => {
+      const next = new Set(prev);
+      if (next.has(topic)) next.delete(topic);
+      else next.add(topic);
+      return next;
+    });
+  }
+
   return (
-    <div className="p-3 space-y-5">
-      {grouped.map(([topic, list]) => (
-        <section key={topic}>
-          <h3 className="text-[10px] uppercase tracking-wider text-muted font-medium px-2 mb-1.5">
-            {topic}
-          </h3>
-          <div className="space-y-0.5">
-            {list.map((e) => {
-              const isActive = activeId === e.point.id;
-              return (
-                <button
-                  key={e.point.id}
-                  ref={isActive ? activeRef : undefined}
-                  onClick={() => onSelect(e.point.id)}
-                  className={`w-full text-left flex items-baseline gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${
-                    isActive
-                      ? "bg-accent-soft text-accent"
-                      : "hover:bg-surface-2 text-foreground/90"
-                  }`}
-                >
-                  <span className={`font-mono text-xs shrink-0 ${isActive ? "text-accent" : "text-muted"}`}>
-                    {e.point.id}
-                  </span>
-                  <span className="leading-snug">{e.point.title}</span>
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      ))}
+    <div className="p-3 space-y-1">
+      {grouped.map(([topic, list]) => {
+        const isOpen = openTopics.has(topic);
+        return (
+          <section key={topic}>
+            <button
+              onClick={() => toggleTopic(topic)}
+              className="w-full flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-surface-2 transition-colors group"
+            >
+              <svg
+                width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                className={`shrink-0 text-muted transition-transform ${isOpen ? "rotate-90" : ""}`}
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+              <span className="text-xs uppercase tracking-wider text-muted font-medium group-hover:text-foreground/70 transition-colors">
+                {topic}
+              </span>
+              <span className="ml-auto text-xs text-muted/60">{list.length}</span>
+            </button>
+            {isOpen && (
+              <div className="space-y-0.5 mt-0.5 ml-3">
+                {list.map((e) => {
+                  const isActive = activeId === e.point.id;
+                  return (
+                    <button
+                      key={e.point.id}
+                      ref={isActive ? activeRef : undefined}
+                      onClick={() => onSelect(e.point.id)}
+                      className={`w-full text-left flex items-baseline gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${
+                        isActive
+                          ? "bg-accent-soft text-accent"
+                          : "hover:bg-surface-2 text-foreground/90"
+                      }`}
+                    >
+                      <span className={`font-mono text-sm shrink-0 ${isActive ? "text-accent" : "text-muted"}`}>
+                        {e.point.id}
+                      </span>
+                      <span className="leading-snug text-sm">{e.point.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+        );
+      })}
     </div>
   );
 }

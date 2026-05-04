@@ -36,7 +36,8 @@
       "Bash(pdftotext -layout public/papers/biology/2024/paper-1/qp.pdf -)",
       "Bash(pdftotext -layout public/papers/biology/2024/paper-1/ms.pdf -)",
       "Bash(pdftotext -layout public/spec/biology.pdf -)",
-      "Bash(npm info *)"
+      "Bash(npm info *)",
+      "Bash(codeburn *)"
     ]
   }
 }
