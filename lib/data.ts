@@ -33,6 +33,8 @@ export function getPaper(subject: SubjectSlug, year: Year, paperNumber: PaperNum
 }
 
 const P1 = paperId("biology", 2024, 1);
+const P2_2024 = paperId("biology", 2024, 2);
+const P3_2024 = paperId("biology", 2024, 3);
 
 // ─────────────────────────────────────────────────────────────────
 // Spec points (AQA 7402)
@@ -287,6 +289,71 @@ const PLACEHOLDER_QUESTIONS: Question[] = [
   { id: questionId(P1, "10.1"), paperId: P1, number: "10.1", marks: 6, pageNumber: 26, specPoints: ["3.2.1.3"] },
   { id: questionId(P1, "10.2"), paperId: P1, number: "10.2", marks: 5, pageNumber: 27, specPoints: ["3.2.1.1"] },
   { id: questionId(P1, "10.3"), paperId: P1, number: "10.3", marks: 4, pageNumber: 28, specPoints: ["3.1.6"] },
+
+  // ── 2024 Paper 2 ──
+  { id: questionId(P2_2024, "01.1"), paperId: P2_2024, number: "01.1", marks: 2, pageNumber: 2, specPoints: ["3.6.1"] },
+  { id: questionId(P2_2024, "01.2"), paperId: P2_2024, number: "01.2", marks: 4, pageNumber: 3, specPoints: ["3.6.1", "3.6.2"] },
+  { id: questionId(P2_2024, "01.3"), paperId: P2_2024, number: "01.3", marks: 2, pageNumber: 3, specPoints: ["3.6.1"] },
+  { id: questionId(P2_2024, "02.1"), paperId: P2_2024, number: "02.1", marks: 2, pageNumber: 4, specPoints: ["3.6.2", "3.1.1"] },
+  { id: questionId(P2_2024, "02.2"), paperId: P2_2024, number: "02.2", marks: 1, pageNumber: 5, specPoints: ["3.6.2"] },
+  { id: questionId(P2_2024, "02.3"), paperId: P2_2024, number: "02.3", marks: 4, pageNumber: 5, specPoints: ["3.6.2"] },
+  { id: questionId(P2_2024, "03.1"), paperId: P2_2024, number: "03.1", marks: 2, pageNumber: 6, specPoints: ["3.4.1"] },
+  { id: questionId(P2_2024, "03.2"), paperId: P2_2024, number: "03.2", marks: 2, pageNumber: 7, specPoints: ["3.4.1"] },
+  { id: questionId(P2_2024, "03.3"), paperId: P2_2024, number: "03.3", marks: 3, pageNumber: 7, specPoints: ["3.4.1"] },
+  { id: questionId(P2_2024, "04.1"), paperId: P2_2024, number: "04.1", marks: 2, pageNumber: 8, specPoints: ["3.4.3"] },
+  { id: questionId(P2_2024, "04.2"), paperId: P2_2024, number: "04.2", marks: 1, pageNumber: 8, specPoints: ["3.4.3"] },
+  { id: questionId(P2_2024, "04.3"), paperId: P2_2024, number: "04.3", marks: 2, pageNumber: 9, specPoints: ["3.4.3"] },
+  { id: questionId(P2_2024, "04.4"), paperId: P2_2024, number: "04.4", marks: 3, pageNumber: 9, specPoints: ["3.4.3"] },
+  { id: questionId(P2_2024, "05.1"), paperId: P2_2024, number: "05.1", marks: 5, pageNumber: 10, specPoints: ["3.7.1"] },
+  { id: questionId(P2_2024, "05.2"), paperId: P2_2024, number: "05.2", marks: 3, pageNumber: 11, specPoints: ["3.7.1"] },
+  { id: questionId(P2_2024, "05.3"), paperId: P2_2024, number: "05.3", marks: 2, pageNumber: 12, specPoints: ["3.1.1"] },
+  { id: questionId(P2_2024, "06.1"), paperId: P2_2024, number: "06.1", marks: 5, pageNumber: 14, specPoints: ["3.6.1"] },
+  { id: questionId(P2_2024, "06.2"), paperId: P2_2024, number: "06.2", marks: 3, pageNumber: 15, specPoints: ["3.1.5"] },
+  { id: questionId(P2_2024, "07.1"), paperId: P2_2024, number: "07.1", marks: 2, pageNumber: 17, specPoints: ["3.4.4"] },
+  { id: questionId(P2_2024, "07.2"), paperId: P2_2024, number: "07.2", marks: 2, pageNumber: 17, specPoints: ["3.4.4"] },
+  { id: questionId(P2_2024, "07.3"), paperId: P2_2024, number: "07.3", marks: 1, pageNumber: 18, specPoints: ["3.4.4"] },
+  { id: questionId(P2_2024, "07.4"), paperId: P2_2024, number: "07.4", marks: 2, pageNumber: 18, specPoints: ["3.4.4"] },
+  { id: questionId(P2_2024, "08.1"), paperId: P2_2024, number: "08.1", marks: 2, pageNumber: 20, specPoints: ["3.5.2"] },
+  { id: questionId(P2_2024, "08.2"), paperId: P2_2024, number: "08.2", marks: 2, pageNumber: 21, specPoints: ["3.1.1"] },
+  { id: questionId(P2_2024, "08.3"), paperId: P2_2024, number: "08.3", marks: 1, pageNumber: 22, specPoints: ["3.1.1"] },
+  { id: questionId(P2_2024, "08.4"), paperId: P2_2024, number: "08.4", marks: 5, pageNumber: 23, specPoints: ["3.1.1", "3.5.2"] },
+  { id: questionId(P2_2024, "09.1"), paperId: P2_2024, number: "09.1", marks: 2, pageNumber: 25, specPoints: ["3.5.3"] },
+  { id: questionId(P2_2024, "09.2"), paperId: P2_2024, number: "09.2", marks: 3, pageNumber: 26, specPoints: ["3.1.1"] },
+  { id: questionId(P2_2024, "09.3"), paperId: P2_2024, number: "09.3", marks: 2, pageNumber: 27, specPoints: ["3.1.1"] },
+  { id: questionId(P2_2024, "09.4"), paperId: P2_2024, number: "09.4", marks: 4, pageNumber: 28, specPoints: ["3.1.1", "3.5.3"] },
+  { id: questionId(P2_2024, "10.1"), paperId: P2_2024, number: "10.1", marks: 2, pageNumber: 29, specPoints: ["3.4.3"] },
+  { id: questionId(P2_2024, "10.2"), paperId: P2_2024, number: "10.2", marks: 2, pageNumber: 30, specPoints: ["3.7.3"] },
+  { id: questionId(P2_2024, "10.3"), paperId: P2_2024, number: "10.3", marks: 5, pageNumber: 30, specPoints: ["3.4.3"] },
+  { id: questionId(P2_2024, "10.4"), paperId: P2_2024, number: "10.4", marks: 3, pageNumber: 31, specPoints: ["3.4.4", "3.4.3"] },
+  { id: questionId(P2_2024, "10.5"), paperId: P2_2024, number: "10.5", marks: 3, pageNumber: 32, specPoints: ["3.7.1"] },
+
+  // ── 2024 Paper 3 ──
+  { id: questionId(P3_2024, "01.1"), paperId: P3_2024, number: "01.1", marks: 3, pageNumber: 2, specPoints: ["3.2.4", "3.1.4"] },
+  { id: questionId(P3_2024, "01.2"), paperId: P3_2024, number: "01.2", marks: 1, pageNumber: 2, specPoints: ["3.2.4", "3.4.3"] },
+  { id: questionId(P3_2024, "01.3"), paperId: P3_2024, number: "01.3", marks: 2, pageNumber: 3, specPoints: ["3.2.1.1", "3.2.4"] },
+  { id: questionId(P3_2024, "02.1"), paperId: P3_2024, number: "02.1", marks: 1, pageNumber: 4, specPoints: ["3.5.2", "3.1.7", "3.3.1", "3.1.8", "3.2.1.1"] },
+  { id: questionId(P3_2024, "02.2"), paperId: P3_2024, number: "02.2", marks: 2, pageNumber: 5, specPoints: ["3.5.2"] },
+  { id: questionId(P3_2024, "02.3"), paperId: P3_2024, number: "02.3", marks: 2, pageNumber: 5, specPoints: ["3.5.2"] },
+  { id: questionId(P3_2024, "02.4"), paperId: P3_2024, number: "02.4", marks: 3, pageNumber: 6, specPoints: ["3.5.2", "3.1.7"] },
+  { id: questionId(P3_2024, "03.1"), paperId: P3_2024, number: "03.1", marks: 3, pageNumber: 7, specPoints: ["3.3.1", "3.5.2"] },
+  { id: questionId(P3_2024, "03.2"), paperId: P3_2024, number: "03.2", marks: 3, pageNumber: 8, specPoints: ["3.3.1"] },
+  { id: questionId(P3_2024, "03.3"), paperId: P3_2024, number: "03.3", marks: 1, pageNumber: 9, specPoints: ["3.3.1"] },
+  { id: questionId(P3_2024, "03.4"), paperId: P3_2024, number: "03.4", marks: 1, pageNumber: 9, specPoints: ["3.3.2"] },
+  { id: questionId(P3_2024, "04.1"), paperId: P3_2024, number: "04.1", marks: 1, pageNumber: 10, specPoints: ["3.4.7"] },
+  { id: questionId(P3_2024, "04.2"), paperId: P3_2024, number: "04.2", marks: 5, pageNumber: 11, specPoints: ["3.8.3", "3.8.4.1", "3.4.7"] },
+  { id: questionId(P3_2024, "05.1"), paperId: P3_2024, number: "05.1", marks: 2, pageNumber: 12, specPoints: ["3.4.3", "3.4.2"] },
+  { id: questionId(P3_2024, "05.2"), paperId: P3_2024, number: "05.2", marks: 3, pageNumber: 13, specPoints: ["3.4.7"] },
+  { id: questionId(P3_2024, "05.3"), paperId: P3_2024, number: "05.3", marks: 2, pageNumber: 13, specPoints: ["3.4.4", "3.4.7"] },
+  { id: questionId(P3_2024, "05.4"), paperId: P3_2024, number: "05.4", marks: 3, pageNumber: 14, specPoints: ["3.8.3"] },
+  { id: questionId(P3_2024, "06.1"), paperId: P3_2024, number: "06.1", marks: 2, pageNumber: 15, specPoints: ["3.4.7"] },
+  { id: questionId(P3_2024, "06.2"), paperId: P3_2024, number: "06.2", marks: 1, pageNumber: 16, specPoints: ["3.4.7"] },
+  { id: questionId(P3_2024, "06.3"), paperId: P3_2024, number: "06.3", marks: 4, pageNumber: 17, specPoints: ["3.4.7"] },
+  { id: questionId(P3_2024, "06.4"), paperId: P3_2024, number: "06.4", marks: 1, pageNumber: 17, specPoints: ["3.4.7"] },
+  { id: questionId(P3_2024, "06.5"), paperId: P3_2024, number: "06.5", marks: 2, pageNumber: 18, specPoints: ["3.4.7"] },
+  { id: questionId(P3_2024, "06.6"), paperId: P3_2024, number: "06.6", marks: 2, pageNumber: 19, specPoints: ["3.4.7"] },
+  { id: questionId(P3_2024, "06.7"), paperId: P3_2024, number: "06.7", marks: 3, pageNumber: 21, specPoints: ["3.4.7"] },
+  { id: questionId(P3_2024, "07.1"), paperId: P3_2024, number: "07.1", marks: 25, pageNumber: 22, specPoints: ["3.1.3", "3.1.5.1", "3.1.5.2", "3.1.6", "3.1.8", "3.2.1.1", "3.2.2", "3.2.3", "3.3.3", "3.4.1", "3.4.2", "3.4.3", "3.4.4", "3.4.7", "3.5.1", "3.5.2", "3.5.4", "3.6.2.1", "3.6.2.2", "3.6.3", "3.6.4.2", "3.6.4.3", "3.8.1", "3.8.2.1", "3.8.2.2", "3.8.3", "3.8.4.1"] },
+  { id: questionId(P3_2024, "07.2"), paperId: P3_2024, number: "07.2", marks: 25, pageNumber: 22, specPoints: ["3.1.3", "3.1.4", "3.1.6", "3.1.7", "3.2.1.1", "3.2.2", "3.2.3", "3.2.4", "3.3.1", "3.3.2", "3.3.3", "3.3.4.1", "3.3.4.2", "3.4.2", "3.4.3", "3.5.1", "3.5.2", "3.6.1.1", "3.6.1.2", "3.6.1.3", "3.6.2.1", "3.6.2.2", "3.6.3", "3.6.4.1", "3.6.4.2", "3.6.4.3", "3.8.1", "3.8.2.2", "3.8.2.3"] },
 ];
 
 // ─────────────────────────────────────────────────────────────────
@@ -670,6 +737,713 @@ const PLACEHOLDER_BREAKDOWNS: Breakdown[] = [
     specLinks: ["3.1.6"],
     commonMistakes:
       "Saying both 'adenosine' and 'ribose' — adenosine already includes ribose, so the mark scheme rejects it. Wrong bond names (glycosidic, hydrogen). Confusing hydrolysis and condensation.",
+  },
+
+  // ── 2024 Paper 2 ──
+  {
+    questionId: questionId(P2_2024, "01.1"),
+    msAnswer: `1. A = mitochondrion
+2. B = presynaptic membrane/neurone
+3. C = (synaptic) vesicle(s)
+4. D = synaptic gap/cleft;;
+4 correct = 2 marks
+2-3 correct = 1 mark
+0-1 correct = 0 marks
+A. Accept mitochondria/crista(e).
+B. Accept synaptic knob/bulb or motor neurone.
+B. Accept nerve cell for neurone.`,
+    whyExplanation: `Two marks for naming all 4 parts (A-D). 2-3 correct = 1 mark. Be precise: 'mitochondrion', 'presynaptic membrane/neurone', '(synaptic) vesicle(s)', 'synaptic gap/cleft'.`,
+    specLinks: ["3.6.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "01.2"),
+    msAnswer: `1. Acetylcholine/neurotransmitter diffuses (across synaptic cleft);
+2. (Acetylcholine/neurotransmitter) attaches to receptors on the sarcolemma;
+3. Sodium ions enter leading to depolarisation/action potential;
+4. Calcium (ions) released by endoplasmic/sarcoplasmic reticulum;
+Incorrect sequence, penalise one mark.
+2. Accept postsynaptic membrane for sarcolemma.
+3. Accept Na+ for sodium ions.
+3. \`Sodium ion channels opening' on its own is not enough.
+4. Accept Ca2+ / Ca (ions not required as given in question).`,
+    whyExplanation: `Sequence at neuromuscular junction: ACh diffuses → binds sarcolemma receptors → Na⁺ enters → depolarisation/action potential → Ca²⁺ released from sarcoplasmic reticulum. Sequence order matters — one mark deducted for wrong order. 'Sodium ion channels opening' alone insufficient for MP3.`,
+    specLinks: ["3.6.1", "3.6.2"],
+  },
+  {
+    questionId: questionId(P2_2024, "01.3"),
+    msAnswer: `1. (Inside postsynaptic neurone/membrane/axon) is more negative OR Membrane potential is below resting potential OR Potential difference (across membrane) is greater;
+2. More sodium ions (required to enter) for depolarisation OR More sodium ions (required to enter) for action potential OR Prevents sodium ions causing depolarisation;
+1. Accept answers which refer to a numerical decrease in the resting potential.
+1. Reject \`reduces potential difference'.
+2. Accept to \`reach threshold' or \`generator potential' for \`action potential'.
+2. Accept Na+ for sodium ions.`,
+    whyExplanation: `Hyperpolarisation → inside more negative (MP1) → larger Na⁺ influx needed to reach threshold for action potential (MP2) → inhibits transmission. Avoid 'reduces potential difference' — it actually increases it.`,
+    specLinks: ["3.6.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "02.1"),
+    msAnswer: `Correct answer of 5 / 5.4 / 5.44 x 10^-2 = 2 marks;;
+Incorrect answer but shows 5 / 54 / 544 (ignore position of any decimal point or preceding/subsequent zeros) = 1 mark;
+10^-2 is essential for two marks.`,
+    whyExplanation: `New sarcomere length = 2 µm × (1 - 0.20) = 1.6 µm. Total = 34 × 1.6 = 54.4 µm = 0.0544 mm = 5.44 × 10⁻² mm. The 10⁻² is required for full marks.`,
+    specLinks: ["3.6.2", "3.1.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "02.2"),
+    msAnswer: `H-zone decreases, I-band decreases, A-band no change;`,
+    whyExplanation: `H-zone (myosin only) and I-band (actin only) shorten as actin slides in. A-band (length of myosin filament) stays the same.`,
+    specLinks: ["3.6.2"],
+  },
+  {
+    questionId: questionId(P2_2024, "02.3"),
+    msAnswer: `1. Fast (fibres) contract quickly whereas slow (fibres) contract slowly OR Fast (fibres) used for short time whereas slow (fibres) used for long time;
+2. Fast (fibres mainly) use anaerobic respiration OR Slow (fibres) use aerobic respiration;
+3. Fast (fibres) produce ATP quickly OR Slow (fibres) produce ATP slowly OR Less ATP/energy (per glucose) from anaerobic respiration OR More ATP/energy (per glucose) from aerobic respiration;
+4. Glycogen is a store of glucose OR Glycogen hydrolysed to glucose OR Glycogenolysis;
+3. Reject \`produce energy'.`,
+    whyExplanation: `Fast fibres: short burst, anaerobic, quick ATP, need large glycogen store. Slow fibres: endurance, aerobic, more ATP per glucose. Glycogen → glucose for respiration. Compare both types for each mark.`,
+    specLinks: ["3.6.2"],
+  },
+  {
+    questionId: questionId(P2_2024, "03.1"),
+    msAnswer: `1. (Percentage of light absorbed at each wavelength) correlates (with rate of photosynthesis);
+2. High(er)/increases (rate of photosynthesis) with blue and red light and low(er)/decreases (rate of photosynthesis) with green light;
+1. Ignore directly proportional.
+2. Reject \`no photosynthesis with green light'.`,
+    whyExplanation: `Two conclusions: (1) correlation between % light absorbed and photosynthesis rate. (2) Higher rate with blue/red (high absorption), lower with green (low absorption). Don't say 'directly proportional' or 'no photosynthesis with green'.`,
+    specLinks: ["3.4.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "03.2"),
+    msAnswer: `1. Intensity/brightness of light (at each wavelength)
+2. Carbon dioxide concentration
+3. Temperature
+4. Water OR Humidity;;
+3 correct = 2 marks
+2 correct = 1 mark
+0-1 correct = 0 marks
+Ignore pH and nutrients.
+1. Accept \`distance of/from light source'.
+1. Reject sunlight.`,
+    whyExplanation: `Three controlled variables needed: light intensity, CO₂ concentration, temperature. Water/humidity also accepted. pH and nutrients ignored.`,
+    specLinks: ["3.4.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "03.3"),
+    msAnswer: `1. ATP and reduced NADP;
+2. ATP provides energy;
+3. GP reduced to triose phosphate;
+1. Accept NADPH or NADPH2 or NADP + H for reduced NADP.
+3. Must have idea of reduction. Accept GP converted to triose phosphate using reduced NADP.
+3. Accept TP for triose phosphate.`,
+    whyExplanation: `Light-dependent reaction produces ATP and reduced NADP. ATP provides energy; reduced NADP reduces GP → triose phosphate. 'Reduction' must be conveyed for MP3.`,
+    specLinks: ["3.4.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "04.1"),
+    msAnswer: `1. Cross with homozygous recessive (fly) OR Cross with a black (fly) OR Cross with gg (fly);
+2. Black offspring/flies then is heterozygous/Gg OR All grey offspring/flies then is homozygous/GG;
+Alternative: DNA base sequencing and compare with known alleles; OR Electrophoresis and gene probes.`,
+    whyExplanation: `Test cross: cross with homozygous recessive (black, gg). Black offspring → parent was Gg. All grey → parent was GG. DNA sequencing/electrophoresis accepted as alternative.`,
+    specLinks: ["3.4.3"],
+  },
+  {
+    questionId: questionId(P2_2024, "04.2"),
+    msAnswer: `(If sex-linked) grey/male fly would only have/pass on grey/dominant allele OR (If sex-linked) females would receive the grey/dominant allele OR (If sex-linked) no female (offspring) would be black OR (If sex-linked) male (parent) could not have been heterozygous;
+Accept G for dominant allele and g for recessive allele.`,
+    whyExplanation: `If sex-linked, grey male (X^G Y) passes X^G to all daughters → all daughters grey. Observing black females (X^g X^g) means father must have X^g, which grey male can't provide → gene not sex-linked.`,
+    specLinks: ["3.4.3"],
+  },
+  {
+    questionId: questionId(P2_2024, "04.3"),
+    msAnswer: `1. Correct answer of 18 (%) = 2 marks;;
+2. Incorrect answer but shows understanding that 2pq = heterozygous/carriers = 1 mark;
+1. Accept 0.18 for one mark.`,
+    whyExplanation: `Grey = dominant. 19% grey means 81% black = q² = 0.81. q = 0.9, p = 0.1. Heterozygous = 2pq = 2×0.1×0.9 = 0.18 = 18%.`,
+    specLinks: ["3.4.3"],
+    commonMistakes: `Treating 19% grey as p² instead of realising black-bodied (recessive) = q² = 0.81.`,
+  },
+  {
+    questionId: questionId(P2_2024, "04.4"),
+    msAnswer: `1. RrGG and Rrgg;
+2. RrGg, (x2), rrGg, (and RRGg);
+3. Curly(-winged), grey(-bodied) and Normal(-winged), grey(-bodied) and ratio 2 : 1;
+Accept the alleles in any order.
+Note: If no mark awarded allow one principle mark when parental genotypes are incorrect but correct dihybrid genotypes shown.`,
+    whyExplanation: `Parents: RrGG × Rrgg. Rr×Rr gives RR:Rr:rr (1:2:1) but RR is lethal → surviving 2Rr:1rr. GG×gg gives all Gg. Offspring: RrGg (curly, grey) : rrGg (normal, grey) = 2:1.`,
+    specLinks: ["3.4.3"],
+  },
+  {
+    questionId: questionId(P2_2024, "05.1"),
+    msAnswer: `1. Use a grid OR Divide field/area into squares;
+2. Method of obtaining random coordinates/numbers e.g. calculator/computer/random numbers table/generator;
+3. Count number/frequency in a quadrat;
+4. Large sample and calculate mean number (per quadrat);
+5. Multiply mean number of plants per m2 by area of field OR Divide area of field by area of quadrat x mean number;
+4. If a specific number is given it must be 10 or more.
+5. Do not allow \`scale up' without further qualification.`,
+    whyExplanation: `Random sampling with quadrats: grid + random coordinates → count per quadrat → large sample (≥10) → mean → extrapolate to field area. Must describe how to obtain random coordinates and how to scale up.`,
+    specLinks: ["3.7.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "05.2"),
+    msAnswer: `1. Interspecific (competition);
+2. Less/no light (for potato plant) so less/no photosynthesis;
+3. Less nitrates/nitrogen to produce amino acids/protein/DNA/RNA/ATP OR Less phosphate/phosphorus to produce DNA/RNA/phospholipids/RuBP/GP/triose phosphate/NADP/ATP;
+3. Accept any named organic nitrogen or phosphorus containing molecule.`,
+    whyExplanation: `Interspecific competition (different species). Fat hen (2m tall) outcompetes for light → less photosynthesis. Also absorbs nitrates/phosphates → less available for potato DNA/protein/ATP synthesis.`,
+    specLinks: ["3.7.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "05.3"),
+    msAnswer: `Correct answer of 6.69 / 6.7 = 2 marks;;
+Incorrect answer but shows 669 / 67 (ignore position of any decimal point) = 1 mark
+OR Shows 0.012 = 1 mark
+OR Shows 8.47 / 8.5 = 1 mark
+OR Shows 8.69 = 1 mark`,
+    whyExplanation: `550 plants × 20000 seeds = 11,000,000. Viable = ×0.79 = 8,690,000. Mass = ×0.77 mg = 6,691,300 mg ÷ 1,000,000 = 6.69 kg. One mark for correct intermediate, two for 6.69/6.7 kg.`,
+    specLinks: ["3.1.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "06.1"),
+    msAnswer: `1. SAN releases (wave of) electrical activity;
+2. (So) atria contract (at the same time);
+3. AVN relays/passes electrical activity after a (short) delay;
+4. (Via) Purkyne tissue in/and bundle of His;
+5. (So) ventricles contract (at the same time from bottom upwards);
+Penalise one mark for incorrect sequence.
+1 and 3. Accept \`impulse/s' or \`wave of depolarisation' for electrical activity but reject \`signal', \`message' once only.
+4. Accept \`Purkinje' for Purkyne.`,
+    whyExplanation: `SAN → atria contract → AVN (delays) → Purkyne/bundle of His → ventricles contract from apex up. Sequence marks — one mark deducted for wrong order. 'Signal'/'message' rejected once.`,
+    specLinks: ["3.6.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "06.2"),
+    msAnswer: `1. Significant with age, hyperthyroidism, and high blood pressure (P < 0.05);
+2. Most significant with high blood pressure OR Least significant with hyperthyroidism;
+3. Not significant with high LDL (P > 0.05);
+4. (With) age, high blood pressure and hyperthyroidism reject the null hypothesis OR (With) high LDL accept the null hypothesis;
+1, 2 and 3. Reject \`results are significant' / \`results not significant' once only.`,
+    whyExplanation: `P < 0.05 = significant. Age (0.004), high BP (0.001), hyperthyroidism (0.018) are significant → reject null. High LDL (0.222) not significant → accept null. High BP has lowest P = strongest association.`,
+    specLinks: ["3.1.5"],
+    commonMistakes: `Saying 'results are significant' instead of 'the association/correlation is significant'.`,
+  },
+  {
+    questionId: questionId(P2_2024, "07.1"),
+    msAnswer: `Experiment 1 with 3 bands and experiment 2 with 5 bands in correct positions = 2 marks;;
+Experiment 1 with 3 bands and experiment 2 with 5 bands but not in correct positions = 1 mark;
+The second band from the top must be in the same position for both experiments.`,
+    whyExplanation: `BamH1 alone: 2 cut sites → 3 fragments. BamH1 + HindIII: 4 cut sites → 5 fragments. The fragment between first BamH1 and first HindIII is the same in both — second band from top must match.`,
+    specLinks: ["3.4.4"],
+  },
+  {
+    questionId: questionId(P2_2024, "07.2"),
+    msAnswer: `1. (Separate) DNA fragments/ladder of known sizes/lengths;
+2. Compare position/distance/bands with unknown fragment(s);
+1. Ignore mass.`,
+    whyExplanation: `DNA ladder (known sizes) run alongside unknowns. Compare migration distance to determine unknown fragment sizes. Smaller fragments travel further.`,
+    specLinks: ["3.4.4"],
+  },
+  {
+    questionId: questionId(P2_2024, "07.3"),
+    msAnswer: `4 or four;`,
+    whyExplanation: `Circular DNA (plasmid) with 4 cut sites → 4 fragments (cuts open the circle). Linear DNA with 4 cut sites → 5 fragments.`,
+    specLinks: ["3.4.4"],
+  },
+  {
+    questionId: questionId(P2_2024, "07.4"),
+    msAnswer: `1. Restriction endonucleases/enzymes cuts plasmid OR Restriction endonucleases/enzymes produce \`sticky ends';
+2. Ligase joins gene/DNA and plasmid OR Ligase joins \`sticky ends' OR Ligase forms phosphodiester bonds;
+1. Ignore restriction enzymes cuts out the gene.
+2. Ignore reference to hydrogen bonds.`,
+    whyExplanation: `Restriction endonuclease cuts plasmid at recognition site → sticky ends. DNA ligase forms phosphodiester bonds to seal the gene into the plasmid.`,
+    specLinks: ["3.4.4"],
+  },
+  {
+    questionId: questionId(P2_2024, "08.1"),
+    msAnswer: `1. Increasing IAA concentration increases (cell wall) plasticity OR IAA activates enzymes which increases (cell wall) plasticity;
+2. Increase in (cell wall) plasticity results in cell elongation;
+1 and 2. Accept \`stretching' for plasticity. Reject \`elasticity' once only.
+2. Idea of cell elongation or increase in cell length must be conveyed.`,
+    whyExplanation: `IAA → increased cell wall plasticity (MP1) → cell wall stretches → cell elongates (MP2). Must link plasticity to elongation, not just IAA to elongation.`,
+    specLinks: ["3.5.2"],
+  },
+  {
+    questionId: questionId(P2_2024, "08.2"),
+    msAnswer: `Correct answer of 570 (%) = 2 marks;;
+Answer or working shows 560 / 566 / 567 (%) = 1 mark
+Answer of 120 (%) = 1 mark`,
+    whyExplanation: `At 10⁻⁸: 1.2 mm. At 10⁻⁵: 8.0 mm. % increase = (8.0-1.2)/1.2 × 100 = 566.7% → 570% to 2 sf. One mark for 560/566/567%, two marks for 570%.`,
+    specLinks: ["3.1.1"],
+    commonMistakes: `Not rounding to 2 significant figures (leaving 566.7%).`,
+  },
+  {
+    questionId: questionId(P2_2024, "08.3"),
+    msAnswer: `1 part/cm3 of 10^-1/stock/GA and/to 9 parts/cm3 of (distilled) water, then 1 part/cm3 (of 10^-2) and/to 9 parts/cm3 of (distilled) water;
+Accept any volumes equivalent in parts to example provided.`,
+    whyExplanation: `10⁻¹ → 10⁻³ requires two 10-fold dilutions. Take 1 part stock + 9 parts water → 10⁻². Take 1 part of that + 9 parts water → 10⁻³.`,
+    specLinks: ["3.1.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "08.4"),
+    msAnswer: `Max 3 marks from mark points 3 to 8.
+1. (Use distilled) water (control) and different (GA) concentrations and 10 (stem) segments in each;
+2. Measure (length of) stem/segments at start and at end OR Determine increase/change in length;
+3. (Place stems in same) volume of solution/GA;
+4. (Leave for same period of) time;
+5. (Same) temperature;
+6. (Same) species/type (of plant);
+7. (Same) age (of plant);
+8. (Same) diameter/thickness of stem/segments;
+3 to 8. Ignore pH, carbon dioxide, humidity, nutrients, and light.`,
+    whyExplanation: `Set up control (water) + multiple GA concentrations. Measure initial and final length. Max 3 marks from controlled variables: volume of solution, time, temperature, same species, same age/stage, same stem diameter.`,
+    specLinks: ["3.1.1", "3.5.2"],
+  },
+  {
+    questionId: questionId(P2_2024, "09.1"),
+    msAnswer: `1. Type I do not produce insulin OR Type II do produce insulin;
+2. In type II receptors/cells less sensitive/responsive to insulin OR In type II receptors/cells are insulin \`resistant';
+3. Weight not linked to type I diabetes OR Weight linked to type II diabetes;
+1. Accept \`Type I lack insulin' or is \`due to an immune response' or \`beta cells non-functional'.
+3. Accept \`obesity' for \`weight'.`,
+    whyExplanation: `Two reasons weight loss helps Type II not Type I: Type I = no insulin production (autoimmune) — weight loss can't fix that. Type II = insulin resistance — weight loss improves cell sensitivity. Weight/obesity is a Type II risk factor, not Type I.`,
+    specLinks: ["3.5.3"],
+  },
+  {
+    questionId: questionId(P2_2024, "09.2"),
+    msAnswer: `1. Computer-generated list so no bias OR Selection of volunteers was random so no bias;
+2. Large sample size so representative/reliable;
+3. Two years so effect (could be) long term;
+4. Control so comparison possible;
+5. (Large) range/variety of ages so (age range) representative OR age is not a factor;
+2. Accept \`large number of health centres' and accept \`380/190' for \`large sample size'.`,
+    whyExplanation: `Three validity features: random selection (no bias), large sample (representative), 2-year duration (long-term effect), control group (comparison), wide age range (generalisable). Explain *why* each supports validity.`,
+    specLinks: ["3.1.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "09.3"),
+    msAnswer: `Correct answer of 71 = 2 marks;;
+Answer of 142 = 1 mark
+OR 80 OR 9 in working = 1 mark`,
+    whyExplanation: `190 per group. Group P remission: 0.421×190 = 79.99. Group Q: 0.047×190 = 8.93. Difference = 79.99-8.93 = 71.06 → 71.`,
+    specLinks: ["3.1.1"],
+  },
+  {
+    questionId: questionId(P2_2024, "09.4"),
+    msAnswer: `Max 3 marks from mark points 5 to 9.
+1. Percentage/number in remission and percentage/number with weight loss is higher for group P;
+2. High percentage with weight loss (15 kg) in both groups achieved remission;
+3. Some with weight gain achieved remission;
+4. Less than 50% in group P achieved remission;
+5. Only shows results for volunteers with less than 5 years of diabetes;
+6. No results for those over 60 years (of age) OR No results for those under 25 years;
+7. No statistical test to see if significant difference (in results);
+8. (Only shows remission) not cure OR Remission not (necessarily) long term;
+9. Mass/weight (of volunteers) at beginning not known;
+7. Reject \`to see if results are significant'.`,
+    whyExplanation: `Balanced evaluation. For: Group P higher remission (42.1% vs 4.7%), 15kg weight loss → high remission in both groups. Against: <50% in P achieved remission, limited to <5 years T2D, age 25-60 only, no statistical test, remission ≠ cure, initial weight unknown.`,
+    specLinks: ["3.1.1", "3.5.3"],
+  },
+  {
+    questionId: questionId(P2_2024, "10.1"),
+    msAnswer: `1. Mutations/genotype/alleles;
+2. Environment/habitat OR (Natural) selection;
+3. Epigenetics;
+4. Crossing over;
+5. Independent segregation/assortment (of homologous chromosomes);
+6. Random fusion of gametes OR Random fertilisation;
+2. Accept named different habitats.
+4. Accept recombination.`,
+    whyExplanation: `Phenotypic diversity from: mutations/alleles, environment/selection, epigenetics, crossing over, independent segregation, random fertilisation. Two distinct factors needed.`,
+    specLinks: ["3.4.3"],
+  },
+  {
+    questionId: questionId(P2_2024, "10.2"),
+    msAnswer: `1. Provides camouflage;
+2. (So) not seen by predators/prey OR Less predation OR Obtain/catch (more) prey;
+2. Accept descriptions of reduced predation e.g. \`fewer are eaten'.`,
+    whyExplanation: `Colour change → camouflage → avoids predators or ambushes prey more effectively.`,
+    specLinks: ["3.7.3"],
+  },
+  {
+    questionId: questionId(P2_2024, "10.3"),
+    msAnswer: `Mark point 1 required for max marks
+1. (Geckos in) same habitat/environment/area OR No geographical isolation/separation (between geckos);
+2. (Possibly) allopatric speciation as different (areas of same) habitat(s);
+3. (Could lead to) separate gene pools OR Reproductive isolation;
+4. Mutation(s);
+5. Selection for (both) extremes/colours OR Disruptive selection (occurs) as two extremes/colours;
+6. (Analysis shows that) diurnal geckos are a distinct (genetic) group;
+7. (Genomes/DNA indicates geckos are) same species;
+4. Reject mutation(s) if context incorrect e.g., \`mutate to adapt'.`,
+    whyExplanation: `Sympatric speciation requires same habitat (MP1, essential). Disruptive selection favours extremes (pale on walls, dark on trees). Different microhabitats could lead to reproductive isolation → separate gene pools. But genome data shows still same species → speciation incomplete.`,
+    specLinks: ["3.4.3"],
+    commonMistakes: `Missing MP1 (same habitat) — required for max marks.`,
+  },
+  {
+    questionId: questionId(P2_2024, "10.4"),
+    msAnswer: `1. Compare DNA base/nucleotide sequence OR Compare banding/position of DNA fragments;
+2. A distinct (group) will have different alleles/DNA/banding (from other group/s);
+3. DNA sequencing is automated/computerised OR PCR amplifies DNA/genes OR Genetic fingerprinting/electrophoresis separates fragments/genes/alleles OR Use of DNA probes/hybridisation to identify genes/alleles;
+1. Idea of \`comparison' must be conveyed.
+2. Reject \`species' for \`group'.`,
+    whyExplanation: `Compare DNA sequences/banding. Distinct group = different alleles/banding from others. Modern techniques: automated sequencing, PCR, electrophoresis, DNA probes. 'Comparison' must be stated.`,
+    specLinks: ["3.4.4", "3.4.3"],
+  },
+  {
+    questionId: questionId(P2_2024, "10.5"),
+    msAnswer: `1. Marking not toxic so does not affect survival OR Marking not visible to predators OR Marking does not wash/rub off so recaptured (geckos) identified;
+2. Time/delay after release so (geckos) spread (in the population) OR Time/delay before recapture so (geckos) spread (in the population);
+3. (Population =) (number in) first sample × (number in) second sample divided by (number) marked in second sample / number recaptured;
+1 and 2. Ignore births, deaths, reproduction, immigration, emigration.`,
+    whyExplanation: `Two precautions: marking must be harmless/invisible to predators/durable (MP1); allow time for marked animals to disperse before second sample (MP2). Formula: N = (n₁ × n₂) / m₂.`,
+    specLinks: ["3.7.1"],
+  },
+
+  // ── 2024 Paper 3 ──
+  {
+    questionId: questionId(P3_2024, "01.1"),
+    msAnswer: `1. (Cell-surface) membrane
+2. Protein
+3. Antigen
+4. Plasma
+5. Active
+6. Herd;;;
+(6 correct = 3 marks, 4-5 correct = 2 marks, 2-3 correct = 1 mark, 0-1 correct = 0 marks)
+2. Accept immunoglobulin or glycoprotein.
+2. Ignore tertiary.
+2. Ignore polypeptide.
+3. Accept complementary/specific.
+3. Ignore identical.
+5. Ignore artificial.
+5. Ignore primary.`,
+    whyExplanation: `Recall of key immunology terms. Six blanks, marks awarded by total correct: 6=3, 4-5=2, 2-3=1. Specific accepted alternatives: 'immunoglobulin' for protein, 'complementary/specific' for antigen.`,
+    specLinks: ["3.2.4", "3.1.4"],
+    commonMistakes: `Forgetting 'cell-surface' before membrane. Using 'tertiary' or 'polypeptide' for protein (rejected). Using 'identical' for antigen (rejected). Using 'artificial' or 'primary' for active immunity (rejected).`,
+  },
+  {
+    questionId: questionId(P3_2024, "01.2"),
+    msAnswer: `1. (High rate of) mutation;
+2. (High) genetic diversity;
+3. HIV in cells could (still) spread infection;
+4. HIV (DNA) embeds/inserts itself in host DNA;
+5. Lack of funding/money (for research/development);
+6. HIV causes fewer T cells, so immune response (to the vaccine) does not happen;
+(1 max)
+1. Accept antigenic variability OR descriptions of antigenic variability.
+6. Accept \`HIV destroys/kills T cells\` for \`HIV causes reduced T cells\`.
+6. Accept \`so B cells not activated\` for \`so immune response (to the vaccine) does not happen\`.
+6. Ignore immune cells destroyed.`,
+    whyExplanation: `One mark for any valid reason why HIV vaccine development is hard. Key reasons: high mutation rate → antigenic variability; hides in host cells; destroys T cells needed for immune response; lack of funding.`,
+    specLinks: ["3.2.4", "3.4.3"],
+    commonMistakes: `General immune system statements without linking to HIV's specific mechanisms. 'Immune cells destroyed' without specifying T cells.`,
+  },
+  {
+    questionId: questionId(P3_2024, "01.3"),
+    msAnswer: `(Ciprofloxacin)
+1. (HIV) has RNA OR (HIV) does not have DNA;
+(Penicillin)
+2. (HIV) has no cell wall OR (HIV) does not contain murein;
+(2 marks)
+1. Ignore any prefixes to RNA.
+1. Reject references to single stranded DNA.
+2. Reject any references to incorrect viral structures, eg viruses have a cell membrane OR a cell wall made of chitin.`,
+    whyExplanation: `Two marks, one per antibiotic. Ciprofloxacin targets DNA — HIV is an RNA virus. Penicillin targets murein cell walls — HIV has no cell wall. Must state the *absence* of the target structure in HIV.`,
+    specLinks: ["3.2.1.1", "3.2.4"],
+    commonMistakes: `Saying HIV has 'single-stranded DNA' (rejected). Stating HIV has a 'cell wall made of chitin' (rejected). Not explicitly stating HIV *lacks* the target.`,
+  },
+  {
+    questionId: questionId(P3_2024, "02.1"),
+    msAnswer: `Accept any two of the following for 1 mark;
+Volume/mass soda lime
+Concentration of soda lime
+Number/mass of woodlice
+Age of woodlice
+Same woodlice
+Species/type of woodlice
+Time for woodlice to acclimatise to (water bath) temperature
+(Starting) concentration of oxygen (inside the apparatus)
+Light intensity
+(1 mark)
+Accept weight/volume of woodlice for number/mass of woodlice.
+Ignore \`amount\` for concentration/volume/weight/mass.`,
+    whyExplanation: `One mark for any two valid controlled variables — factors that could affect respiration rate or drop movement other than temperature. Amount/concentration of soda lime, number/mass/type of woodlice, initial oxygen concentration.`,
+    specLinks: ["3.5.2", "3.1.7", "3.3.1", "3.1.8", "3.2.1.1"],
+    commonMistakes: `Stating 'amount of soda lime' without specifying volume/mass/concentration (ignored).`,
+  },
+  {
+    questionId: questionId(P3_2024, "02.2"),
+    msAnswer: `1. Open the (3-way) tap;
+2. Push/press the syringe (down);
+(2 marks)
+1. Accept descriptions of opening the tap, eg push/move/turn the tap.
+2. Accept descriptions of the pushing the syringe down, eg apply pressure to the syringe.`,
+    whyExplanation: `Two marks for two actions to reset the respirometer: open the tap, then push the syringe. Both required.`,
+    specLinks: ["3.5.2"],
+    commonMistakes: `Only stating one action. Not specifying the tap must be opened first.`,
+  },
+  {
+    questionId: questionId(P3_2024, "02.3"),
+    msAnswer: `1. No woodlice and all other conditions/apparatus/equipment the same;
+2. To show that (respiring) woodlice are causing the drop to move OR To show that (respiring) woodlice are taking up the oxygen OR To show that (respiring) woodlice are causing the change in volume/pressure;
+(2 marks)
+1. Accept other inert objects instead of woodlice eg glass beads.
+1. Accept dead woodlice for no woodlice.
+2. Accept to show that (respiring) woodlice are affecting the results.
+2. Accept \`no other factor(s)\` OR no other named factor OR \`nothing else\` for woodlice.`,
+    whyExplanation: `Two marks: setup (identical but no living woodlice) + purpose (prove the drop movement is caused by woodlice respiration, not environmental factors). Both needed.`,
+    specLinks: ["3.5.2"],
+    commonMistakes: `Not stating 'all other conditions the same'. Saying 'for comparison' without explaining what's being controlled.`,
+  },
+  {
+    questionId: questionId(P3_2024, "02.4"),
+    msAnswer: `Correct answer of 0.11 = 3 marks;;;
+0.10816247795/0.1082600897/0.1082173395 = 2 marks (answer not to 2 dp)
+Evidence of (3.14 x 1.25^2 x 25) / ((5 x 60) x 3.78) and incorrect answer to 2 dp = 2 marks (for input error into calculator)
+0.41 = 2 marks (mean rate in mm3 s^-1 for 3.78 g of woodlice)
+32.45/32.48/32.47 = 2 marks (mean rate in mm3 g^-1 in 5 minutes)
+0.43 = 2 marks (used diameter instead of radius in calculation)
+122.65625/122.767857142/122.718463 = 1 mark (volume of oxygen taken up in 5 minutes)`,
+    whyExplanation: `Three marks for correct oxygen uptake rate. Steps: 1) volume = π×r²×l = 3.14×1.25²×25 = 122.66 mm³. 2) time = 5×60 = 300 s. 3) rate = 122.66 ÷ (300×3.78) = 0.108... → 0.11 mm³ s⁻¹ g⁻¹. Marks for correct intermediates.`,
+    specLinks: ["3.5.2", "3.1.7"],
+    commonMistakes: `Using diameter (2.5 mm) instead of radius (1.25 mm). Not converting minutes to seconds. Not dividing by mass.`,
+  },
+  {
+    questionId: questionId(P3_2024, "03.1"),
+    msAnswer: `1. As surface area to volume ratio increases, metabolic rate increases OR (Humans with) a large surface area to volume ratio have a high/fast metabolic rate;
+2. (A large(r) surface area to volume ratio will) lose more heat;
+3. (A high(er) rate of metabolism/respiration) releases/provides/replaces heat OR (A high(er) rate of metabolism/respiration) maintains body temperature;
+(3 marks)
+Accept the converse for all marking points.
+1. Accept the relationship is proportional.
+3. Reject produces energy/heat energy.`,
+    whyExplanation: `Three-mark chain: higher SA:V → more heat loss (MP2) → higher metabolic rate to replace heat (MP3). Must state the positive correlation first (MP1). Converse scores.`,
+    specLinks: ["3.3.1", "3.5.2"],
+    commonMistakes: `Not linking all three points in a chain. Saying 'produces heat energy' (rejected). Not explicitly stating 'lose more heat'.`,
+  },
+  {
+    questionId: questionId(P3_2024, "03.2"),
+    msAnswer: `Person A and correct ratio of 23.7:1 OR 23.8:1 = 3 marks;;;
+Person A and correct ratio (23.75349227:1) not to 3 sf = 2 marks
+Person A and correct answer not expressed as a ratio = 2 marks
+Person B and correct ratio of 23.7 OR 23.8:1 = 2 marks
+Person B and 26.0:1 = 2 marks (correct calculations, wrong person)
+Evidence of 2.14 and 1.61 in working = 1 mark
+Evidence of 0.09 and 0.06(2) in working = 1 mark
+(3 marks)
+Ignore named person alone.
+If no person remove 1 mark.`,
+    whyExplanation: `Calculate SA:V for both persons using Mosteller formula (√(height×mass)/60 for SA; mass/1010 for volume). Person A: SA=2.138 m², V=0.0900 m³, ratio=23.8:1. Person B: SA=1.609 m², V=0.0620 m³, ratio=26.0:1. Person A has smaller ratio → named for 3 marks.`,
+    specLinks: ["3.3.1"],
+    commonMistakes: `Not using square root in surface area formula. Wrong significant figures. Not naming which person.`,
+  },
+  {
+    questionId: questionId(P3_2024, "03.3"),
+    msAnswer: `Due to a typographical error, this question has been discounted and all candidates will receive 1 mark, even the non-attempts.`,
+    whyExplanation: `Question discounted — typographical error in question paper. All candidates awarded 1 mark.`,
+    specLinks: ["3.3.1"],
+  },
+  {
+    questionId: questionId(P3_2024, "03.4"),
+    msAnswer: `(Gill) lamella(e) and (gill) filament(s);
+(1 mark)
+Accept primary and secondary lamellae.
+Ignore (gill) arch and (gill) rakers.`,
+    whyExplanation: `One mark for two structures. Gill filaments and lamellae increase surface area for gas exchange. 'Primary and secondary lamellae' also accepted.`,
+    specLinks: ["3.3.2"],
+    commonMistakes: `Naming gill arch or rakers (ignored). Only naming one structure.`,
+  },
+  {
+    questionId: questionId(P3_2024, "04.1"),
+    msAnswer: `Put the (stiffness) scores (for each concentration) in (value/rank) order and found middle value;
+(1 mark)
+Accept descriptions of (rank/value) order, eg smallest to largest.
+Accept find the (+2 1)th term/value.`,
+    whyExplanation: `One mark for median method: arrange data in order, find the middle value.`,
+    specLinks: ["3.4.7"],
+    commonMistakes: `Saying 'find the middle value' without mentioning ordering first.`,
+  },
+  {
+    questionId: questionId(P3_2024, "04.2"),
+    msAnswer: `Max 4 for mark points 3 to 9
+For
+1. (All concentrations) reduced stiffness (compared with 0 mg kg^-1);
+2. (Reduced stiffness) could mean less damage/pain OR (Reduced stiffness) could improve movement/mobility
+Against
+3. No idea of range/SD OR No statistical tests, so do not know if differences are due to chance/significant;
+4. No result for 37.5 OR No data between 25.0 and 50.0;
+5. Not clear if enzyme/damage is the same (as OA);
+6. All mice had stiffness, so not (completely) effective/cured OR Only reduced the amount of stiffness;
+7. (Investigation) carried out in mice OR (Investigation) not carried out in humans;
+8. (Investigation) only six weeks OR Do not know long-term effect;
+9. Small sample/20 (mice) in each group OR 20 (mice) is a small sample size;
+(5 max)
+3. Do not accept results unqualified.`,
+    whyExplanation: `Five marks for balanced evaluation. For: drug reduced stiffness at all concentrations vs control → less pain/improved mobility. Against: no statistical tests, missing 37.5 mg/kg data point, mice not humans, only 6 weeks, 20 mice per group, only reduced not cured, enzyme damage may not mimic OA.`,
+    specLinks: ["3.8.3", "3.8.4.1", "3.4.7"],
+    commonMistakes: `Only arguing one side. 'Results are significant' without statistical test evidence (rejected). Not linking limitations to human applicability.`,
+  },
+  {
+    questionId: questionId(P3_2024, "05.1"),
+    msAnswer: `Mark as pairs: 1 and 2 OR 3 and 4
+1. Deletion/translocation;
+2. Could mean triplet(s)/codon(s) missing OR Could mean amino acid(s) missing (from the polypeptide/SURF1);
+3. Substitution/inversion/addition/duplication/deletion/translocation;
+4. Could result in a (premature) stop triplet/codon;
+(2 max)
+2. Reject could mean an amino acid is not produced.`,
+    whyExplanation: `Two marks as pairs. Deletion/translocation → missing codons → missing amino acids (shorter). Any mutation → premature stop codon → early termination (shorter). Must link mutation type to the mechanism.`,
+    specLinks: ["3.4.3", "3.4.2"],
+    commonMistakes: `'Amino acid is not produced' (rejected — should say 'missing from the sequence'). Not explaining the mechanism linking mutation to shorter polypeptide.`,
+  },
+  {
+    questionId: questionId(P3_2024, "05.2"),
+    msAnswer: `Correct answer of 3 (people) = 3 marks;;;
+3.462564706/3.48/3.45 (or any correct rounding down to 1dp) = 2 marks (answer not to the nearest whole number)
+23 = 2 marks (number of Faroe Islanders with nuclear mutations)
+4 = 2 marks (not factored in that only 80% of mutations are in nuclear DNA)
+29 = 1 mark (number of Faroe Islanders with LS)
+(3 marks)`,
+    whyExplanation: `Three marks. Steps: 1) LS cases in Faroe Islands = 49053÷1700 = 28.85. 2) Nuclear DNA mutations = 28.85×0.80 = 23.08. 3) SURF1 mutations = 23.08×0.15 = 3.46 → 3 people. Marks for correct intermediates.`,
+    specLinks: ["3.4.7"],
+    commonMistakes: `Not rounding to nearest whole number. Forgetting the 80% nuclear DNA filter or 15% SURF1 filter.`,
+  },
+  {
+    questionId: questionId(P3_2024, "05.3"),
+    msAnswer: `Mark as pairs: 1 and 2 OR 3 and 4
+1. Genetic drift;
+2. Frequency is higher by chance OR High frequency is not due to natural selection;
+3. (Only) inbreeding/interbreeding (within a population) OR No (inter)breeding with other populations OR (Inherited from) common ancestor;
+4. Low genetic diversity OR Small gene pool OR Little gene flow OR Higher chance of inheriting allele OR Frequency of allele higher (in offspring);
+(2 max)
+3. Accept reproductively isolated.
+3. Accept genetic bottleneck OR founder effect.`,
+    whyExplanation: `Two marks as pairs. Genetic drift → higher frequency by chance (not selection). OR inbreeding/founder effect → small gene pool → higher chance of inheriting recessive allele. Need both the mechanism and its consequence.`,
+    specLinks: ["3.4.4", "3.4.7"],
+    commonMistakes: `Stating 'isolated population' without the genetic consequence. Not linking inbreeding to reduced diversity or increased allele frequency.`,
+  },
+  {
+    questionId: questionId(P3_2024, "05.4"),
+    msAnswer: `2 max for mark point 1 to 4 OR 5 to 7
+Yes (no mark)
+1. Some people could be heterozygous/carriers;
+2. Could prevent (human) suffering/death OR Could allow for (informed) decisions about having children;
+3. (But only) in families/people with a history of LS OR (only) in families/people in the Faroe Islands (where high frequency/1: 1700);
+4. Cost of screening might be cheaper than cost of treating LS;
+No (no mark)
+5. It is rare (globally) OR (Only) 1 in 40 000 (globally);
+6. Caused by (too) many genes/one of 75 genes OR Would need (too) many probes/75 probes;
+7. (Too) expensive to produce tests/probes (for more than 75 different genes) OR (Too) expensive to screen all;
+(3 max)`,
+    whyExplanation: `Three marks for balanced evaluation. For: identify carriers, prevent suffering, cost-effective vs treatment (especially high-frequency populations). Against: globally rare (1:40000), 75+ causal genes = complex/expensive screening. Max 2 if only one side.`,
+    specLinks: ["3.8.3"],
+    commonMistakes: `Not providing both sides. Generic statements without linking to LS specifics (rarity, multiple genes).`,
+  },
+  {
+    questionId: questionId(P3_2024, "06.1"),
+    msAnswer: `1. A group (of organisms) of the same species in a (particular) space at a (particular) time;
+2. That can (potentially) interbreed;
+(2 marks)
+1. Accept descriptions of \`space\` eg area, part of the world, habitat, ecosystem.
+2. Accept that can produce fertile offspring.`,
+    whyExplanation: `Two marks: same species in a defined space/time + ability to interbreed (produce fertile offspring). All components needed.`,
+    specLinks: ["3.4.7"],
+    commonMistakes: `Missing one component (same species / space / time / interbreed).`,
+  },
+  {
+    questionId: questionId(P3_2024, "06.2"),
+    msAnswer: `The number of bird species present in the woodland
+(1 mark)`,
+    whyExplanation: `Species richness = number of different species in an area. Correct option focuses on count of bird species in the woodland.`,
+    specLinks: ["3.4.7"],
+    commonMistakes: `Including all species (question specifies birds) or habitats (not part of species richness).`,
+  },
+  {
+    questionId: questionId(P3_2024, "06.3"),
+    msAnswer: `Max 3 for mark points 3 to 10
+Reason for
+1. The number of (bird) species increased (over 30 years);
+2. Long-term study;
+Reasons against
+3. (Bird) species did not increase every year;
+4. Don't know if the protection was for birds OR Don't know when the protection started;
+5. No data from/comparison with a woodland without protection;
+6. Only breeding birds recorded OR Not all bird species were recorded;
+7. Only one woodland OR Protection might not be the same in all woodlands;
+8. Only one day each year OR Birds migrate OR Birds might not be present on the day;
+9. Number of each species not known;
+10. The data is old/out of date;
+(4 max)
+5. Accept no control (woodland).
+6. and 7. Ignore unqualified references to sample size.`,
+    whyExplanation: `Four marks for balanced evaluation. For: species increased over 30 years in protected woodland. Against: fluctuating data, no control woodland, only breeding birds, single site, single-day surveys, no species counts, data is dated. Must cover both sides for full marks.`,
+    specLinks: ["3.4.7"],
+    commonMistakes: `Only giving one side. Generic 'small sample size' without qualification (ignored). Not linking limitations to conclusion validity.`,
+  },
+  {
+    questionId: questionId(P3_2024, "06.4"),
+    msAnswer: `Not a linear relationship;
+(1 mark)
+Accept descriptions of a linear relationship.
+Accept not a proportional relationship.
+Accept no correlation.
+Accept data fluctuates.`,
+    whyExplanation: `One mark for explaining why extrapolation isn't valid. The data isn't linear/proportional — it fluctuates, making future predictions unreliable.`,
+    specLinks: ["3.4.7"],
+    commonMistakes: `Not explicitly stating 'not linear' or 'fluctuates'.`,
+  },
+  {
+    questionId: questionId(P3_2024, "06.5"),
+    msAnswer: `1. (The bird community) becomes less similar (to the first year) OR (The bird community) becomes more dissimilar (to the first year);
+2. (Suggesting) biodiversity has changed/increased;
+3. Due to changes/increases in the species/birds (present) OR Due to changes in the woodland/abiotic/biotic factors;
+(2 max)
+1. Accept the index (of similarity) decreases.
+3. Accept named examples eg change in habitat/competition/predation.`,
+    whyExplanation: `Two marks: index decreases → community less similar to initial state (MP1) → biodiversity/species composition changing, characteristic of succession (MPs 2-3).`,
+    specLinks: ["3.4.7"],
+    commonMistakes: `Not explicitly stating 'less similar'. Not linking to biodiversity or species changing.`,
+  },
+  {
+    questionId: questionId(P3_2024, "06.6"),
+    msAnswer: `1. Climax community;
+2. (Even in a climax community,) number of birds/species will change;
+(2 marks)
+2. Accept suitable suggestions that describe the species/bird composition changing, eg migration of birds.`,
+    whyExplanation: `Two marks: near-constant similarity index = climax community (MP1). Not absolutely constant because species composition still fluctuates naturally e.g. migration (MP2).`,
+    specLinks: ["3.4.7"],
+    commonMistakes: `Not naming 'climax community'. Not giving a specific reason for minor fluctuations.`,
+  },
+  {
+    questionId: questionId(P3_2024, "06.7"),
+    msAnswer: `1. No significant decrease/difference as shown by SD;
+2. No idea if due to human activity OR No data/measurement/evidence of human activity OR Changes could be due to natural variation;
+3. LPI/index above 1970/1.0/baseline OR LPI/index increased (overall);
+4. (Vertical) scale has been altered to make (changes in) LPI/index look worse;
+(3 max)
+2. Accept named examples of factors that could cause change, eg disease, natural disasters.
+3. and 4. Accept \`biodiversity\` for LPI.`,
+    whyExplanation: `Three marks arguing the headline is invalid. SD lines show no significant decrease. No evidence changes are due to human activity. LPI still above 1970 baseline. Scale may be manipulated to exaggerate apparent decrease.`,
+    specLinks: ["3.4.7"],
+    commonMistakes: `Not referencing SD for significance. Not questioning the 'human activities' causal claim. Not noting LPI above baseline.`,
+  },
+  {
+    questionId: questionId(P3_2024, "07.1"),
+    msAnswer: `Phosphorus-containing substances and their importance in biological systems.
+(Indicative content lists relevant spec points as above).
+In order to fully address the question and reach the highest mark bands students must also include at least four topics in their answer, to demonstrate a synoptic approach to the essay.`,
+    whyExplanation: `Essay — synoptic, minimum four distinct topics. Cover phosphorus-containing substances: DNA/RNA, ATP, phospholipids, inorganic phosphate. For each: structure and biological importance. Detailed, linked to essay theme.`,
+    specLinks: ["3.1.3", "3.1.5.1", "3.1.5.2", "3.1.6", "3.1.8", "3.2.1.1", "3.2.2", "3.2.3", "3.3.3", "3.4.1", "3.4.2", "3.4.3", "3.4.4", "3.4.7", "3.5.1", "3.5.2", "3.5.4", "3.6.2.1", "3.6.2.2", "3.6.3", "3.6.4.2", "3.6.4.3", "3.8.1", "3.8.2.1", "3.8.2.2", "3.8.3", "3.8.4.1"],
+    commonMistakes: `Fewer than four topics. Isolated facts without linking to 'importance'. Significant biological errors.`,
+  },
+  {
+    questionId: questionId(P3_2024, "07.2"),
+    msAnswer: `The mechanisms and importance of transport within organisms.
+(Indicative content lists relevant spec points as above).
+In order to fully address the question and reach the highest mark bands students must also include at least four topics in their answer, to demonstrate a synoptic approach to the essay.`,
+    whyExplanation: `Essay — synoptic, minimum four distinct topics. Cover transport mechanisms: cell membranes, mass transport in animals/plants, nerve impulses, synaptic transmission, water transport. For each: mechanism + importance. Detailed, linked.`,
+    specLinks: ["3.1.3", "3.1.4", "3.1.6", "3.1.7", "3.2.1.1", "3.2.2", "3.2.3", "3.2.4", "3.3.1", "3.3.2", "3.3.3", "3.3.4.1", "3.3.4.2", "3.4.2", "3.4.3", "3.5.1", "3.5.2", "3.6.1.1", "3.6.1.2", "3.6.1.3", "3.6.2.1", "3.6.2.2", "3.6.3", "3.6.4.1", "3.6.4.2", "3.6.4.3", "3.8.1", "3.8.2.2", "3.8.2.3"],
+    commonMistakes: `Fewer than four topics. Facts without linking to 'mechanisms' or 'importance'. Irrelevant material.`,
   },
 ];
 
