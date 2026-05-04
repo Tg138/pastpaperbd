@@ -18,8 +18,11 @@ export default async function PaperPage(
   props: PageProps<"/biology/[year]/[paper]">
 ) {
   const { year: yearParam, paper: paperParam } = await props.params;
-  const { page } = await props.searchParams;
+  const { page, panels } = await props.searchParams;
   const initialPage = typeof page === "string" ? Number(page) || undefined : undefined;
+  const initialPanels = typeof panels === "string"
+    ? (panels.split(",").filter((p): p is "spec" | "walkthrough" => p === "spec" || p === "walkthrough"))
+    : undefined;
   const year = Number(yearParam) as Year;
   const paperNumber = Number(paperParam) as PaperNumber;
 
@@ -61,7 +64,7 @@ export default async function PaperPage(
         <ThemeToggle />
       </header>
 
-      <PaperViewer paper={paper} entries={enriched} initialPage={initialPage} />
+      <PaperViewer paper={paper} entries={enriched} initialPage={initialPage} initialPanels={initialPanels} />
     </div>
   );
 }

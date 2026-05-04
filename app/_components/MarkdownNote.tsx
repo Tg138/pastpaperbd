@@ -90,7 +90,7 @@ function plainInline(text: string): string {
     .trim();
 }
 
-function renderInline(text: string, noteIndex: Record<string, string> = {}): React.ReactNode[] {
+function renderInline(text: string, noteIndex: Record<string, string> = {}, backParam = ""): React.ReactNode[] {
   const cleaned = cleanText(text);
   const parts = cleaned.split(/(!\[\[[^\]]+\]\]|\[\[[^\]]+\]\]|\*\*[^*]+\*\*|_[^_]+_|\*[^*]+\*|\$[^$\n]+\$)/g);
 
@@ -114,7 +114,7 @@ function renderInline(text: string, noteIndex: Record<string, string> = {}): Rea
       const slug = noteIndex[lookupKey];
       if (slug) {
         return (
-          <a key={index} href={`/biology/notes/${slug}`} className="font-medium text-accent underline decoration-accent/40 underline-offset-2 hover:decoration-accent transition-colors">
+          <a key={index} href={`/biology/notes/${slug}${backParam}`} className="font-medium text-accent underline decoration-accent/40 underline-offset-2 hover:decoration-accent transition-colors">
             {displayText}
           </a>
         );
@@ -169,8 +169,8 @@ function sectionVariant(text: string): "exam" | "summary" | "default" {
   return "default";
 }
 
-export function MarkdownNote({ content, noteIndex = {} }: { content: string; noteIndex?: Record<string, string> }) {
-  const ri = (text: string) => renderInline(text, noteIndex);
+export function MarkdownNote({ content, noteIndex = {}, backParam = "" }: { content: string; noteIndex?: Record<string, string>; backParam?: string }) {
+  const ri = (text: string) => renderInline(text, noteIndex, backParam);
   const lines = content.replace(/\r\n/g, "\n").split("\n");
   const blocks: React.ReactNode[] = [];
   let pendingList: PendingList | undefined;

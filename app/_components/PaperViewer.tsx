@@ -55,10 +55,12 @@ export function PaperViewer({
   paper,
   entries,
   initialPage,
+  initialPanels,
 }: {
   paper: Paper;
   entries: QuestionEntry[];
   initialPage?: number;
+  initialPanels?: SidebarKey[];
 }) {
   const pathname = usePathname();
 
@@ -100,7 +102,7 @@ export function PaperViewer({
   }, []);
 
   // Both panels can be open simultaneously
-  const [openPanels, setOpenPanels] = useState<Set<SidebarKey>>(new Set());
+  const [openPanels, setOpenPanels] = useState<Set<SidebarKey>>(new Set(initialPanels ?? []));
 
   const togglePanel = (key: SidebarKey) => {
     setOpenPanels((prev) => {
@@ -170,9 +172,10 @@ export function PaperViewer({
   const activeEntry =
     entries.find((e) => e.question.id === activeQid) ?? entries[0];
 
+  const panelsParam = openPanels.size > 0 ? `&panels=${[...openPanels].join(",")}` : "";
   const backHref = activeEntry?.question.pageNumber
-    ? `${pathname}?page=${activeEntry.question.pageNumber}`
-    : pathname;
+    ? `${pathname}?page=${activeEntry.question.pageNumber}${panelsParam}`
+    : `${pathname}${panelsParam ? `?${panelsParam.slice(1)}` : ""}`;
 
   const onScrollActiveQuestionChange = useCallback((qid: string | null) => {
     if (qid) setActiveQid(qid);

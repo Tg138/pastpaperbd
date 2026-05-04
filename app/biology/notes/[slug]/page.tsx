@@ -23,6 +23,7 @@ export default async function BiologyNotePage(
   const { slug } = await props.params;
   const { back } = await props.searchParams;
   const backHref = typeof back === "string" ? back : null;
+  const backParam = backHref ? `?back=${encodeURIComponent(backHref)}` : "";
 
   const note = getBiologyNote(slug);
   if (!note) notFound();
@@ -62,7 +63,7 @@ export default async function BiologyNotePage(
           <div className="mb-6 text-xs font-medium uppercase tracking-wider text-muted">
             {note.topic}
           </div>
-          <MarkdownNote content={note.content} noteIndex={noteIndex} />
+          <MarkdownNote content={note.content} noteIndex={noteIndex} backParam={backParam} />
         </div>
       </main>
 
