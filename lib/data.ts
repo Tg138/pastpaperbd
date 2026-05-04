@@ -227,6 +227,84 @@ const PLACEHOLDER_SPEC: SpecPoint[] = [
     breakdown:
       "Courtship is data — you must link a numerical change to a specific behaviour outcome (attraction, mating, etc.) to score. 'Fewer courtship signals → fewer mates → fewer offspring' is the chain of reasoning examiners look for.",
   },
+
+  // ── 3.4 Genetic information, variation and relationships (continued) ──
+  {
+    id: "3.4.3",
+    title: "Inheritance — genetic crosses and populations",
+    topic: "Genetic information & variation",
+    description:
+      "Monohybrid and dihybrid inheritance, including sex-linked traits and lethal alleles. The Hardy-Weinberg principle states that allele and genotype frequencies remain constant in a large, randomly mating population with no selection, mutation or migration. p² + 2pq + q² = 1; p + q = 1. A test cross (cross with homozygous recessive) reveals whether an organism is homozygous or heterozygous dominant. Sources of phenotypic variation: mutations, crossing over, independent segregation, random fertilisation, environment, epigenetics.",
+    breakdown:
+      "Hardy-Weinberg: identify which phenotype is recessive (q²), take the square root to find q, then p = 1−q, heterozygous = 2pq. Dihybrid crosses with a lethal allele remove one genotype from the expected ratio. Test cross = cross with homozygous recessive; black offspring → parent was heterozygous.",
+    pageNumber: 43,
+  },
+  {
+    id: "3.4.4",
+    title: "Gene technologies — restriction enzymes, electrophoresis and recombinant DNA",
+    topic: "Genetic information & variation",
+    description:
+      "Restriction endonucleases cut DNA at specific recognition sequences, producing 'sticky ends'. DNA ligase forms phosphodiester bonds to seal fragments together. Gel electrophoresis separates DNA fragments by size — smaller fragments travel further. A DNA ladder of known fragment sizes allows unknown fragments to be sized by comparison. PCR amplifies DNA. Circular DNA (e.g., plasmids) with n cut sites produces n fragments; linear DNA with n cut sites produces n+1 fragments.",
+    breakdown:
+      "Restriction enzyme = cut (produces sticky ends). Ligase = join (phosphodiester bonds, not hydrogen bonds). Gel: smaller → further. Circular vs linear: n cuts → n fragments (circular) vs n+1 (linear). Comparison with ladder is always required for sizing.",
+    pageNumber: 45,
+  },
+
+  // ── 3.5 Energy transfers (continued) ──
+  {
+    id: "3.5.2",
+    title: "Plant growth regulators — auxins (IAA) and gibberellins",
+    topic: "Energy transfers",
+    description:
+      "Auxins (e.g., IAA) are plant growth regulators that promote cell elongation by increasing cell wall plasticity. IAA activates proton pumps, acidifying the cell wall and activating expansins. Gibberellins promote stem elongation, seed germination and fruit development. Experimental investigations into plant growth use serial dilutions to produce a range of concentrations and measure length changes over time.",
+    breakdown:
+      "IAA → plasticity → elongation (must show the chain, not just IAA → elongation). 'Elasticity' is rejected; use 'plasticity' or 'stretching'. Serial dilution: two 10-fold dilutions needed to go from 10⁻¹ to 10⁻³.",
+    pageNumber: 51,
+  },
+
+  // ── 3.6 Organisms respond to changes ──
+  {
+    id: "3.6.1",
+    title: "Nervous coordination — synapses and cardiac control",
+    topic: "Organisms respond",
+    description:
+      "At a cholinergic synapse: action potential arrives → Ca²⁺ enters presynaptic neurone → vesicles release acetylcholine (ACh) by exocytosis → ACh diffuses across synaptic cleft → binds receptors on postsynaptic membrane → Na⁺ channels open → depolarisation. Inhibitory synapses hyperpolarise the postsynaptic membrane (inside more negative), requiring a larger Na⁺ influx to reach threshold. Cardiac control: SAN generates electrical activity → atria contract → AVN delays impulse → Purkyne tissue/bundle of His → ventricles contract from apex upwards.",
+    breakdown:
+      "Sequence questions penalise wrong order. 'Signal'/'message' is rejected — use 'electrical activity'/'impulse'/'wave of depolarisation'. Hyperpolarisation increases the magnitude of the potential difference; don't say 'reduces potential difference'. AVN delay is essential — allows atria to empty before ventricles contract.",
+    pageNumber: 57,
+  },
+  {
+    id: "3.6.2",
+    title: "Skeletal muscles — structure and contraction",
+    topic: "Organisms respond",
+    description:
+      "At the neuromuscular junction: ACh released → binds sarcolemma receptors → Na⁺ enters → action potential along T-tubules → Ca²⁺ released from sarcoplasmic reticulum → Ca²⁺ binds troponin → tropomyosin moves → actin–myosin cross-bridges form → sliding filament mechanism. During contraction: I-band shortens, H-zone shortens, A-band stays the same. Fast (glycolytic) fibres: anaerobic, rapid ATP, quick contraction, large glycogen store. Slow (oxidative) fibres: aerobic, sustained contraction, more ATP per glucose.",
+    breakdown:
+      "A-band = length of myosin = UNCHANGED. I-band = actin only region = shortens. H-zone = myosin only region = shortens. Fast vs slow: always compare both for full marks. 'Produce energy' is rejected; use 'produce ATP'.",
+    pageNumber: 59,
+  },
+
+  // ── 3.7 Genetics, populations, evolution and ecosystems ──
+  {
+    id: "3.7.1",
+    title: "Populations and ecosystems — sampling and interspecific competition",
+    topic: "Genetics, populations & evolution",
+    description:
+      "Random sampling with quadrats: use a grid and random coordinates (calculator/computer/random number table) → count per quadrat → large sample (≥10) → calculate mean → extrapolate to total area. Mark-release-recapture: N = (n₁ × n₂) / m, where n₁ = first sample, n₂ = second sample, m = number recaptured marked. Assumptions: marking does not affect survival or visibility; sufficient time for redistribution before second sample; closed population. Interspecific competition: two different species competing for the same resource (light, water, minerals, space).",
+    breakdown:
+      "Random coordinates must be described (not just 'randomly place'). Scale-up: mean per quadrat × (total area ÷ quadrat area). Mark-Recapture formula: first × second ÷ recaptured. Interspecific = between species. Intraspecific = within a species.",
+    pageNumber: 71,
+  },
+  {
+    id: "3.7.3",
+    title: "Evolution may lead to speciation",
+    topic: "Genetics, populations & evolution",
+    description:
+      "Natural selection acts on phenotypic variation caused by mutations and other genetic changes. Disruptive selection favours both extremes of a trait, splitting a population into two phenotypic groups. Sympatric speciation occurs without geographical isolation — reproductive isolation arises through behavioural, temporal or ecological barriers within the same area. Allopatric speciation requires geographical isolation. Camouflage (matching background colour) reduces predation and increases reproductive success.",
+    breakdown:
+      "Sympatric = same habitat (no geographical isolation). Allopatric = different habitats (geographical isolation). Disruptive selection favours extremes, not the middle. For camouflage questions: always link to a survival/reproductive advantage — not just 'harder to see'.",
+    pageNumber: 75,
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────────
@@ -754,6 +832,7 @@ B. Accept synaptic knob/bulb or motor neurone.
 B. Accept nerve cell for neurone.`,
     whyExplanation: `Two marks for naming all 4 parts (A-D). 2-3 correct = 1 mark. Be precise: 'mitochondrion', 'presynaptic membrane/neurone', '(synaptic) vesicle(s)', 'synaptic gap/cleft'.`,
     specLinks: ["3.6.1"],
+    commonMistakes: `Confusing presynaptic membrane (B) with the postsynaptic membrane. Calling the gap 'synapse' — the mark requires 'synaptic gap/cleft'.`,
   },
   {
     questionId: questionId(P2_2024, "01.2"),
@@ -768,6 +847,7 @@ Incorrect sequence, penalise one mark.
 4. Accept Ca2+ / Ca (ions not required as given in question).`,
     whyExplanation: `Sequence at neuromuscular junction: ACh diffuses → binds sarcolemma receptors → Na⁺ enters → depolarisation/action potential → Ca²⁺ released from sarcoplasmic reticulum. Sequence order matters — one mark deducted for wrong order. 'Sodium ion channels opening' alone insufficient for MP3.`,
     specLinks: ["3.6.1", "3.6.2"],
+    commonMistakes: `Writing the sequence in the wrong order (one mark deducted). Saying 'cell surface membrane of muscle cell' instead of sarcolemma. Writing 'sodium ion channels open' alone for MP3 — you must state that sodium ions enter leading to depolarisation.`,
   },
   {
     questionId: questionId(P2_2024, "01.3"),
@@ -779,6 +859,7 @@ Incorrect sequence, penalise one mark.
 2. Accept Na+ for sodium ions.`,
     whyExplanation: `Hyperpolarisation → inside more negative (MP1) → larger Na⁺ influx needed to reach threshold for action potential (MP2) → inhibits transmission. Avoid 'reduces potential difference' — it actually increases it.`,
     specLinks: ["3.6.1"],
+    commonMistakes: `Writing 'reduces potential difference' — this is explicitly rejected; hyperpolarisation increases the potential difference (inside is more negative). Not explaining WHY inhibition occurs — must link the more-negative inside to needing more Na⁺ to reach threshold.`,
   },
   {
     questionId: questionId(P2_2024, "02.1"),
@@ -787,12 +868,14 @@ Incorrect answer but shows 5 / 54 / 544 (ignore position of any decimal point or
 10^-2 is essential for two marks.`,
     whyExplanation: `New sarcomere length = 2 µm × (1 - 0.20) = 1.6 µm. Total = 34 × 1.6 = 54.4 µm = 0.0544 mm = 5.44 × 10⁻² mm. The 10⁻² is required for full marks.`,
     specLinks: ["3.6.2", "3.1.1"],
+    commonMistakes: `Giving 54.4 or 0.0544 without expressing in standard form — 10⁻² is required for the second mark. Forgetting to apply the 20% shortening before multiplying by 34.`,
   },
   {
     questionId: questionId(P2_2024, "02.2"),
     msAnswer: `H-zone decreases, I-band decreases, A-band no change;`,
     whyExplanation: `H-zone (myosin only) and I-band (actin only) shorten as actin slides in. A-band (length of myosin filament) stays the same.`,
     specLinks: ["3.6.2"],
+    commonMistakes: `Stating the A-band decreases — it does not change (it equals the length of the myosin filament). Confusing H-zone (myosin only, central) with I-band (actin only, either side).`,
   },
   {
     questionId: questionId(P2_2024, "02.3"),
@@ -803,6 +886,7 @@ Incorrect answer but shows 5 / 54 / 544 (ignore position of any decimal point or
 3. Reject \`produce energy'.`,
     whyExplanation: `Fast fibres: short burst, anaerobic, quick ATP, need large glycogen store. Slow fibres: endurance, aerobic, more ATP per glucose. Glycogen → glucose for respiration. Compare both types for each mark.`,
     specLinks: ["3.6.2"],
+    commonMistakes: `Describing only one fibre type instead of comparing both. Writing 'produce energy' — the mark scheme rejects this; use 'produce ATP'. Not linking glycogen to its role as a glucose store for respiration.`,
   },
   {
     questionId: questionId(P2_2024, "03.1"),
@@ -812,6 +896,7 @@ Incorrect answer but shows 5 / 54 / 544 (ignore position of any decimal point or
 2. Reject \`no photosynthesis with green light'.`,
     whyExplanation: `Two conclusions: (1) correlation between % light absorbed and photosynthesis rate. (2) Higher rate with blue/red (high absorption), lower with green (low absorption). Don't say 'directly proportional' or 'no photosynthesis with green'.`,
     specLinks: ["3.4.1"],
+    commonMistakes: `Writing 'directly proportional' — ignored by the mark scheme. Stating 'no photosynthesis with green light' — this is explicitly rejected; green light just gives a lower rate.`,
   },
   {
     questionId: questionId(P2_2024, "03.2"),
@@ -827,6 +912,7 @@ Ignore pH and nutrients.
 1. Reject sunlight.`,
     whyExplanation: `Three controlled variables needed: light intensity, CO₂ concentration, temperature. Water/humidity also accepted. pH and nutrients ignored.`,
     specLinks: ["3.4.1"],
+    commonMistakes: `Including pH or nutrients — these are explicitly ignored. Listing 'sunlight' instead of light intensity — rejected. Forgetting that you need three correct for both marks.`,
   },
   {
     questionId: questionId(P2_2024, "03.3"),
@@ -838,6 +924,7 @@ Ignore pH and nutrients.
 3. Accept TP for triose phosphate.`,
     whyExplanation: `Light-dependent reaction produces ATP and reduced NADP. ATP provides energy; reduced NADP reduces GP → triose phosphate. 'Reduction' must be conveyed for MP3.`,
     specLinks: ["3.4.1"],
+    commonMistakes: `Naming only ATP or only reduced NADP (both needed for MP1). Not conveying the idea of reduction for MP3 — 'GP converted to triose phosphate' alone is insufficient; must state it is reduced using reduced NADP.`,
   },
   {
     questionId: questionId(P2_2024, "04.1"),
@@ -846,6 +933,7 @@ Ignore pH and nutrients.
 Alternative: DNA base sequencing and compare with known alleles; OR Electrophoresis and gene probes.`,
     whyExplanation: `Test cross: cross with homozygous recessive (black, gg). Black offspring → parent was Gg. All grey → parent was GG. DNA sequencing/electrophoresis accepted as alternative.`,
     specLinks: ["3.4.3"],
+    commonMistakes: `Not specifying that the test cross partner must be homozygous recessive (black, gg). Forgetting to state what the offspring phenotypes indicate — e.g., black offspring means the grey parent was Gg.`,
   },
   {
     questionId: questionId(P2_2024, "04.2"),
@@ -853,6 +941,7 @@ Alternative: DNA base sequencing and compare with known alleles; OR Electrophore
 Accept G for dominant allele and g for recessive allele.`,
     whyExplanation: `If sex-linked, grey male (X^G Y) passes X^G to all daughters → all daughters grey. Observing black females (X^g X^g) means father must have X^g, which grey male can't provide → gene not sex-linked.`,
     specLinks: ["3.4.3"],
+    commonMistakes: `Not applying the sex-linkage logic rigorously: a grey male (X^G Y) passes his X^G to all daughters, so no daughter can be black — seeing black females disproves sex-linkage.`,
   },
   {
     questionId: questionId(P2_2024, "04.3"),
@@ -872,6 +961,7 @@ Accept the alleles in any order.
 Note: If no mark awarded allow one principle mark when parental genotypes are incorrect but correct dihybrid genotypes shown.`,
     whyExplanation: `Parents: RrGG × Rrgg. Rr×Rr gives RR:Rr:rr (1:2:1) but RR is lethal → surviving 2Rr:1rr. GG×gg gives all Gg. Offspring: RrGg (curly, grey) : rrGg (normal, grey) = 2:1.`,
     specLinks: ["3.4.3"],
+    commonMistakes: `Forgetting that RR is lethal, so showing a 3:1 ratio instead of 2:1. Not stating that all offspring are grey-bodied (all get Gg from GG × gg).`,
   },
   {
     questionId: questionId(P2_2024, "05.1"),
@@ -884,6 +974,7 @@ Note: If no mark awarded allow one principle mark when parental genotypes are in
 5. Do not allow \`scale up' without further qualification.`,
     whyExplanation: `Random sampling with quadrats: grid + random coordinates → count per quadrat → large sample (≥10) → mean → extrapolate to field area. Must describe how to obtain random coordinates and how to scale up.`,
     specLinks: ["3.7.1"],
+    commonMistakes: `Not explaining how to obtain random coordinates (must name a method: random number generator, calculator, table). Writing 'scale up' without the qualifying formula or method.`,
   },
   {
     questionId: questionId(P2_2024, "05.2"),
@@ -893,6 +984,7 @@ Note: If no mark awarded allow one principle mark when parental genotypes are in
 3. Accept any named organic nitrogen or phosphorus containing molecule.`,
     whyExplanation: `Interspecific competition (different species). Fat hen (2m tall) outcompetes for light → less photosynthesis. Also absorbs nitrates/phosphates → less available for potato DNA/protein/ATP synthesis.`,
     specLinks: ["3.7.1"],
+    commonMistakes: `Not naming the type of competition as 'interspecific'. Only describing competition for light — the mark requires at least one mineral/nutrient resource (nitrates or phosphates) for MP3.`,
   },
   {
     questionId: questionId(P2_2024, "05.3"),
@@ -903,6 +995,7 @@ OR Shows 8.47 / 8.5 = 1 mark
 OR Shows 8.69 = 1 mark`,
     whyExplanation: `550 plants × 20000 seeds = 11,000,000. Viable = ×0.79 = 8,690,000. Mass = ×0.77 mg = 6,691,300 mg ÷ 1,000,000 = 6.69 kg. One mark for correct intermediate, two for 6.69/6.7 kg.`,
     specLinks: ["3.1.1"],
+    commonMistakes: `Forgetting to convert mg to kg at the end (leaving the answer as ~6,691,300 mg). Rounding incorrectly — 6.69 and 6.7 both earn two marks; 669 or 67 earns one mark only.`,
   },
   {
     questionId: questionId(P2_2024, "06.1"),
@@ -916,6 +1009,7 @@ Penalise one mark for incorrect sequence.
 4. Accept \`Purkinje' for Purkyne.`,
     whyExplanation: `SAN → atria contract → AVN (delays) → Purkyne/bundle of His → ventricles contract from apex up. Sequence marks — one mark deducted for wrong order. 'Signal'/'message' rejected once.`,
     specLinks: ["3.6.1"],
+    commonMistakes: `Using 'signal' or 'message' for the SAN/AVN impulse — these are rejected once. Omitting the AVN delay (MP3) or the Purkyne/bundle of His (MP4). Writing the sequence in the wrong order (one mark deducted).`,
   },
   {
     questionId: questionId(P2_2024, "06.2"),
@@ -935,6 +1029,7 @@ Experiment 1 with 3 bands and experiment 2 with 5 bands but not in correct posit
 The second band from the top must be in the same position for both experiments.`,
     whyExplanation: `BamH1 alone: 2 cut sites → 3 fragments. BamH1 + HindIII: 4 cut sites → 5 fragments. The fragment between first BamH1 and first HindIII is the same in both — second band from top must match.`,
     specLinks: ["3.4.4"],
+    commonMistakes: `Not placing the shared band (second from top) at the same position in both experiments. Showing the wrong number of bands — BamH1 alone gives 3; BamH1 + HindIII gives 5.`,
   },
   {
     questionId: questionId(P2_2024, "07.2"),
@@ -943,12 +1038,14 @@ The second band from the top must be in the same position for both experiments.`
 1. Ignore mass.`,
     whyExplanation: `DNA ladder (known sizes) run alongside unknowns. Compare migration distance to determine unknown fragment sizes. Smaller fragments travel further.`,
     specLinks: ["3.4.4"],
+    commonMistakes: `Simply saying 'used as a reference' without describing what comparison is made. Not specifying that the ladder contains fragments of known sizes.`,
   },
   {
     questionId: questionId(P2_2024, "07.3"),
     msAnswer: `4 or four;`,
     whyExplanation: `Circular DNA (plasmid) with 4 cut sites → 4 fragments (cuts open the circle). Linear DNA with 4 cut sites → 5 fragments.`,
     specLinks: ["3.4.4"],
+    commonMistakes: `Answering 5 — this applies to linear DNA. Circular DNA with 4 cut sites produces 4 fragments (cuts open the circle at 4 points, not creating extra ends).`,
   },
   {
     questionId: questionId(P2_2024, "07.4"),
@@ -958,6 +1055,7 @@ The second band from the top must be in the same position for both experiments.`
 2. Ignore reference to hydrogen bonds.`,
     whyExplanation: `Restriction endonuclease cuts plasmid at recognition site → sticky ends. DNA ligase forms phosphodiester bonds to seal the gene into the plasmid.`,
     specLinks: ["3.4.4"],
+    commonMistakes: `Writing that ligase forms hydrogen bonds — rejected; ligase forms phosphodiester bonds. Saying restriction enzymes 'cut out the gene' for MP1 — this is ignored; the mark is for cutting the plasmid or producing sticky ends.`,
   },
   {
     questionId: questionId(P2_2024, "08.1"),
@@ -967,6 +1065,7 @@ The second band from the top must be in the same position for both experiments.`
 2. Idea of cell elongation or increase in cell length must be conveyed.`,
     whyExplanation: `IAA → increased cell wall plasticity (MP1) → cell wall stretches → cell elongates (MP2). Must link plasticity to elongation, not just IAA to elongation.`,
     specLinks: ["3.5.2"],
+    commonMistakes: `Stopping at 'IAA causes cell elongation' without mentioning cell wall plasticity — the mechanism (plasticity) is required for MP1. Using 'elasticity' — this is rejected; the correct term is 'plasticity' or 'stretching'.`,
   },
   {
     questionId: questionId(P2_2024, "08.2"),
@@ -983,6 +1082,7 @@ Answer of 120 (%) = 1 mark`,
 Accept any volumes equivalent in parts to example provided.`,
     whyExplanation: `10⁻¹ → 10⁻³ requires two 10-fold dilutions. Take 1 part stock + 9 parts water → 10⁻². Take 1 part of that + 9 parts water → 10⁻³.`,
     specLinks: ["3.1.1"],
+    commonMistakes: `Describing only one 10-fold dilution step — two serial dilutions are needed to go from 10⁻¹ to 10⁻³. Not specifying the ratio (1 part stock to 9 parts water).`,
   },
   {
     questionId: questionId(P2_2024, "08.4"),
@@ -998,6 +1098,7 @@ Accept any volumes equivalent in parts to example provided.`,
 3 to 8. Ignore pH, carbon dioxide, humidity, nutrients, and light.`,
     whyExplanation: `Set up control (water) + multiple GA concentrations. Measure initial and final length. Max 3 marks from controlled variables: volume of solution, time, temperature, same species, same age/stage, same stem diameter.`,
     specLinks: ["3.1.1", "3.5.2"],
+    commonMistakes: `Listing controlled variables that are explicitly ignored (pH, CO₂, humidity, nutrients, light) — these earn no marks. Forgetting to include a control (distilled water) or forgetting to describe how length is measured (before and after).`,
   },
   {
     questionId: questionId(P2_2024, "09.1"),
@@ -1008,6 +1109,7 @@ Accept any volumes equivalent in parts to example provided.`,
 3. Accept \`obesity' for \`weight'.`,
     whyExplanation: `Two reasons weight loss helps Type II not Type I: Type I = no insulin production (autoimmune) — weight loss can't fix that. Type II = insulin resistance — weight loss improves cell sensitivity. Weight/obesity is a Type II risk factor, not Type I.`,
     specLinks: ["3.5.3"],
+    commonMistakes: `Giving only one reason instead of two — the question says 'two reasons'. Vaguely saying 'weight causes diabetes' without specifying Type II only. Not contrasting Type I (no insulin production / autoimmune) with Type II (insulin resistance).`,
   },
   {
     questionId: questionId(P2_2024, "09.2"),
@@ -1019,6 +1121,7 @@ Accept any volumes equivalent in parts to example provided.`,
 2. Accept \`large number of health centres' and accept \`380/190' for \`large sample size'.`,
     whyExplanation: `Three validity features: random selection (no bias), large sample (representative), 2-year duration (long-term effect), control group (comparison), wide age range (generalisable). Explain *why* each supports validity.`,
     specLinks: ["3.1.1"],
+    commonMistakes: `Stating a feature (e.g., 'random selection') without explaining why it improves validity (e.g., 'no bias'). Only giving two features when three are needed for full marks.`,
   },
   {
     questionId: questionId(P2_2024, "09.3"),
@@ -1027,6 +1130,7 @@ Answer of 142 = 1 mark
 OR 80 OR 9 in working = 1 mark`,
     whyExplanation: `190 per group. Group P remission: 0.421×190 = 79.99. Group Q: 0.047×190 = 8.93. Difference = 79.99-8.93 = 71.06 → 71.`,
     specLinks: ["3.1.1"],
+    commonMistakes: `Giving 142 as the answer — this is the total in remission across both groups combined, not the difference. Must calculate each group separately (190 × 0.421 and 190 × 0.047) then subtract.`,
   },
   {
     questionId: questionId(P2_2024, "09.4"),
@@ -1043,6 +1147,7 @@ OR 80 OR 9 in working = 1 mark`,
 7. Reject \`to see if results are significant'.`,
     whyExplanation: `Balanced evaluation. For: Group P higher remission (42.1% vs 4.7%), 15kg weight loss → high remission in both groups. Against: <50% in P achieved remission, limited to <5 years T2D, age 25-60 only, no statistical test, remission ≠ cure, initial weight unknown.`,
     specLinks: ["3.1.1", "3.5.3"],
+    commonMistakes: `Only listing strengths or only weaknesses — a balanced evaluation is needed. Saying 'results are significant' rather than referring to a statistical test to determine significance.`,
   },
   {
     questionId: questionId(P2_2024, "10.1"),
@@ -1056,6 +1161,7 @@ OR 80 OR 9 in working = 1 mark`,
 4. Accept recombination.`,
     whyExplanation: `Phenotypic diversity from: mutations/alleles, environment/selection, epigenetics, crossing over, independent segregation, random fertilisation. Two distinct factors needed.`,
     specLinks: ["3.4.3"],
+    commonMistakes: `Listing only genetic factors (e.g., mutations alone) without an environmental factor — two distinct types are expected. Confusing crossing over (which creates new allele combinations) with independent segregation (which shuffles whole chromosomes).`,
   },
   {
     questionId: questionId(P2_2024, "10.2"),
@@ -1064,6 +1170,7 @@ OR 80 OR 9 in working = 1 mark`,
 2. Accept descriptions of reduced predation e.g. \`fewer are eaten'.`,
     whyExplanation: `Colour change → camouflage → avoids predators or ambushes prey more effectively.`,
     specLinks: ["3.7.3"],
+    commonMistakes: `Stopping at 'provides camouflage' without giving the survival advantage — must link to predation (less likely to be eaten) or prey capture (catch more prey).`,
   },
   {
     questionId: questionId(P2_2024, "10.3"),
@@ -1089,6 +1196,7 @@ OR 80 OR 9 in working = 1 mark`,
 2. Reject \`species' for \`group'.`,
     whyExplanation: `Compare DNA sequences/banding. Distinct group = different alleles/banding from others. Modern techniques: automated sequencing, PCR, electrophoresis, DNA probes. 'Comparison' must be stated.`,
     specLinks: ["3.4.4", "3.4.3"],
+    commonMistakes: `Not conveying the idea of 'comparison' in MP1 — comparison between groups is essential. Using 'species' instead of 'group' in MP2 — explicitly rejected.`,
   },
   {
     questionId: questionId(P2_2024, "10.5"),
@@ -1098,6 +1206,7 @@ OR 80 OR 9 in working = 1 mark`,
 1 and 2. Ignore births, deaths, reproduction, immigration, emigration.`,
     whyExplanation: `Two precautions: marking must be harmless/invisible to predators/durable (MP1); allow time for marked animals to disperse before second sample (MP2). Formula: N = (n₁ × n₂) / m₂.`,
     specLinks: ["3.7.1"],
+    commonMistakes: `Confusing which numbers go where in the formula — N = (n₁ × n₂) / m₂ (both sample sizes on top, recaptured marked on bottom). Including births, deaths, immigration or emigration as precautions — these are ignored.`,
   },
 
   // ── 2024 Paper 3 ──
