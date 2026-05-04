@@ -3,6 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 // ─────────────────────────────────────────────────────────────────
 // Icons
@@ -57,6 +58,9 @@ export function PaperViewer({
   paper: Paper;
   entries: QuestionEntry[];
 }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [examMode, setExamMode] = useState(false);
   const [layout, setLayout] = useState<ViewLayout>("qp");
   const [renderMode, setRenderMode] = useState<RenderMode>("interactive");
@@ -122,6 +126,17 @@ export function PaperViewer({
   const qpHandleRef = useRef<InteractivePdfHandle>(null);
   const msHandleRef = useRef<InteractivePdfHandle>(null);
 
+  // Scroll to page specified in ?page= when navigating back from a note
+  useEffect(() => {
+    const page = Number(searchParams.get("page"));
+    if (!page) return;
+    const timer = setTimeout(() => {
+      qpHandleRef.current?.scrollToPage(page);
+    }, 400);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const storageKey = `progress:${paper.subject}-${paper.year}-p${paper.paperNumber}`;
 
   useEffect(() => {
@@ -160,6 +175,10 @@ export function PaperViewer({
 
   const activeEntry =
     entries.find((e) => e.question.id === activeQid) ?? entries[0];
+
+  const backHref = activeEntry?.question.pageNumber
+    ? `${pathname}?page=${activeEntry.question.pageNumber}`
+    : pathname;
 
   const onScrollActiveQuestionChange = useCallback((qid: string | null) => {
     if (qid) setActiveQid(qid);
@@ -307,12 +326,12 @@ export function PaperViewer({
         {(openPanels.size < 2 && layout !== "split") ? (
           <div className={`overflow-hidden flex flex-col bg-surface border-r border-border transition-all duration-150 ease-in-out ${specOpen ? "w-1/3 opacity-100" : "w-0 opacity-0"}`}>
             {specOpen && (
-              <SpecSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} onClose={() => closePanel("spec")} />
+              <SpecSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} onClose={() => closePanel("spec")} backHref={backHref} />
             )}
           </div>
         ) : (
           <DockedPanel side="left" open={specOpen} onClose={() => closePanel("spec")} width={dualPanelWidth}>
-            <SpecSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} onClose={() => closePanel("spec")} />
+            <SpecSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} onClose={() => closePanel("spec")} backHref={backHref} />
           </DockedPanel>
         )}
 
@@ -590,12 +609,14 @@ function SpecSidebar({
   activeQid,
   onSelectQuestion,
   onClose,
+  backHref,
 }: {
   entry: QuestionEntry | undefined;
   entries: QuestionEntry[];
   activeQid: string | null;
   onSelectQuestion: (qid: string) => void;
   onClose: () => void;
+  backHref: string;
 }) {
   return (
     <div className="flex flex-col h-full">
@@ -627,7 +648,7 @@ function SpecSidebar({
               ))}
             </div>
           </div>
-          <RelatedNotes notes={entry.relatedNotes} />
+          <RelatedNotes notes={entry.relatedNotes} backHref={backHref} />
         </div>
       ) : (
         <div className="p-4 text-sm text-muted">No question selected.</div>
@@ -788,7 +809,7 @@ function Collapsible({
 // ─────────────────────────────────────────────────────────────────
 // Shared
 
-function RelatedNotes({ notes }: { notes: RelatedNote[] }) {
+function RelatedNotes({ notes, backHref }: { notes: RelatedNote[]; backHref?: string }) {
   if (notes.length === 0) return null;
 
   return (
@@ -797,19 +818,24 @@ function RelatedNotes({ notes }: { notes: RelatedNote[] }) {
         Related notes
       </div>
       <div className="space-y-1">
-        {notes.map((note) => (
-          <Link
-            key={`${note.slug}-${note.sectionAnchor ?? "note"}`}
-            href={`/biology/notes/${note.slug}${note.sectionAnchor ? `#${note.sectionAnchor}` : ""}`}
-            className="block rounded border border-border bg-background px-2.5 py-2 text-xs hover:border-accent hover:bg-accent-soft transition-colors"
-          >
-            <span className="font-medium">{note.title}</span>
-            <span className="ml-2 font-mono text-muted">{note.topic}</span>
-            {note.sectionTitle && (
-              <span className="mt-1 block text-muted">Jump to {note.sectionTitle}</span>
-            )}
-          </Link>
-        ))}
+        {notes.map((note) => {
+          const backParam = backHref ? `?back=${encodeURIComponent(backHref)}` : "";
+          const hash = note.sectionAnchor ? `#${note.sectionAnchor}` : "";
+          const href = `/biology/notes/${note.slug}${backParam}${hash}`;
+          return (
+            <Link
+              key={`${note.slug}-${note.sectionAnchor ?? "note"}`}
+              href={href}
+              className="block rounded border border-border bg-background px-2.5 py-2 text-xs hover:border-accent hover:bg-accent-soft transition-colors"
+            >
+              <span className="font-medium">{note.title}</span>
+              <span className="ml-2 font-mono text-muted">{note.topic}</span>
+              {note.sectionTitle && (
+                <span className="mt-1 block text-muted">Jump to {note.sectionTitle}</span>
+              )}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

@@ -21,6 +21,9 @@ export default async function BiologyNotePage(
   props: PageProps<"/biology/notes/[slug]">
 ) {
   const { slug } = await props.params;
+  const { back } = await props.searchParams;
+  const backHref = typeof back === "string" ? back : null;
+
   const note = getBiologyNote(slug);
   if (!note) notFound();
   const noteIndex = buildNoteIndex();
@@ -29,16 +32,27 @@ export default async function BiologyNotePage(
     <div className="flex flex-1 flex-col">
       <header className="flex items-center justify-between border-b border-border px-8 py-5">
         <div className="flex items-baseline gap-3">
-          <Link href="/" className="text-lg font-semibold tracking-tight hover:text-accent transition-colors">
-            pastpaperbd
-          </Link>
-          <Link href="/biology" className="text-sm text-muted hover:text-foreground transition-colors">
-            / Biology
-          </Link>
-          <Link href="/biology/notes" className="text-sm text-muted hover:text-foreground transition-colors">
-            / Notes
-          </Link>
-          <span className="text-sm text-muted">/ {note.title}</span>
+          {backHref ? (
+            <Link href={backHref} className="text-sm text-muted hover:text-foreground transition-colors flex items-center gap-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              Back to paper
+            </Link>
+          ) : (
+            <Link href="/" className="text-lg font-semibold tracking-tight hover:text-accent transition-colors">
+              pastpaperbd
+            </Link>
+          )}
+          {!backHref && (
+            <Link href="/biology" className="text-sm text-muted hover:text-foreground transition-colors">
+              / Biology
+            </Link>
+          )}
+          {!backHref && (
+            <Link href="/biology/notes" className="text-sm text-muted hover:text-foreground transition-colors">
+              / Notes
+            </Link>
+          )}
+          {!backHref && <span className="text-sm text-muted">/ {note.title}</span>}
         </div>
         <ThemeToggle />
       </header>
