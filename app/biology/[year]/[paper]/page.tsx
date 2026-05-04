@@ -18,6 +18,8 @@ export default async function PaperPage(
   props: PageProps<"/biology/[year]/[paper]">
 ) {
   const { year: yearParam, paper: paperParam } = await props.params;
+  const { page } = await props.searchParams;
+  const initialPage = typeof page === "string" ? Number(page) || undefined : undefined;
   const year = Number(yearParam) as Year;
   const paperNumber = Number(paperParam) as PaperNumber;
 
@@ -59,7 +61,7 @@ export default async function PaperPage(
         <ThemeToggle />
       </header>
 
-      <PaperViewer paper={paper} entries={enriched} />
+      <PaperViewer paper={paper} entries={enriched} initialPage={initialPage} />
     </div>
   );
 }

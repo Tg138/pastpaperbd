@@ -3,7 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 // ─────────────────────────────────────────────────────────────────
 // Icons
@@ -54,12 +54,13 @@ type SidebarKey = "spec" | "walkthrough";
 export function PaperViewer({
   paper,
   entries,
+  initialPage,
 }: {
   paper: Paper;
   entries: QuestionEntry[];
+  initialPage?: number;
 }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const [examMode, setExamMode] = useState(false);
   const [layout, setLayout] = useState<ViewLayout>("qp");
@@ -126,12 +127,11 @@ export function PaperViewer({
   const qpHandleRef = useRef<InteractivePdfHandle>(null);
   const msHandleRef = useRef<InteractivePdfHandle>(null);
 
-  // Scroll to page specified in ?page= when navigating back from a note
+  // Scroll to page specified via ?page= when navigating back from a note
   useEffect(() => {
-    const page = Number(searchParams.get("page"));
-    if (!page) return;
+    if (!initialPage) return;
     const timer = setTimeout(() => {
-      qpHandleRef.current?.scrollToPage(page);
+      qpHandleRef.current?.scrollToPage(initialPage);
     }, 400);
     return () => clearTimeout(timer);
   // eslint-disable-next-line react-hooks/exhaustive-deps
