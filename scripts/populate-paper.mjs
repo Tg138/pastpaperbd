@@ -28,7 +28,7 @@ const pid = `biology-${year}-p${paper}`;
 const qpPath = `public/papers/biology/${year}/paper-${paper}/qp.pdf`;
 const msPath = `public/papers/biology/${year}/paper-${paper}/ms.pdf`;
 
-const apiKey = process.env.GEMINI_API_KEY || "AIzaSyDCCpWZ3I7TMG8A3me6VXDagJKZL7TGYIU";
+const apiKey = process.env.GEMINI_API_KEY || "";
 if (!apiKey) {
   console.error("GEMINI_API_KEY not set");
   process.exit(1);
