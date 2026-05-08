@@ -210,22 +210,214 @@ const PLACEHOLDER_SPEC: SpecPoint[] = [
   {
     id: "3.4.1",
     title: "DNA, genes and chromosomes — the genetic code",
-    topic: "Genetic information & variation",
+    topic: "Genetic information, variation and relationships between organisms",
     description:
       "DNA carries the genetic code in triplets (codons). Each codon on mRNA specifies one amino acid. mRNA is linear/straight and carries codons; tRNA is clover-leaf shaped and carries anticodons and an amino acid binding site. A substitution mutation changes one base, which may or may not alter the amino acid coded (degenerate genetic code). If the same amino acid is still coded, primary and tertiary structure — and therefore active site shape — are unchanged.",
     breakdown:
       "Substitution + degenerate code = often a silent mutation. Same amino acid → same primary structure → same fold → same enzyme. Always check the codon table before assuming a mutation breaks something. Watch which strand the mark scheme wants — DNA template is complementary to mRNA.",
   },
 
+  // ── 3.1.7–3.1.8 ──
+  {
+    id: "3.1.7",
+    title: "Water's biological importance",
+    topic: "Biological molecules",
+    description:
+      `Water is a major component of cells with several vital properties. It acts as a metabolite in condensation and hydrolysis reactions and as an important solvent for metabolic reactions. Its high heat capacity buffers temperature changes, and its large latent heat of vaporisation provides a cooling effect. Strong cohesion between water molecules supports transport in plants and creates surface tension.`,
+    breakdown:
+      `Key properties: metabolite (condensation/hydrolysis), solvent, high heat capacity (buffers temp), high latent heat of vaporisation (cooling), cohesion (plant transport, surface tension). Link each property to its biological significance.`,
+    pageNumber: 19,
+  },
+  {
+    id: "3.1.8",
+    title: "Roles of inorganic ions",
+    topic: "Biological molecules",
+    description:
+      `Inorganic ions are found in varying concentrations in cytoplasm and body fluids, each with specific roles. Examples include hydrogen ions in pH regulation, iron ions as a component of haemoglobin, and sodium ions in glucose and amino acid co-transport. Phosphate ions are crucial components of DNA and ATP.`,
+    breakdown:
+      `Know specific examples: H+ (pH), Fe2+ (haemoglobin), Na+ (co-transport of glucose/amino acids), PO43- (DNA/ATP). Link ion to function.`,
+    pageNumber: 19,
+  },
+
+  // ── 3.2.4 ──
+  {
+    id: "3.2.4",
+    title: "Immune system and cell recognition",
+    topic: "Cells",
+    description:
+      `Cells possess specific surface molecules (antigens) that allow the immune system to identify pathogens, foreign cells, abnormal body cells, and toxins. T lymphocytes mediate the cellular response via helper T cells stimulating cytotoxic T cells, B cells, and phagocytes. B lymphocytes mediate the humoral response through clonal selection, plasma cells, and antibody release — forming antigen-antibody complexes leading to agglutination and phagocytosis. Memory cells underpin the secondary immune response. Vaccines provide herd immunity. HIV replicates in helper T cells, causing AIDS. Monoclonal antibodies are used in targeted medication and ELISA-based diagnosis.`,
+    breakdown:
+      `Antigens = 'self' vs 'non-self'. Cellular response: APC → Helper T → Cytotoxic T + B cells + phagocytes. Humoral response: B cells → clonal selection → plasma cells → antibodies → agglutination. Primary vs secondary response (memory cells). Active vs passive immunity. HIV → helper T cells → AIDS. Antibiotics useless vs viruses. Monoclonal antibodies: targeted drugs, ELISA. Ethical considerations.`,
+    pageNumber: 25,
+  },
+
+  // ── 3.4.2–3.4.4, 3.4.7 ──
+  {
+    id: "3.4.2",
+    title: "DNA, RNA and protein synthesis",
+    topic: "Genetic information, variation and relationships between organisms",
+    description:
+      `The genome is a cell's complete set of genes; the proteome is the full range of proteins it can produce. Transcription: RNA polymerase produces mRNA from a DNA template. In eukaryotes, pre-mRNA is spliced to remove introns before translation. Translation: ribosomes read mRNA codons; tRNA anticodons carry amino acids; ATP provides energy. Polypeptides fold into functional proteins.`,
+    breakdown:
+      `Genome = all genes. Proteome = all proteins (larger than genome — alternative splicing). Transcription: DNA → mRNA. Eukaryotes: pre-mRNA → splicing (introns out) → mRNA. Translation: mRNA codon + tRNA anticodon + ribosome → polypeptide. No specific codon recall needed.`,
+    pageNumber: 33,
+  },
+  {
+    id: "3.4.3",
+    title: "Genetic diversity — mutation and meiosis",
+    topic: "Genetic information, variation and relationships between organisms",
+    description:
+      `Gene mutations (base deletion, substitution) occur during DNA replication and can be increased by mutagenic agents. Chromosome mutations include non-disjunction during meiosis. Meiosis produces four genetically different haploid daughter cells from a diploid parent via two nuclear divisions. Independent segregation of homologous chromosomes and crossing over increase genetic variation. Random fertilisation of haploid gametes further enhances variation.`,
+    breakdown:
+      `Gene mutations: deletion (frame shift), substitution (may be silent — degenerate code). Mutagens ↑ rate. Non-disjunction = extra/missing chromosomes. Meiosis: 2 divisions → 4 haploid cells (genetically different). Variation sources: independent segregation + crossing over + random fertilisation.`,
+    pageNumber: 34,
+  },
+  {
+    id: "3.4.4",
+    title: "Natural selection and adaptation",
+    topic: "Genetic information, variation and relationships between organisms",
+    description:
+      `Genetic diversity (number of different alleles in a population) is essential for natural selection. Random mutations create new alleles; advantageous alleles increase reproductive success and rise in frequency over generations. This drives species adaptation through anatomical, physiological, or behavioural changes. Directional selection (e.g. antibiotic resistance) shifts the population mean; stabilising selection favours the middle (e.g. human birth weight).`,
+    breakdown:
+      `Genetic diversity = allele number. Natural selection: mutation → advantageous allele → ↑ reproductive success → ↑ allele frequency. Directional selection (antibiotic resistance). Stabilising selection (birth weight). Adaptations: anatomical, physiological, behavioural.`,
+    pageNumber: 35,
+  },
+  {
+    id: "3.4.7",
+    title: "Investigating variation and biodiversity",
+    topic: "Genetic information, variation and relationships between organisms",
+    description:
+      `Genetic diversity within or between species is investigated by comparing measurable characteristics, DNA base sequences, mRNA sequences, or protein amino acid sequences. Gene technology has shifted diversity investigation toward direct DNA sequencing. Quantitative studies of variation involve collecting random samples, calculating means and standard deviations, and interpreting these statistical measures.`,
+    breakdown:
+      `Compare diversity using: observable traits, DNA sequence, mRNA sequence, amino acid sequence. Direct DNA sequencing preferred. Quantitative studies: random sampling → mean + SD. Interpret mean/SD — no SD calculation required in exams.`,
+    pageNumber: 37,
+  },
+
   // ── 3.5 Energy transfers ──
+  {
+    id: "3.5.1",
+    title: "Photosynthesis — light-dependent and light-independent reactions",
+    topic: "Energy transfers in and between organisms",
+    description:
+      `The light-dependent reaction: chlorophyll absorbs light → photoionisation → electrons pass along an electron transfer chain → H+ gradient across thylakoid membrane → ATP synthase produces ATP (chemiosmosis). Photolysis of water yields H+, electrons, and O2. Reduced NADP is produced. The light-independent reaction (Calvin cycle): CO2 + RuBP → GP (catalysed by rubisco). GP is reduced to triose phosphate using ATP and reduced NADP. Triose phosphate regenerates RuBP and forms other organic compounds.`,
+    breakdown:
+      `Light-dependent: photoionisation → ETC → H+ gradient → ATP synthase → ATP. Photolysis: H2O → H+, e-, O2. Reduced NADP made. Calvin cycle: CO2 + RuBP (rubisco) → GP → TP (ATP + reduced NADP). TP → RuBP or organic compounds. Limiting factors: light, CO2, temperature.`,
+    pageNumber: 38,
+  },
+  {
+    id: "3.5.2",
+    title: "Respiration — glycolysis, Krebs cycle and oxidative phosphorylation",
+    topic: "Energy transfers in and between organisms",
+    description:
+      `Glycolysis (cytoplasm, anaerobic): glucose is phosphorylated, split to triose phosphate, then oxidised to pyruvate — yielding net 2 ATP and reduced NAD. Anaerobic respiration: pyruvate → ethanol + CO2 (plants/yeast) or lactate (animals), regenerating NAD. Aerobic: pyruvate enters mitochondrial matrix. Link reaction: pyruvate → acetyl CoA (CO2 + reduced NAD). Krebs cycle: acetyl CoA + 4C → 6C → regenerated 4C; produces reduced coenzymes, ATP, CO2. Oxidative phosphorylation: reduced coenzymes donate H+ to ETC → H+ gradient across inner mitochondrial membrane → ATP synthase → ATP (chemiosmosis). Lipids and amino acids can also be respiratory substrates.`,
+    breakdown:
+      `Glycolysis (cytoplasm): glucose → pyruvate. Net 2 ATP + reduced NAD. Anaerobic: pyruvate → ethanol/lactate (regenerates NAD). Link reaction: pyruvate → acetyl CoA. Krebs: acetyl CoA → CO2 + reduced coenzymes + ATP. Oxidative phosphorylation: ETC → H+ gradient → ATP synthase → ATP. Lipids/amino acids also enter respiration.`,
+    pageNumber: 40,
+  },
   {
     id: "3.5.3",
     title: "Animal behaviour — courtship and reproduction",
-    topic: "Energy transfers",
+    topic: "Energy transfers in and between organisms",
     description:
       "Courtship behaviour precedes mating and ensures reproductive success. It includes species-recognition signals, assessment of mate quality, and synchronisation of reproductive states. Reduction in courtship reduces offspring number. In Xenopus laevis, advertisement calls attract females, mating calls start/continue mating, and rasping calls signal sexual inactivity.",
     breakdown:
       "Courtship is data — you must link a numerical change to a specific behaviour outcome (attraction, mating, etc.) to score. 'Fewer courtship signals → fewer mates → fewer offspring' is the chain of reasoning examiners look for.",
+  },
+  {
+    id: "3.5.4",
+    title: "Nutrient cycles and microorganisms",
+    topic: "Energy transfers in and between organisms",
+    description:
+      `Natural ecosystems recycle nutrients, exemplified by the nitrogen and phosphorus cycles. Saprobionts are crucial for decomposition; mycorrhizae facilitate plant uptake of water and inorganic ions. Bacteria drive the nitrogen cycle through saprobiotic nutrition, ammonification, nitrification, nitrogen fixation, and denitrification. Natural and artificial fertilisers replace lost nitrates and phosphates but can cause leaching and eutrophication.`,
+    breakdown:
+      `N and P cycles rely on microorganisms. Saprobionts = decomposers. Mycorrhizae help plants absorb water/ions. Nitrogen cycle: saprobiotic nutrition, ammonification, nitrification, nitrogen fixation, denitrification. No specific bacterial names needed. Fertilisers (natural/artificial) replace lost nutrients. Issues: leaching, eutrophication.`,
+    pageNumber: 42,
+  },
+
+  // ── 3.6 Organisms respond ──
+  {
+    id: "3.6.1",
+    title: "Survival and nervous coordination",
+    topic: "Organisms respond to changes in their environment",
+    description:
+      `The sinoatrial node (SAN) initiates a wave of electrical activity → atria contract → atrioventricular node (AVN) relays after a delay → Purkyne tissue in the bundle of His → ventricles contract from apex upwards. Chemoreceptors and pressure receptors relay information via the autonomic nervous system. Plants use IAA to regulate cell elongation, explaining gravitropism and phototropism. Animals exhibit taxes (directional) and kineses (non-directional).`,
+    breakdown:
+      `SAN → AVN (delay) → Purkyne/bundle of His → ventricles contract. 'Signal' and 'message' are rejected — use 'electrical activity' or 'wave of depolarisation'. IAA → cell elongation (shoots: elongation on shaded side; roots: inhibition). Taxes: directional response. Kineses: non-directional. Autonomic NS controls heart rate.`,
+    pageNumber: 43,
+  },
+  {
+    id: "3.6.2",
+    title: "Nerve impulses — action potential and conduction",
+    topic: "Organisms respond to changes in their environment",
+    description:
+      `A resting potential is maintained by differential membrane permeability and the Na+/K+ pump (more K+ out, Na+ in). Depolarisation: Na+ channels open → Na+ rushes in → inside becomes positive → action potential. All-or-nothing principle applies. Repolarisation: K+ channels open → K+ out. The refractory period prevents back-propagation and limits impulse frequency. Myelinated axons conduct faster via saltatory conduction (impulse jumps between nodes of Ranvier). Speed increases with myelination, axon diameter, and temperature.`,
+    breakdown:
+      `Resting potential: inside negative. Na+/K+ pump. Depolarisation: Na+ in → action potential (all-or-nothing). Refractory period: ensures one-way travel + limits frequency. Saltatory conduction: jumps between nodes of Ranvier → faster. Speed factors: myelination, axon diameter, temperature.`,
+    pageNumber: 44,
+  },
+  {
+    id: "3.6.3",
+    title: "Skeletal muscle contraction",
+    topic: "Organisms respond to changes in their environment",
+    description:
+      `Skeletal muscles operate in antagonistic pairs. Myofibril ultrastructure: A-band (myosin), I-band (actin only), H-zone (myosin only), Z-line. During contraction: Ca2+ released from sarcoplasmic reticulum → binds troponin → moves tropomyosin → exposes actin binding sites → myosin heads bind actin → power stroke (ADP + Pi released) → ATP binds myosin → cross-bridge breaks. H-zone and I-band shorten; A-band stays same length. ATP and phosphocreatine provide energy. Slow-twitch fibres: aerobic, fatigue-resistant; fast-twitch: anaerobic, fast but fatigue quickly.`,
+    breakdown:
+      `Sarcomere: A-band (myosin, constant), I-band (actin only, shortens), H-zone (myosin only, shortens). Contraction: Ca2+ → troponin → tropomyosin moves → actin site exposed → myosin binds → power stroke. ATP breaks cross-bridge. Phosphocreatine = rapid ATP regeneration. Slow-twitch: aerobic, more mitochondria/myoglobin. Fast-twitch: anaerobic, glycogen stores. 'Elasticity' for 'plasticity' is rejected.`,
+    pageNumber: 45,
+  },
+
+  // ── 3.7 Genetics, populations, evolution ──
+  {
+    id: "3.7.1",
+    title: "Inheritance — monohybrid, dihybrid and complex crosses",
+    topic: "Genetics, populations, evolution and ecosystems",
+    description:
+      `Genotype is an organism's genetic constitution; phenotype is its observable expression influenced by genotype and environment. Genetic diagrams predict monohybrid and dihybrid cross outcomes for dominant/recessive, codominant, sex-linked, autosomal-linked alleles, multiple alleles, and epistasis. Hardy-Weinberg principle: p² + 2pq + q² = 1 and p + q = 1, used to calculate allele and genotype frequencies in a non-evolving population. The chi-squared (χ²) test compares observed and expected phenotypic ratios.`,
+    breakdown:
+      `Genotype vs phenotype. Genetic diagrams: dominant/recessive, codominant, sex-linkage (X-linked), autosomal linkage, multiple alleles, epistasis. Hardy-Weinberg: p² + 2pq + q² = 1. p = dominant allele freq, q = recessive. q² = homozygous recessive — start here when given a phenotype frequency. χ² test: compare observed vs expected.`,
+    pageNumber: 49,
+  },
+  {
+    id: "3.7.3",
+    title: "Evolution and speciation",
+    topic: "Genetics, populations, evolution and ecosystems",
+    description:
+      `Phenotypic variation arises from genetic (mutation, meiosis, random fertilisation) and environmental factors. Natural selection increases advantageous allele frequencies via differential survival and reproduction. Stabilising, directional, and disruptive selection describe different patterns. Evolution is a change in allele frequency in a population. Reproductive isolation causes gene pool divergence, eventually producing new species (allopatric: geographic isolation; sympatric: same location). Genetic drift significantly alters allele frequency in small populations.`,
+    breakdown:
+      `Variation: genetic (mutation, meiosis, random fertilisation) + environmental. Natural selection → ↑ advantageous allele frequency. Selection types: stabilising (middle favoured), directional (one extreme), disruptive (both extremes). Evolution = allele frequency change. Speciation: reproductive isolation → gene pools diverge → infertile offspring if crossed. Allopatric = geographic barrier. Sympatric = same location. Genetic drift: big effect in small populations.`,
+    pageNumber: 51,
+  },
+
+  // ── 3.8 Control of gene expression ──
+  {
+    id: "3.8.1",
+    title: "Gene mutations and epigenetics",
+    topic: "The control of gene expression",
+    description:
+      `Gene mutations involve changes to DNA base sequences: addition, deletion, substitution, inversion, duplication, translocation. Additions and deletions cause frame shifts, altering all downstream codons. Due to the degenerate code, substitutions may be silent. Epigenetics: heritable changes in gene expression without DNA sequence change. Increased methylation of DNA and decreased histone acetylation reduce transcription. Environmental factors can alter these epigenetic markers.`,
+    breakdown:
+      `Mutation types: addition/deletion → frame shift (major effect); substitution → may be silent (degenerate code). Epigenetics: heritable changes without DNA sequence change. DNA methylation (↑ = ↓ transcription). Histone acetylation (↑ = ↑ transcription). Environment alters epigenetic markers. Cancer link: tumour suppressor gene silenced by methylation.`,
+    pageNumber: 53,
+  },
+  {
+    id: "3.8.3",
+    title: "Genome projects and gene sequencing",
+    topic: "The control of gene expression",
+    description:
+      `Genome sequencing projects have mapped genomes across diverse organisms. For simpler organisms, genome knowledge directly informs the proteome, aiding applications like vaccine antigen identification. In complex organisms, non-coding DNA and regulatory genes complicate the genome-to-proteome relationship. Sequencing methods are automated and continually advancing. Comparing genomes across species reveals evolutionary relationships and gene function.`,
+    breakdown:
+      `Genome projects → sequence DNA. Simple organisms: genome → proteome directly. Complex organisms: non-coding DNA + regulatory genes make it harder. Sequencing automated. Comparing genomes → evolutionary relationships, gene function. Applications: vaccines, gene therapy.`,
+    pageNumber: 56,
+  },
+  {
+    id: "3.8.4.1",
+    title: "Recombinant DNA technology",
+    topic: "The control of gene expression",
+    description:
+      `DNA fragments are produced by converting mRNA to cDNA (reverse transcriptase), cutting DNA with restriction endonucleases creating sticky ends, or using a gene machine. Amplification: PCR (in vitro) or transformed host cells (in vivo). Promoter and terminator sequences are added. Restriction endonucleases and DNA ligase insert DNA into vectors (plasmids). Marker genes identify successfully transformed cells. The universal genetic code allows expression of foreign genes in host cells. Ethical, financial, and social issues surround gene therapy and GM organisms.`,
+    breakdown:
+      `DNA fragment sources: mRNA → cDNA (reverse transcriptase); restriction enzymes (sticky ends); gene machine. Amplification: PCR or host cell transformation. Add promoter + terminator. Restriction endonuclease cuts vector → ligase seals. Marker genes identify GM cells. Universal code → foreign gene expressed in host. Evaluate ethical/financial/social issues. Gene therapy: somatic vs germ-line.`,
+    pageNumber: 57,
   },
 ];
 
