@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllSpecPoints, getSpecPoint } from "@/lib/data";
+import { getAllSpecPoints, getQuestionsForSpecPoint, getSpecPoint } from "@/lib/data";
 import { getRelatedBiologyNotesForSpecPoints } from "@/lib/notes";
 import { ThemeToggle } from "../../../_components/ThemeToggle";
 
@@ -12,8 +12,14 @@ export default async function SpecPointPage(
   if (!sp) notFound();
   const relatedNotes = getRelatedBiologyNotesForSpecPoints([sp]);
 
-  // TODO: replace with real reverse-lookup once question data is extracted
-  const linkedQuestions: { paperId: string; number: string; href: string }[] = [];
+  const linkedQuestions = getQuestionsForSpecPoint(point).map((q) => {
+    const [, year, paperPart] = q.paperId.split("-");
+    return {
+      paperId: q.paperId,
+      number: q.number,
+      href: `/biology/${year}/${paperPart.replace("p", "")}`,
+    };
+  });
 
   return (
     <div className="flex flex-1 flex-col">

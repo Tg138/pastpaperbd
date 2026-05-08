@@ -1462,3 +1462,9 @@ export function getSpecPoint(id: string): SpecPoint | undefined {
 export function getAllSpecPoints(): SpecPoint[] {
   return PLACEHOLDER_SPEC;
 }
+
+export function getQuestionsForSpecPoint(specId: string): Question[] {
+  return PLACEHOLDER_QUESTIONS.filter((q) =>
+    q.specPoints.some((s) => s === specId || s.startsWith(specId + "."))
+  );
+}
