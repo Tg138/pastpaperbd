@@ -2,6 +2,17 @@ import Link from "next/link";
 import { getBiologyNotes } from "@/lib/notes";
 import { ThemeToggle } from "../../_components/ThemeToggle";
 
+const TOPIC_LABELS: Record<string, string> = {
+  T1: "Topic 1 — Biological Molecules",
+  T2: "Topic 2 — Cells",
+  T3: "Topic 3 — Exchange & Transport",
+  T4: "Topic 4 — Genetics, Biodiversity & Classification",
+  T5: "Topic 5 — Energy Transfers",
+  T6: "Topic 6 — Organisms Respond to their Environment",
+  T7: "Topic 7 — Genetics & Ecosystems",
+  T8: "Topic 8 — The Control of Gene Expression",
+};
+
 export default function BiologyNotesPage() {
   const notes = getBiologyNotes();
   const grouped = notes.reduce<Record<string, typeof notes>>((acc, note) => {
@@ -40,7 +51,7 @@ export default function BiologyNotesPage() {
               {Object.entries(grouped).map(([topic, list]) => (
                 <section key={topic}>
                   <h2 className="text-sm font-medium uppercase tracking-wider text-muted">
-                    {topic}
+                    {TOPIC_LABELS[topic] ?? topic}
                   </h2>
                   <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {list.map((note) => (

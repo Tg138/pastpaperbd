@@ -1463,6 +1463,10 @@ export function getAllSpecPoints(): SpecPoint[] {
   return PLACEHOLDER_SPEC;
 }
 
+export function paperHasBreakdowns(pid: string): boolean {
+  return PLACEHOLDER_QUESTIONS.some((q) => q.paperId === pid);
+}
+
 export function getQuestionsForSpecPoint(specId: string): Question[] {
   return PLACEHOLDER_QUESTIONS.filter((q) =>
     q.specPoints.some((s) => s === specId || s.startsWith(specId + "."))

@@ -616,6 +616,20 @@ function SpecSidebar({
   onClose: () => void;
   backHref: string;
 }) {
+  if (entries.length === 0) {
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex items-center justify-end px-3 py-2 border-b border-border shrink-0">
+          <button onClick={onClose} aria-label="Close panel" className="text-muted hover:text-foreground transition-colors text-lg leading-none px-2">×</button>
+        </div>
+        <div className="flex-1 flex flex-col items-center justify-center p-6 text-center gap-3">
+          <div className="text-sm font-medium">No spec data yet</div>
+          <div className="text-xs text-muted max-w-[200px]">Spec point tagging for this paper hasn't been added. Only 2024 papers are fully covered right now.</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full">
       <QuestionTabBar entries={entries} activeQid={activeQid} onSelect={onSelectQuestion} onClose={onClose} />
@@ -681,6 +695,20 @@ function WalkthroughSidebar({
 }) {
   const done = entry ? completed.has(entry.question.id) : false;
   const breakdownLocked = examMode && entry !== undefined && !done;
+
+  if (entries.length === 0) {
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex items-center justify-end px-3 py-2 border-b border-border shrink-0">
+          <button onClick={onClose} aria-label="Close panel" className="text-muted hover:text-foreground transition-colors text-lg leading-none px-2">×</button>
+        </div>
+        <div className="flex-1 flex flex-col items-center justify-center p-6 text-center gap-3">
+          <div className="text-sm font-medium">No walkthroughs yet</div>
+          <div className="text-xs text-muted max-w-[200px]">Breakdown data for this paper hasn't been added. Only 2024 papers are fully covered right now.</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full">

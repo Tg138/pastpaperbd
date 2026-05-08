@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PAPER_NUMBERS, YEARS } from "@/lib/data";
+import { PAPER_NUMBERS, YEARS, paperHasBreakdowns } from "@/lib/data";
+import { paperId } from "@/lib/types";
 import type { Year } from "@/lib/types";
 import { ThemeToggle } from "../../_components/ThemeToggle";
 
@@ -30,18 +31,28 @@ export default async function YearIndex(props: PageProps<"/biology/[year]">) {
           <p className="mt-2 text-muted">June {year}.</p>
 
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {PAPER_NUMBERS.map((n) => (
-              <Link
-                key={n}
-                href={`/biology/${year}/${n}`}
-                className="rounded-lg border border-border bg-surface p-6 hover:border-accent hover:bg-accent-soft transition-colors group"
-              >
-                <div className="text-2xl font-semibold tracking-tight group-hover:text-accent transition-colors">
-                  Paper {n}
-                </div>
-                <div className="mt-1 text-sm text-muted">7402/{n}</div>
-              </Link>
-            ))}
+            {PAPER_NUMBERS.map((n) => {
+              const hasData = paperHasBreakdowns(paperId("biology", year, n));
+              return (
+                <Link
+                  key={n}
+                  href={`/biology/${year}/${n}`}
+                  className="rounded-lg border border-border bg-surface p-6 hover:border-accent hover:bg-accent-soft transition-colors group"
+                >
+                  <div className="text-2xl font-semibold tracking-tight group-hover:text-accent transition-colors">
+                    Paper {n}
+                  </div>
+                  <div className="mt-1 text-sm text-muted">7402/{n}</div>
+                  <div className="mt-3">
+                    {hasData ? (
+                      <span className="text-xs text-accent font-medium">Walkthroughs available</span>
+                    ) : (
+                      <span className="text-xs text-muted">PDFs only</span>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </main>
