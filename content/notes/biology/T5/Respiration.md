@@ -1,5 +1,7 @@
 # Respiration
 
+*AQA spec ref: 3.5.2 — Respiration*
+
 Respiration is the process by which cells release energy from organic molecules, primarily glucose, to synthesise **ATP (adenosine triphosphate)**. ATP is the universal energy currency of the cell — it is used to drive all energy-requiring processes, from active transport and muscle contraction to biosynthesis and nerve impulse transmission. AQA's definition of respiration focuses on ATP synthesis, not simply "releasing energy," so always frame it in terms of ATP.
 
 Aerobic respiration uses oxygen and completely oxidises glucose to CO₂ and water, yielding a large amount of ATP. Anaerobic respiration occurs without oxygen and is far less efficient, yielding only 2 ATP per glucose. The two pathways share the first stage (glycolysis) but diverge after pyruvate.

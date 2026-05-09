@@ -1,6 +1,6 @@
 # Photosynthesis
 
-*AQA spec ref: 3.5.2 — Photosynthesis*
+*AQA spec ref: 3.5.1 — Photosynthesis*
 
 Photosynthesis is the process by which light energy is converted into chemical energy stored in organic molecules, primarily glucose. It takes place in the chloroplasts of plant cells and in some other photosynthetic organisms (algae, cyanobacteria). The overall equation is:
 
