@@ -462,6 +462,12 @@ function NotesSidebar({ entry }: { entry: SpecEntry | undefined }) {
           <span className="font-mono text-sm text-accent">{sp.id}</span>
           <h2 className="text-base font-semibold leading-tight">{sp.title}</h2>
         </div>
+        <Link
+          href={`/biology/spec/${sp.id}`}
+          className="mt-2 inline-flex items-center gap-1 text-xs text-accent hover:underline"
+        >
+          View full page <span aria-hidden>→</span>
+        </Link>
       </div>
 
       <div className="rounded-md border border-border bg-background p-3 text-sm leading-relaxed">

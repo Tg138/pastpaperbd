@@ -664,6 +664,12 @@ function SpecSidebar({
                         <div className="text-sm leading-relaxed">{sp.breakdown}</div>
                       </Collapsible>
                     )}
+                    <Link
+                      href={`/biology/spec/${sp.id}`}
+                      className="inline-flex items-center gap-1 text-xs text-accent hover:underline"
+                    >
+                      View full page <span aria-hidden>→</span>
+                    </Link>
                   </div>
                 </Collapsible>
               ))}
@@ -773,13 +779,15 @@ function WalkthroughSidebar({
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {entry.specPoints.map((sp) => (
-                      <span
+                      <Link
                         key={sp.id}
-                        className="inline-flex items-baseline gap-1.5 rounded bg-accent-soft text-accent px-2 py-0.5 text-xs"
+                        href={`/biology/spec/${sp.id}`}
+                        className="inline-flex items-baseline gap-1.5 rounded bg-accent-soft text-accent px-2 py-0.5 text-xs hover:bg-accent hover:text-white transition-colors"
+                        title={`Open ${sp.id} detail page`}
                       >
                         <span className="font-mono">{sp.id}</span>
                         <span>{sp.title}</span>
-                      </span>
+                      </Link>
                     ))}
                   </div>
                 </div>
