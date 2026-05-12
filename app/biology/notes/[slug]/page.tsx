@@ -1,8 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownNote } from "@/app/_components/MarkdownNote";
 import { getBiologyNote, getBiologyNotes } from "@/lib/notes";
+import { buildNoteMetadata } from "@/lib/seo";
 import { ThemeToggle } from "../../../_components/ThemeToggle";
+import { SearchTrigger } from "../../../_components/SearchTrigger";
+
+export async function generateMetadata(
+  props: PageProps<"/biology/notes/[slug]">
+): Promise<Metadata> {
+  const { slug } = await props.params;
+  const note = getBiologyNote(slug);
+  if (!note) return {};
+  return buildNoteMetadata(note);
+}
 
 function buildNoteIndex(): Record<string, string> {
   const notes = getBiologyNotes();
@@ -55,7 +67,10 @@ export default async function BiologyNotePage(
           )}
           {!backHref && <span className="text-sm text-muted">/ {note.title}</span>}
         </div>
-        <ThemeToggle />
+        <div className="flex items-center gap-3">
+          <SearchTrigger />
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="flex-1 px-8 py-12">

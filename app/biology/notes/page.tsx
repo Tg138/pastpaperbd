@@ -1,6 +1,22 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getBiologyNotes } from "@/lib/notes";
 import { ThemeToggle } from "../../_components/ThemeToggle";
+import { SearchTrigger } from "../../_components/SearchTrigger";
+
+export const metadata: Metadata = {
+  title: "Biology notes — every topic",
+  description:
+    "AQA A-level Biology notes organised by topic (T1–T8) — biological molecules through to gene expression.",
+  alternates: { canonical: "/biology/notes" },
+  openGraph: {
+    title: "AQA A-level Biology notes",
+    description:
+      "Topic-by-topic AQA A-level Biology notes covering the full 7402 specification.",
+    url: "/biology/notes",
+    type: "website",
+  },
+};
 
 const TOPIC_LABELS: Record<string, string> = {
   T1: "Topic 1 — Biological Molecules",
@@ -32,7 +48,10 @@ export default function BiologyNotesPage() {
           </Link>
           <span className="text-sm text-muted">/ Notes</span>
         </div>
-        <ThemeToggle />
+        <div className="flex items-center gap-3">
+          <SearchTrigger />
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="flex-1 px-8 py-12">

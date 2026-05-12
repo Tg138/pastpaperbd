@@ -1,8 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllSpecPoints, getQuestionsForSpecPoint, getSpecPoint } from "@/lib/data";
 import { getRelatedBiologyNotesForSpecPoints } from "@/lib/notes";
+import { buildSpecMetadata } from "@/lib/seo";
 import { ThemeToggle } from "../../../_components/ThemeToggle";
+import { SearchTrigger } from "../../../_components/SearchTrigger";
+
+export async function generateMetadata(
+  props: PageProps<"/biology/spec/[point]">
+): Promise<Metadata> {
+  const { point } = await props.params;
+  const sp = getSpecPoint(point);
+  if (!sp) return {};
+  return buildSpecMetadata(sp);
+}
 
 export default async function SpecPointPage(
   props: PageProps<"/biology/spec/[point]">
@@ -14,12 +26,27 @@ export default async function SpecPointPage(
 
   const linkedQuestions = getQuestionsForSpecPoint(point).map((q) => {
     const [, year, paperPart] = q.paperId.split("-");
+    const paperNumber = paperPart.replace("p", "");
+    const pageParam = q.pageNumber ? `?page=${q.pageNumber}` : "";
     return {
       paperId: q.paperId,
+      year,
+      paperNumber,
       number: q.number,
-      href: `/biology/${year}/${paperPart.replace("p", "")}`,
+      marks: q.marks,
+      href: `/biology/${year}/${paperNumber}${pageParam}`,
     };
   });
+
+  // Group questions by year for easier scanning.
+  const questionsByYear = linkedQuestions.reduce<Record<string, typeof linkedQuestions>>(
+    (acc, q) => {
+      (acc[q.year] ??= []).push(q);
+      return acc;
+    },
+    {}
+  );
+  const years = Object.keys(questionsByYear).sort((a, b) => Number(b) - Number(a));
 
   return (
     <div className="flex flex-1 flex-col">
@@ -36,7 +63,10 @@ export default async function SpecPointPage(
           </Link>
           <span className="text-sm text-muted">/ {sp.id}</span>
         </div>
-        <ThemeToggle />
+        <div className="flex items-center gap-3">
+          <SearchTrigger />
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="flex-1 px-8 py-12">
@@ -88,24 +118,45 @@ export default async function SpecPointPage(
             </section>
 
             <section>
-              <h2 className="text-xs uppercase tracking-wider text-muted mb-2">
-                Past-paper questions on this point
-              </h2>
+              <div className="mb-3 flex items-baseline justify-between">
+                <h2 className="text-xs uppercase tracking-wider text-muted">
+                  Past-paper questions on this point
+                </h2>
+                {linkedQuestions.length > 0 && (
+                  <span className="text-xs text-muted">
+                    {linkedQuestions.length} question{linkedQuestions.length === 1 ? "" : "s"}
+                  </span>
+                )}
+              </div>
               {linkedQuestions.length === 0 ? (
                 <div className="rounded-lg border border-border bg-surface p-4 text-sm text-muted">
                   Reverse-lookup coming once question data is extracted from each paper.
                 </div>
               ) : (
-                <div className="space-y-1">
-                  {linkedQuestions.map((q) => (
-                    <Link
-                      key={`${q.paperId}-${q.number}`}
-                      href={q.href}
-                      className="block rounded-md border border-border bg-surface px-3 py-2 hover:border-accent transition-colors"
-                    >
-                      <span className="font-mono text-sm">{q.paperId}</span>{" "}
-                      <span className="text-muted">— Q{q.number}</span>
-                    </Link>
+                <div className="space-y-5">
+                  {years.map((year) => (
+                    <div key={year}>
+                      <div className="mb-1.5 text-[11px] font-medium uppercase tracking-wider text-muted">
+                        {year}
+                      </div>
+                      <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+                        {questionsByYear[year].map((q) => (
+                          <Link
+                            key={`${q.paperId}-${q.number}`}
+                            href={q.href}
+                            className="flex items-baseline justify-between gap-3 rounded-md border border-border bg-surface px-3 py-2 hover:border-accent hover:bg-accent-soft transition-colors"
+                          >
+                            <span className="text-sm">
+                              <span className="font-medium">Paper {q.paperNumber}</span>
+                              <span className="ml-2 text-muted">Q{q.number}</span>
+                            </span>
+                            <span className="font-mono text-xs text-muted shrink-0">
+                              {q.marks} {q.marks === 1 ? "mark" : "marks"}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}

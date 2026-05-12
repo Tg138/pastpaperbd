@@ -1643,6 +1643,14 @@ export function getQuestionsForPaper(pid: string): Question[] {
   return PLACEHOLDER_QUESTIONS.filter((q) => q.paperId === pid);
 }
 
+export function getAllQuestions(): Question[] {
+  return PLACEHOLDER_QUESTIONS;
+}
+
+export function getAllBreakdowns(): Breakdown[] {
+  return PLACEHOLDER_BREAKDOWNS;
+}
+
 export function getBreakdown(qid: string): Breakdown | undefined {
   return PLACEHOLDER_BREAKDOWNS.find((b) => b.questionId === qid);
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "./_components/ThemeToggle";
+import { SearchTrigger } from "./_components/SearchTrigger";
 
 interface SubjectCard {
   slug: string;
@@ -42,7 +43,10 @@ export default function Home() {
     <div className="flex flex-1 flex-col bg-background text-foreground">
       <header className="flex items-center justify-between px-8 py-5 border-b border-border">
         <span className="text-lg font-semibold tracking-tight">pastpaperbd</span>
-        <ThemeToggle />
+        <div className="flex items-center gap-3">
+          <SearchTrigger />
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="flex-1 flex flex-col items-center px-8 py-16">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 
 // ─────────────────────────────────────────────────────────────────
 // Icons
@@ -63,14 +64,30 @@ export function PaperViewer({
   initialPanels?: SidebarKey[];
 }) {
   const pathname = usePathname();
+  const isMobile = useMediaQuery("(max-width: 767px)");
 
   const [examMode, setExamMode] = useState(false);
-  const [layout, setLayout] = useState<ViewLayout>("qp");
+  const [layout, setLayoutRaw] = useState<ViewLayout>("qp");
   const [renderMode, setRenderMode] = useState<RenderMode>("interactive");
   const [zoom, setZoom] = useState(1);
   const pdfAreaRef = useRef<HTMLDivElement>(null);
   const mainRowRef = useRef<HTMLDivElement>(null);
   const [mainRowWidth, setMainRowWidth] = useState(0);
+
+  // Force away from split layout on mobile — side-by-side PDFs are unusable on phones.
+  const setLayout = useCallback(
+    (v: ViewLayout | ((prev: ViewLayout) => ViewLayout)) => {
+      setLayoutRaw((prev) => {
+        const next = typeof v === "function" ? v(prev) : v;
+        return next;
+      });
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (isMobile && layout === "split") setLayoutRaw("qp");
+  }, [isMobile, layout]);
 
   const clampZoom = (v: number) => Math.min(Math.max(Math.round(v * 20) / 20, 0.5), 3);
   const zoomIn = () => setZoom((z) => clampZoom(z + 0.25));
@@ -181,19 +198,65 @@ export function PaperViewer({
     if (qid) setActiveQid(qid);
   }, []);
 
-  const onSelectQuestion = (qid: string) => {
-    setActiveQid(qid);
-    const entry = entries.find((e) => e.question.id === qid);
-    if (renderMode === "interactive" && entry?.question.pageNumber) {
-      if (layout === "split") {
-        qpHandleRef.current?.scrollToPage(entry.question.pageNumber);
-        msHandleRef.current?.scrollToPage(entry.question.pageNumber);
-      } else {
-        const handle = layout === "qp" ? qpHandleRef : msHandleRef;
-        handle.current?.scrollToPage(entry.question.pageNumber);
+  const onSelectQuestion = useCallback(
+    (qid: string) => {
+      setActiveQid(qid);
+      const entry = entries.find((e) => e.question.id === qid);
+      if (renderMode === "interactive" && entry?.question.pageNumber) {
+        if (layout === "split") {
+          qpHandleRef.current?.scrollToPage(entry.question.pageNumber);
+          msHandleRef.current?.scrollToPage(entry.question.pageNumber);
+        } else {
+          const handle = layout === "qp" ? qpHandleRef : msHandleRef;
+          handle.current?.scrollToPage(entry.question.pageNumber);
+        }
       }
-    }
-  };
+    },
+    [entries, layout, renderMode]
+  );
+
+  const [showHelp, setShowHelp] = useState(false);
+
+  // Keyboard shortcuts: j/k navigate questions, s/w toggle panels, x exam mode, ? help.
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const target = e.target as HTMLElement | null;
+      if (target?.matches("input, textarea, select, [contenteditable='true']")) return;
+
+      if (e.key === "?") {
+        e.preventDefault();
+        setShowHelp((v) => !v);
+        return;
+      }
+      if (entries.length === 0) return;
+      const currentIdx = entries.findIndex((entry) => entry.question.id === activeQid);
+
+      if (e.key === "j" || e.key === "ArrowRight") {
+        e.preventDefault();
+        const next = entries[Math.min(entries.length - 1, currentIdx + 1)];
+        if (next) onSelectQuestion(next.question.id);
+      } else if (e.key === "k" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        const prev = entries[Math.max(0, currentIdx - 1)];
+        if (prev) onSelectQuestion(prev.question.id);
+      } else if (e.key === "s") {
+        e.preventDefault();
+        togglePanel("spec");
+      } else if (e.key === "w") {
+        e.preventDefault();
+        togglePanel("walkthrough");
+      } else if (e.key === "x") {
+        e.preventDefault();
+        setExamMode((v) => !v);
+      } else if (e.key === "m" && msAvailable) {
+        e.preventDefault();
+        setLayout((prev) => (prev === "ms" ? "qp" : "ms"));
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [activeQid, entries, msAvailable, onSelectQuestion, setLayout]);
 
   // In split view, mirror QP page changes onto the MS by page number.
   // This handles the MS cover pages correctly — both land on the same question page.
@@ -231,7 +294,7 @@ export function PaperViewer({
   return (
     <div className="flex flex-1 min-h-0 flex-col">
       {/* Toolbar */}
-      <div className="flex items-center gap-3 px-4 py-2 border-b border-border bg-surface shrink-0 flex-wrap">
+      <div className="flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2 border-b border-border bg-surface shrink-0 flex-wrap">
         {/* Spec toggle */}
         <button
           onClick={() => togglePanel("spec")}
@@ -244,46 +307,70 @@ export function PaperViewer({
           <IconSpec active={specOpen} />
         </button>
 
-        <SegmentedControl
-          options={[
-            { value: "qp", label: "Question paper" },
-            {
-              value: "ms",
-              label: "MS",
-              disabled: !msAvailable,
-              title: !msAvailable ? "Complete all questions to unlock" : undefined,
-            },
-            {
-              value: "split",
-              label: "Side by side",
-              disabled: !msAvailable,
-              title: !msAvailable ? "Complete all questions to unlock" : undefined,
-            },
-          ]}
-          value={layout}
-          onChange={handleLayoutChange}
-        />
+        {/* Desktop layout segmented control */}
+        <div className="hidden md:block">
+          <SegmentedControl
+            options={[
+              { value: "qp", label: "Question paper" },
+              {
+                value: "ms",
+                label: "MS",
+                disabled: !msAvailable,
+                title: !msAvailable ? "Complete all questions to unlock" : undefined,
+              },
+              {
+                value: "split",
+                label: "Side by side",
+                disabled: !msAvailable,
+                title: !msAvailable ? "Complete all questions to unlock" : undefined,
+              },
+            ]}
+            value={layout}
+            onChange={handleLayoutChange}
+          />
+        </div>
 
-        <div className="h-5 w-px bg-border" />
+        {/* Mobile layout switch — QP / MS only, no split */}
+        <div className="flex md:hidden">
+          <SegmentedControl
+            options={[
+              { value: "qp", label: "QP" },
+              {
+                value: "ms",
+                label: "MS",
+                disabled: !msAvailable,
+                title: !msAvailable ? "Complete all questions to unlock" : undefined,
+              },
+            ]}
+            value={layout === "split" ? "qp" : layout}
+            onChange={handleLayoutChange}
+          />
+        </div>
 
-        <SegmentedControl
-          options={[
-            { value: "interactive", label: "Interactive" },
-            { value: "classic", label: "Classic PDF" },
-          ]}
-          value={renderMode}
-          onChange={(v) => setRenderMode(v as RenderMode)}
-        />
+        <div className="hidden md:block h-5 w-px bg-border" />
 
-        {/* Zoom controls */}
-        <div className="flex items-center gap-1 rounded-md border border-border overflow-hidden text-sm">
+        {/* Render mode — desktop only */}
+        <div className="hidden md:block">
+          <SegmentedControl
+            options={[
+              { value: "interactive", label: "Interactive" },
+              { value: "classic", label: "Classic PDF" },
+            ]}
+            value={renderMode}
+            onChange={(v) => setRenderMode(v as RenderMode)}
+          />
+        </div>
+
+        {/* Zoom controls — desktop only (mobile uses native pinch) */}
+        <div className="hidden md:flex items-center gap-1 rounded-md border border-border overflow-hidden text-sm">
           <button onClick={zoomOut} title="Zoom out" className="px-2 py-1.5 hover:bg-surface-2 transition-colors text-muted hover:text-foreground">−</button>
           <button onClick={zoomReset} title="Reset zoom" className="px-2 py-1.5 hover:bg-surface-2 transition-colors text-xs text-muted hover:text-foreground tabular-nums w-12 text-center">{Math.round(zoom * 100)}%</button>
           <button onClick={zoomIn} title="Zoom in" className="px-2 py-1.5 hover:bg-surface-2 transition-colors text-muted hover:text-foreground">+</button>
         </div>
 
-        <div className="ml-auto flex items-center gap-4">
-          <label className="flex items-center gap-2 text-sm text-muted cursor-pointer select-none">
+        <div className="ml-auto flex items-center gap-2 md:gap-4">
+          {/* Exam mode — text on desktop, icon-only on mobile */}
+          <label className="hidden md:flex items-center gap-2 text-sm text-muted cursor-pointer select-none">
             <input
               type="checkbox"
               checked={examMode}
@@ -292,12 +379,40 @@ export function PaperViewer({
             />
             Exam mode
           </label>
+          <button
+            type="button"
+            onClick={() => setExamMode((v) => !v)}
+            aria-label={examMode ? "Disable exam mode" : "Enable exam mode"}
+            title={examMode ? "Exam mode on" : "Exam mode off"}
+            className={`md:hidden p-1.5 rounded transition-colors ${
+              examMode ? "bg-accent-soft text-accent" : "text-muted hover:bg-surface-2 hover:text-foreground"
+            }`}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </button>
+
           <a
             href={downloadHref}
             download
-            className="text-xs text-muted hover:text-accent transition-colors"
+            aria-label="Download PDF"
+            className="text-xs text-muted hover:text-accent transition-colors hidden md:inline"
           >
             Download
+          </a>
+          <a
+            href={downloadHref}
+            download
+            aria-label="Download PDF"
+            className="md:hidden p-1.5 text-muted hover:text-accent transition-colors"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
           </a>
 
           {/* Walkthrough toggle */}
@@ -317,17 +432,18 @@ export function PaperViewer({
       {/* Main content row.
           One panel open (non-split layout) → inline 1/3 split.
           Both panels open, or split layout → panels overlay (DockedPanel). */}
-      <div ref={mainRowRef} className={`flex flex-1 min-h-0 ${(openPanels.size < 2 && layout !== "split") ? "" : "relative"}`}>
+      <div ref={mainRowRef} className={`flex flex-1 min-h-0 ${(!isMobile && openPanels.size < 2 && layout !== "split") ? "" : "relative"}`}>
 
-        {/* Spec — inline when solo (non-split), overlay otherwise */}
-        {(openPanels.size < 2 && layout !== "split") ? (
+        {/* Spec — inline when solo (non-split) on desktop, overlay otherwise.
+            On mobile: always full-screen overlay. */}
+        {(!isMobile && openPanels.size < 2 && layout !== "split") ? (
           <div className={`overflow-hidden flex flex-col bg-surface border-r border-border transition-all duration-150 ease-in-out ${specOpen ? "w-1/3 opacity-100" : "w-0 opacity-0"}`}>
             {specOpen && (
               <SpecSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} onClose={() => closePanel("spec")} backHref={backHref} />
             )}
           </div>
         ) : (
-          <DockedPanel side="left" open={specOpen} onClose={() => closePanel("spec")} width={dualPanelWidth}>
+          <DockedPanel side="left" open={specOpen} onClose={() => closePanel("spec")} width={dualPanelWidth} fullScreen={isMobile}>
             <SpecSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} onClose={() => closePanel("spec")} backHref={backHref} />
           </DockedPanel>
         )}
@@ -405,18 +521,93 @@ export function PaperViewer({
           )}
         </div>
 
-        {/* Walkthrough — inline when solo (non-split), overlay otherwise */}
-        {(openPanels.size < 2 && layout !== "split") ? (
+        {/* Walkthrough — inline when solo (non-split) on desktop, overlay otherwise.
+            On mobile: always full-screen overlay. */}
+        {(!isMobile && openPanels.size < 2 && layout !== "split") ? (
           <div className={`overflow-hidden flex flex-col bg-surface border-l border-border transition-all duration-150 ease-in-out ${walkthroughOpen ? "w-1/3 opacity-100" : "w-0 opacity-0"}`}>
             {walkthroughOpen && (
               <WalkthroughSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} completed={completed} onToggleComplete={toggleComplete} examMode={examMode} onClose={() => closePanel("walkthrough")} backHref={backHref} />
             )}
           </div>
         ) : (
-          <DockedPanel side="right" open={walkthroughOpen} onClose={() => closePanel("walkthrough")} width={dualPanelWidth}>
+          <DockedPanel side="right" open={walkthroughOpen} onClose={() => closePanel("walkthrough")} width={dualPanelWidth} fullScreen={isMobile}>
             <WalkthroughSidebar entry={activeEntry} entries={entries} activeQid={activeQid} onSelectQuestion={onSelectQuestion} completed={completed} onToggleComplete={toggleComplete} examMode={examMode} onClose={() => closePanel("walkthrough")} backHref={backHref} />
           </DockedPanel>
         )}
+      </div>
+
+      {showHelp && <ShortcutsHelp msAvailable={msAvailable} onClose={() => setShowHelp(false)} />}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Keyboard shortcuts help
+
+function ShortcutsHelp({ msAvailable, onClose }: { msAvailable: boolean; onClose: () => void }) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape" || e.key === "?") {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  const rows: { keys: string[]; label: string; disabled?: boolean }[] = [
+    { keys: ["j", "→"], label: "Next question" },
+    { keys: ["k", "←"], label: "Previous question" },
+    { keys: ["s"], label: "Toggle spec panel" },
+    { keys: ["w"], label: "Toggle walkthrough" },
+    { keys: ["m"], label: "Toggle mark scheme", disabled: !msAvailable },
+    { keys: ["x"], label: "Toggle exam mode" },
+    { keys: ["⌘", "K"], label: "Open search" },
+    { keys: ["esc"], label: "Close panel / dialog" },
+    { keys: ["?"], label: "Show this help" },
+  ];
+
+  return (
+    <div
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/40 backdrop-blur-sm px-4"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-sm rounded-lg border border-border bg-background shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between border-b border-border px-4 py-3">
+          <div className="text-sm font-semibold">Keyboard shortcuts</div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="text-muted hover:text-foreground transition-colors text-lg leading-none"
+          >
+            ×
+          </button>
+        </div>
+        <div className="px-4 py-3 space-y-1.5">
+          {rows.map((row) => (
+            <div
+              key={row.label}
+              className={`flex items-center justify-between gap-3 ${row.disabled ? "opacity-40" : ""}`}
+            >
+              <span className="text-sm">{row.label}</span>
+              <div className="flex items-center gap-1">
+                {row.keys.map((k) => (
+                  <kbd
+                    key={k}
+                    className="rounded border border-border bg-surface px-1.5 py-0.5 font-mono text-[11px] text-muted"
+                  >
+                    {k}
+                  </kbd>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -452,12 +643,14 @@ function DockedPanel({
   open,
   onClose,
   width,
+  fullScreen,
   children,
 }: {
   side: "left" | "right";
   open: boolean;
   onClose: () => void;
   width?: number;
+  fullScreen?: boolean;
   children: React.ReactNode;
 }) {
   useEffect(() => {
@@ -470,6 +663,14 @@ function DockedPanel({
   }, [open, onClose]);
 
   if (!open) return null;
+
+  if (fullScreen) {
+    return (
+      <div className="absolute inset-0 z-30 bg-surface flex flex-col">
+        <div className="flex-1 min-h-0 overflow-y-auto">{children}</div>
+      </div>
+    );
+  }
 
   const borderClass = side === "left" ? "border-r" : "border-l";
   const posClass = side === "left" ? "left-0" : "right-0";

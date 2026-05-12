@@ -1,9 +1,32 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PAPER_NUMBERS, YEARS, paperHasBreakdowns } from "@/lib/data";
 import { paperId } from "@/lib/types";
 import type { Year } from "@/lib/types";
 import { ThemeToggle } from "../../_components/ThemeToggle";
+import { SearchTrigger } from "../../_components/SearchTrigger";
+
+export async function generateMetadata(
+  props: PageProps<"/biology/[year]">
+): Promise<Metadata> {
+  const { year: yearParam } = await props.params;
+  const year = Number(yearParam) as Year;
+  if (!YEARS.includes(year)) return {};
+  const title = `Biology ${year} · AQA A-level papers`;
+  const description = `AQA A-level Biology (7402) — June ${year} series. Papers 1, 2, and 3 with mark schemes and walkthroughs.`;
+  return {
+    title,
+    description,
+    alternates: { canonical: `/biology/${year}` },
+    openGraph: {
+      title,
+      description,
+      url: `/biology/${year}`,
+      type: "website",
+    },
+  };
+}
 
 export default async function YearIndex(props: PageProps<"/biology/[year]">) {
   const { year: yearParam } = await props.params;
@@ -22,7 +45,10 @@ export default async function YearIndex(props: PageProps<"/biology/[year]">) {
           </Link>
           <span className="text-sm text-muted">/ {year}</span>
         </div>
-        <ThemeToggle />
+        <div className="flex items-center gap-3">
+          <SearchTrigger />
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="flex-1 px-8 py-12">

@@ -1,6 +1,22 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { YEARS } from "@/lib/data";
 import { ThemeToggle } from "../_components/ThemeToggle";
+import { SearchTrigger } from "../_components/SearchTrigger";
+
+export const metadata: Metadata = {
+  title: "Biology · AQA A-level past papers",
+  description:
+    "Browse AQA A-level Biology (7402) past papers by year, jump into mark-scheme walkthroughs, the specification browser, or topic notes.",
+  alternates: { canonical: "/biology" },
+  openGraph: {
+    title: "Biology · AQA A-level past papers",
+    description:
+      "Browse AQA A-level Biology (7402) past papers by year, jump into mark-scheme walkthroughs, the specification browser, or topic notes.",
+    url: "/biology",
+    type: "website",
+  },
+};
 
 export default function BiologyIndex() {
   return (
@@ -12,7 +28,10 @@ export default function BiologyIndex() {
           </Link>
           <span className="text-sm text-muted">/ Biology (7402)</span>
         </div>
-        <ThemeToggle />
+        <div className="flex items-center gap-3">
+          <SearchTrigger />
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="flex-1 px-8 py-12">
@@ -32,6 +51,18 @@ export default function BiologyIndex() {
               className="inline-flex items-center justify-center rounded-md border border-border px-4 py-2 text-sm font-medium hover:bg-surface transition-colors"
             >
               Spec browser
+            </Link>
+            <Link
+              href="/biology/topics"
+              className="inline-flex items-center justify-center rounded-md border border-border px-4 py-2 text-sm font-medium hover:bg-surface transition-colors"
+            >
+              Topics
+            </Link>
+            <Link
+              href="/biology/progress"
+              className="inline-flex items-center justify-center rounded-md border border-border px-4 py-2 text-sm font-medium hover:bg-surface transition-colors"
+            >
+              Your progress
             </Link>
           </div>
 
