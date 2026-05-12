@@ -47,7 +47,7 @@ export interface QuestionEntry {
   relatedNotes: RelatedNote[];
 }
 
-type ViewLayout = "qp" | "ms" | "split";
+type ViewLayout = "qp" | "ms" | "split" | "er";
 type RenderMode = "classic" | "interactive";
 type SidebarKey = "spec" | "walkthrough";
 
@@ -215,7 +215,7 @@ export function PaperViewer({
     closePanel("walkthrough");
   };
 
-  const downloadHref = layout === "ms" ? paper.msPath : paper.qpPath;
+  const downloadHref = layout === "ms" ? paper.msPath : layout === "er" ? paper.erPath : paper.qpPath;
 
   const specOpen = openPanels.has("spec");
   const walkthroughOpen = openPanels.has("walkthrough");
@@ -259,6 +259,7 @@ export function PaperViewer({
               disabled: !msAvailable,
               title: !msAvailable ? "Complete all questions to unlock" : undefined,
             },
+            { value: "er", label: "Examiner report" },
           ]}
           value={layout}
           onChange={handleLayoutChange}
@@ -375,6 +376,14 @@ export function PaperViewer({
                 )}
               </PdfPane>
             </>
+          ) : layout === "er" ? (
+            <PdfPane key="er" label="Examiner report" className="flex-1 min-w-0">
+              {renderMode === "interactive" ? (
+                <InteractivePdf src={paper.erPath} questionPages={{}} scale={zoom} />
+              ) : (
+                <iframe src={paper.erPath} className="w-full h-full bg-surface-2" title="Examiner report" />
+              )}
+            </PdfPane>
           ) : (
             <PdfPane key={layout} label={layout === "qp" ? "Question paper" : "Mark scheme"} className="flex-1 min-w-0">
               {renderMode === "interactive" ? (
